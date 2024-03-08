@@ -2,6 +2,7 @@ let express = require('express');
 let app = express();
 let bodyParser = require('body-parser');
 const routesAssignment = require("./routes/assignments")
+const routesUser = require("./routes/user")
 let mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 // mongoose.set('debug', true);
@@ -43,6 +44,7 @@ let port = process.env.PORT || 8010;
 // Les routes
 const prefix = '/api';
 app.use(prefix, routesAssignment)
+app.use(prefix, routesUser)
 
 // On démarre le serveur
 app.listen(port, "0.0.0.0");
