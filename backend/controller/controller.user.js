@@ -4,23 +4,29 @@ const jwt = require('jsonwebtoken');
 
 // UTILISATEUR CONNECTEE
 const utilisateur_actif = (req, res) => {
-    // User.findOne()
-    if(req.auth){
-        res.json({message: req.auth.userId})
-    }else{
-        res.json({message: "Donnée vide"})
+    const userId = req.headers["authorization"].split(" ")[0];
+        if(userId){
+            User.findOne({ _id: userId })
+                .then((user) => {
+                    if(!user){
+                        res.json({ message: "Utilisateur introuvable" })
+                    }
+                    res.json({ useractif: user })
+                })
+                .catch(error => res.status(400).json({ error }))
+        }else{
+            res.json({ message: "Token invalide"})
+        }
     }
-}
 
 // INSCRIPTION UTILISATEUR
 // data : email, password, role 
 const inscription = (req, res) => {
     User.findOne({ email: req.body.email })
         .then(user => {
-            
-            if(user){
+            if (user) {
                 res.status(201).json({ message: 'Email déjà utilisé !' })
-            }else{
+            } else {
                 bcrypt.hash(req.body.password, 10)
                     .then(hash => {
                         const user = new User({
@@ -35,7 +41,7 @@ const inscription = (req, res) => {
                     .catch(error => res.status(500).json({ error }));
             }
         })
-        .catch(error => res.status(400).json({ error}))
+        .catch(error => res.status(400).json({ error }))
 };
 
 // CONNEXION UTILISATEUR
@@ -54,7 +60,7 @@ const connexion = (req, res) => {
                         userId: user._id,
                         token: jwt.sign(
                             { userId: user._id },
-                            'RANDOM_TOKEN_SECRET',
+                            'KEY_ANGULAR_24',
                             { expiresIn: '24h' }
                         )
                     });
