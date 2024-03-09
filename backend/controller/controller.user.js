@@ -61,7 +61,7 @@ const connexion = (req, res) => {
                         token: jwt.sign(
                             { userId: user._id },
                             'KEY_ANGULAR_24',
-                            { expiresIn: '24h' }
+                            { expiresIn: '1200s' }
                         )
                     });
                 })
