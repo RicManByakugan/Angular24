@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const auth = require("../middleware/authentification")
 const Controller_assignment = require("../controller/controller.assignments")
 
 // http://serveur..../assignments
-router.post('/assignments', Controller_assignment.postAssignment);
-router.put('/assignments', Controller_assignment.updateAssignment);
-router.get('/assignments', Controller_assignment.getAssignments);
-router.get('/assignments/:id', Controller_assignment.getAssignment)
-router.delete('/assignments/:id', Controller_assignment.deleteAssignment)
+router.post('/assignments', auth, Controller_assignment.postAssignment);
+router.put('/assignments', auth, Controller_assignment.updateAssignment);
+router.get('/assignments', auth, Controller_assignment.getAssignments);
+router.get('/assignments/:id', auth, Controller_assignment.getAssignment)
+router.delete('/assignments/:id', auth, Controller_assignment.deleteAssignment)
 
 module.exports = router;

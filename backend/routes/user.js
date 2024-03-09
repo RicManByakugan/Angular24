@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const auth = require("../middleware/authentification")
-
 const user_controller = require('../controller/controller.user');
 
 // http://serveur..../utilisateur/
