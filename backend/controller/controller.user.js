@@ -25,7 +25,7 @@ const inscription = (req, res) => {
     User.findOne({ email: req.body.email })
         .then(user => {
             if (user) {
-                res.status(201).json({ message: 'Email déjà utilisé !' })
+                res.status(201).json({ message: 'Email déjà utilisé' })
             } else {
                 bcrypt.hash(req.body.password, 10)
                     .then(hash => {
@@ -35,7 +35,7 @@ const inscription = (req, res) => {
                             password: hash
                         });
                         user.save()
-                            .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
+                            .then(() => res.status(201).json({ message: 'Utilisateur créé' }))
                             .catch(error => res.status(400).json({ error }));
                     })
                     .catch(error => res.status(500).json({ error }));

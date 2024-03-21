@@ -6,8 +6,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { AssignmentsComponent } from './assignments/assignments.component';
-import { AuthService } from './shared/auth.service';
-import { AssignmentsService } from './shared/assignments.service';
+import { AuthService } from './shared/service/auth.service';
+import { AssignmentsService } from './shared/service/assignments.service';
 
 @Component({
   selector: 'app-root',
