@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { AssignmentsComponent } from './assignments/assignments.component';
-import { AddAssignmentComponent } from './assignments/add-assignment/add-assignment.component';
-import { AssignmentDetailComponent } from './assignments/assignment-detail/assignment-detail.component';
-import { EditAssignmentComponent } from './assignments/edit-assignment/edit-assignment.component';
+import { AssignmentsComponent } from './pages/assignments/assignments.component';
+import { AddAssignmentComponent } from './pages/assignments/add-assignment/add-assignment.component';
+import { AssignmentDetailComponent } from './pages/assignments/assignment-detail/assignment-detail.component';
+import { EditAssignmentComponent } from './pages/assignments/edit-assignment/edit-assignment.component';
 import { authGuard } from './shared/guard/auth.guard';
 
 export const routes: Routes = [

@@ -12,11 +12,11 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import { PageEvent, MatPaginatorModule } from '@angular/material/paginator';
 
-import { RenduDirective } from '../shared/rendu.directive';
+import { RenduDirective } from '../../shared/rendu.directive';
 import { Assignment } from './assignment.model';
 import { AssignmentDetailComponent } from './assignment-detail/assignment-detail.component';
 import { AddAssignmentComponent } from './add-assignment/add-assignment.component';
-import { AssignmentsService } from '../shared/service/assignments.service';
+import { AssignmentsService } from '../../shared/service/assignments.service';
 import { RouterLink } from '@angular/router';
 import { filter, map, pairwise, tap, throttleTime } from 'rxjs/operators';
 @Component({
