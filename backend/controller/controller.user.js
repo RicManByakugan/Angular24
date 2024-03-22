@@ -1,12 +1,12 @@
 const User = require('../model/user');
+const { ObjectID } = require("bson")
 const bcrypt = require("bcrypt")
 const jwt = require('jsonwebtoken');
 
 // UTILISATEUR CONNECTEE
 const utilisateur_actif = (req, res) => {
-    const userId = req.headers["authorization"].split(" ")[0];
-    if (userId) {
-        User.findOne({ _id: userId })
+    if (req.auth.userId) {
+        User.findOne({ _id: new ObjectID(req.auth.userId) })
             .then((user) => {
                 if (!user) {
                     res.json({ message: "Utilisateur introuvable" })
@@ -20,7 +20,7 @@ const utilisateur_actif = (req, res) => {
 }
 
 // INSCRIPTION UTILISATEUR
-// data : email, password, role 
+// data : email, password, role, nom, prenom
 const inscription = (req, res) => {
     User.findOne({ email: req.body.email })
         .then(user => {
@@ -32,6 +32,8 @@ const inscription = (req, res) => {
                         const user = new User({
                             email: req.body.email,
                             role: req.body.role,
+                            nom: req.body.nom,
+                            prenom: req.body.prenom,
                             password: hash
                         });
                         user.save()

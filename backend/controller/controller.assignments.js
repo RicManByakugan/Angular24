@@ -77,37 +77,73 @@ const postAssignment = (req, res) => {
             })
             .catch(error => res.status(400).json({ error }))
     } else {
-        res.json({ message: "Token invalide" })
+        res.json({ message: "Utilisateur non connecté" })
     }
 }
 
 // Update d'un assignment (PUT)
 const updateAssignment = (req, res) => {
-    console.log("UPDATE recu assignment : ");
-    console.log(req.body);
-    Assignment.findByIdAndUpdate(req.body._id, req.body, { new: true }, (err, assignment) => {
-        if (err) {
-            console.log(err);
-            res.send(err)
-        } else {
-            res.json({ message: 'updated' })
-        }
+    if (req.auth.userId) {
+        User.findOne({ _id: new ObjectID(req.auth.userId) })
+            .then((user) => {
+                if (!user) {
+                    res.json({ message: "Utilisateur introuvable" })
+                }
+                Assignment.find({ $and: [{ user: user, _id: req.body._id }] })
+                    .then(check => {
+                        if (!check) {
+                            res.json({ message: "Utilisateur ne peut pas modifier" })
+                        }
+                        console.log("UPDATE recu assignment : ");
+                        console.log(req.body);
+                        Assignment.findByIdAndUpdate(req.body._id, req.body, { new: true }, (err, assignment) => {
+                            if (err) {
+                                console.log(err);
+                                res.send(err)
+                            } else {
+                                res.json({ message: 'updated' })
+                            }
+                            // console.log('updated ', assignment)
+                        });
+                    })
+                    .catch(error => res.status(400).json({ error }))
+            })
+            .catch(error => res.status(400).json({ error }))
+    } else {
+        res.json({ message: "Utilisateur non connecté" })
+    }
 
-        // console.log('updated ', assignment)
-    });
 
 }
 
 // suppression d'un assignment (DELETE)
 // l'id est bien le _id de mongoDB
 const deleteAssignment = (req, res) => {
+    if (req.auth.userId) {
+        User.findOne({ _id: new ObjectID(req.auth.userId) })
+            .then((user) => {
+                if (!user) {
+                    res.json({ message: "Utilisateur introuvable" })
+                }
+                Assignment.find({ $and: [{ user: user, id: req.params.id }] })
+                    .then(check => {
+                        if (!check) {
+                            res.json({ message: "Utilisateur ne peut pas supprimer" })
+                        }
+                        Assignment.findByIdAndRemove(req.params.id, (err, assignment) => {
+                            if (err) {
+                                res.send(err);
+                            }
+                            res.json({ message: `${assignment.nom} deleted` });
+                        })
 
-    Assignment.findByIdAndRemove(req.params.id, (err, assignment) => {
-        if (err) {
-            res.send(err);
-        }
-        res.json({ message: `${assignment.nom} deleted` });
-    })
+                    })
+                    .catch(error => res.status(400).json({ error }))
+            })
+            .catch(error => res.status(400).json({ error }))
+    } else {
+        res.json({ message: "Utilisateur non connecté" })
+    }
 }
 
 
