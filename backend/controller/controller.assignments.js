@@ -50,6 +50,26 @@ const getAssignment = (req, res) => {
     */
 }
 
+// Récupérer tous les assignments d'un utilisateur (GET)
+const getAssignmentsUtilisateur = (req, res) => {
+    if (req.auth.userId) {
+        User.findOne({ _id: new ObjectID(req.auth.userId) })
+            .then((user) => {
+                if (!user) {
+                    res.json({ message: "Utilisateur introuvable" })
+                }
+                Assignment.find({ user: user })
+                    .then((assignmentUser) => {
+                        res.json(assignmentUser)
+                    })
+                    .catch(error => res.status(400).json({ error }))
+            })
+            .catch(error => res.status(400).json({ error }))
+    } else {
+        res.json({ message: "Utilisateur non connecté" })
+    }
+}
+
 // Ajout d'un assignment (POST)
 const postAssignment = (req, res) => {
     if (req.auth.userId) {
@@ -148,4 +168,4 @@ const deleteAssignment = (req, res) => {
 
 
 
-module.exports = { getAssignments, postAssignment, getAssignment, updateAssignment, deleteAssignment };
+module.exports = { getAssignments, getAssignmentsUtilisateur, postAssignment, getAssignment, updateAssignment, deleteAssignment };
