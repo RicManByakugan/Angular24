@@ -62,9 +62,9 @@ const getAssignmentsUtilisateur = (req, res) => {
                     .then((assignmentUser) => {
                         res.json(assignmentUser)
                     })
-                    .catch(error => res.status(400).json({ error }))
+                    .catch(error => res.json({ message: "Erreur de traitement" }))
             })
-            .catch(error => res.status(400).json({ error }))
+            .catch(error => res.json({ message: "Erreur de traitement" }))
     } else {
         res.json({ message: "Utilisateur non connecté" })
     }
@@ -95,7 +95,7 @@ const postAssignment = (req, res) => {
                     res.json({ message: `${assignment.nom} saved!` })
                 })
             })
-            .catch(error => res.status(400).json({ error }))
+            .catch(error => res.json({ message: "Erreur de traitement" }))
     } else {
         res.json({ message: "Utilisateur non connecté" })
     }
@@ -108,31 +108,32 @@ const updateAssignment = (req, res) => {
             .then((user) => {
                 if (!user) {
                     res.json({ message: "Utilisateur introuvable" })
-                }
-                Assignment.find({ $and: [{ user: user, _id: req.body._id }] })
-                    .then(check => {
-                        if (!check) {
-                            res.json({ message: "Utilisateur ne peut pas modifier" })
-                        }
-                        console.log("UPDATE recu assignment : ");
-                        console.log(req.body);
-                        Assignment.findByIdAndUpdate(req.body._id, req.body, { new: true }, (err, assignment) => {
-                            if (err) {
-                                console.log(err);
-                                res.send(err)
+                } else {
+                    Assignment.findOne({ _id: new ObjectID(req.body._id) })
+                        .then(check => {
+                            if (check) {
+                                if (check.user[0] == user._id.toString('hex')) {
+                                    console.log("UPDATE recu assignment : ");
+                                    console.log(req.body);
+                                    Assignment.findByIdAndUpdate(req.body._id, req.body, { new: true })
+                                        .then(resUpdate => {
+                                            res.json({ message: 'Updated' })
+                                        })
+                                        .catch(error => res.json({ message: "Erreur de traitement" }))
+                                } else {
+                                    res.json({ message: "Utilisateur ne peut pas modifier" })
+                                }
                             } else {
-                                res.json({ message: 'updated' })
+                                res.json({ message: "Assignment introuvable" })
                             }
-                            // console.log('updated ', assignment)
-                        });
-                    })
-                    .catch(error => res.status(400).json({ error }))
+                        })
+                        .catch(error => res.json({ message: "Erreur de traitement" }))
+                }
             })
-            .catch(error => res.status(400).json({ error }))
+            .catch(error => res.json({ message: "Erreur de traitement" }))
     } else {
         res.json({ message: "Utilisateur non connecté" })
     }
-
 
 }
 
@@ -144,23 +145,27 @@ const deleteAssignment = (req, res) => {
             .then((user) => {
                 if (!user) {
                     res.json({ message: "Utilisateur introuvable" })
-                }
-                Assignment.find({ $and: [{ user: user, id: req.params.id }] })
-                    .then(check => {
-                        if (!check) {
-                            res.json({ message: "Utilisateur ne peut pas supprimer" })
-                        }
-                        Assignment.findByIdAndRemove(req.params.id, (err, assignment) => {
-                            if (err) {
-                                res.send(err);
+                } else {
+                    Assignment.findOne({ _id: req.params.id })
+                        .then(check => {
+                            if (!check) {
+                                res.json({ message: "Assignment introuvable" })
+                            } else {
+                                if (check.user[0] == user._id.toString('hex')) {
+                                    Assignment.findByIdAndRemove({_id: new ObjectID(req.params.id)})
+                                        .then(resFinal => {
+                                            res.json({ message: "Deleted" })
+                                        })
+                                        .catch(error => res.json({ message: "Erreur de traitement" }));
+                                } else {
+                                    res.json({ message: "Utilisateur ne peut pas supprimer" })
+                                }
                             }
-                            res.json({ message: `${assignment.nom} deleted` });
                         })
-
-                    })
-                    .catch(error => res.status(400).json({ error }))
+                        .catch(error => res.json({ message: "Erreur de traitement" }))
+                }
             })
-            .catch(error => res.status(400).json({ error }))
+            .catch(error => res.json({ message: "Erreur de traitement" }))
     } else {
         res.json({ message: "Utilisateur non connecté" })
     }
