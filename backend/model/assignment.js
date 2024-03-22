@@ -1,12 +1,14 @@
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
+const User = require('./user');
 const mongoosePaginate = require('mongoose-aggregate-paginate-v2');
 
 let AssignmentSchema = Schema({
-    id: Number,
-    dateDeRendu: Date,
-    nom: String,
-    rendu: Boolean
+    id: { type: Number },
+    dateDeRendu: { type: Date, required: true },
+    nom: { type: String, required: true },
+    rendu: { type: Boolean, required: true },
+    user: [{ type: Schema.Types.ObjectId, ref: 'User' }]
 });
 
 AssignmentSchema.plugin(mongoosePaginate);

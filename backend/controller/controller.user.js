@@ -5,19 +5,19 @@ const jwt = require('jsonwebtoken');
 // UTILISATEUR CONNECTEE
 const utilisateur_actif = (req, res) => {
     const userId = req.headers["authorization"].split(" ")[0];
-        if(userId){
-            User.findOne({ _id: userId })
-                .then((user) => {
-                    if(!user){
-                        res.json({ message: "Utilisateur introuvable" })
-                    }
-                    res.json({ useractif: user })
-                })
-                .catch(error => res.status(400).json({ error }))
-        }else{
-            res.json({ message: "Token invalide"})
-        }
+    if (userId) {
+        User.findOne({ _id: userId })
+            .then((user) => {
+                if (!user) {
+                    res.json({ message: "Utilisateur introuvable" })
+                }
+                res.json({ useractif: user })
+            })
+            .catch(error => res.status(400).json({ error }))
+    } else {
+        res.json({ message: "Token invalide" })
     }
+}
 
 // INSCRIPTION UTILISATEUR
 // data : email, password, role 
@@ -61,7 +61,7 @@ const connexion = (req, res) => {
                         token: jwt.sign(
                             { userId: user._id },
                             'KEY_ANGULAR_24',
-                            { expiresIn: '1200s' }
+                            { expiresIn: '3600s' }
                         )
                     });
                 })
