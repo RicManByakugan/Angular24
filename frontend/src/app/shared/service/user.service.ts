@@ -23,6 +23,10 @@ export class UserService {
     return this.http.post<any>(this.uri + "/connexion", {email: email, password: password});
   }
 
+  registerUser(nom: string, prenom: string, role: string, email: string, password: string): Observable<any> {
+    return this.http.post<any>(this.uri + "/inscription", {nom: nom, prenom: prenom, role: role, email: email, password: password});
+  }
+
 
 
 }

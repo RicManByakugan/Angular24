@@ -1,12 +1,60 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { UserService } from '../../../shared/service/user.service';
+import { AuthService } from '../../../shared/service/auth.service';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { LoaderComponent } from '../../../component/loader/loader.component';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [],
+  imports: [LoaderComponent, FormsModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
+  emailUser: string = "";
+  passwordUser: string  = "";
+  nomUser: string = "";
+  prenomUser: string = "";
+  roleUser: string = "";
+  statusLoading: boolean = false;
+  ResRequest: string = "";
+
+
+  constructor(private userService: UserService, private authService: AuthService, private router: Router) { }
+
+  ngOnInit(): void {
+    this.authService.isAdmin()
+    .then(res => {
+      if(res){
+        this.router.navigate(['/home']);
+      }
+    })
+    .catch(err => console.log(err))
+  }
+
+  onSubmit(event: any){
+    event.preventDefault();
+    this.statusLoading = true;
+    this.ResRequest = ""
+    if ((this.emailUser === "") || (this.passwordUser === undefined) || (this.nomUser === undefined) || (this.roleUser === undefined) || (this.passwordUser === undefined)) {
+        this.ResRequest = ""
+        this.ResRequest = "Entrer les informations"
+        this.statusLoading = false;
+        return
+    };
+    this.userService.registerUser(this.nomUser, this.prenomUser, this.roleUser, this.emailUser, this.passwordUser)
+      .subscribe(res => {
+        if(res.message === "Utilisateur créé"){
+          this.router.navigate(['/login']);
+          window.location.reload();
+        }
+        this.ResRequest = res.message
+        this.statusLoading = false;
+      })
+  }
+
+
 
 }

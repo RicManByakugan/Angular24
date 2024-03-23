@@ -1,1 +1,42 @@
-<p>register works!</p>
+@if (statusLoading){
+<app-loader></app-loader>
+} @if (ResRequest){
+<small>{{ ResRequest }}</small>
+}
+<form ngForm #loginRegister (submit)="onSubmit($event)">
+  <input
+    type="text"
+    placeholder="Nom"
+    required
+    [(ngModel)]="nomUser"
+    name="nomUser"
+  />
+  <input
+    type="text"
+    placeholder="Prénom"
+    required
+    [(ngModel)]="prenomUser"
+    name="prenomUser"
+  />
+  <select required
+  [(ngModel)]="roleUser"
+  name="roleUser">
+    <option value="1">Administrateur</option>
+    <option value="0">Utilisateur</option>
+  </select>
+  <input
+    type="Email"
+    placeholder="Adresse email"
+    required
+    [(ngModel)]="emailUser"
+    name="emailUser"
+  />
+  <input
+    type="password"
+    placeholder="Mot de passe"
+    required
+    [(ngModel)]="passwordUser"
+    name="passwordUser"
+  />
+  <button type="submit">Entrer</button>
+</form>
