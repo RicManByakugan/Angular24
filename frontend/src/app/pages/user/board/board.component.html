@@ -1,1 +1,6 @@
-<p>board works!</p>
+@if(userData){
+    <p>{{ userData.nom }}</p>
+    <p>{{ userData.prenom }}</p>
+    <p>{{ userData.role }}</p>
+    <p>{{ userData.email }}</p>
+}
