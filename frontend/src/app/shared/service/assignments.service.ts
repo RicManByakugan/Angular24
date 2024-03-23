@@ -3,7 +3,7 @@ import { Assignment } from '../../pages/assignments/assignment.model';
 import { Observable, forkJoin, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { LoggingService } from './logging.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 // importation des données de test
 import { bdInitialAssignments } from '../data';
@@ -13,6 +13,10 @@ import { bdInitialAssignments } from '../data';
 })
 export class AssignmentsService {
   assignments:Assignment[] = [];
+  token = localStorage.getItem("user") + " " + localStorage.getItem("token");
+  headers = new HttpHeaders({
+    'Authorization': this.token
+  });
 
   constructor(private logService:LoggingService,
               private http:HttpClient) { }
@@ -22,7 +26,7 @@ export class AssignmentsService {
 
   // retourne tous les assignments
   getAssignments():Observable<Assignment[]> {
-    return this.http.get<Assignment[]>(this.uri);
+    return this.http.get<Assignment[]>(this.uri, {headers: this.headers});
   }
 
   getAssignmentsPagines(page:number, limit:number):Observable<any> {
@@ -54,38 +58,42 @@ export class AssignmentsService {
   // i, Observable<T> où T est le type de l'objet à renvoyer
   // (généricité de la méthode)
   private handleError<T>(operation: any, result?: T) {
-    return (error: any): Observable<T> => {
-      console.log(error); // pour afficher dans la console
-      console.log(operation + ' a échoué ' + error.message);
+      return (error: any): Observable<T> => {
+        console.log(error); // pour afficher dans la console
+        console.log(operation + ' a échoué ' + error.message);
 
-      return of(result as T);
-    }
- };
+        return of(result as T);
+      }
+  };
 
   // ajoute un assignment et retourne une confirmation
   addAssignment(assignment:Assignment):Observable<any> {
     //this.assignments.push(assignment);
     this.logService.log(assignment.nom, "ajouté");
+    this.logService.log(this.token, " : token");
+    this.logService.log(this.token, " : token");
     //return of("Assignment ajouté avec succès");
-    return this.http.post<Assignment>(this.uri, assignment);
+    return this.http.post<Assignment>(this.uri, assignment, {headers: this.headers});
   }
 
   updateAssignment(assignment:Assignment):Observable<any> {
+  
    // l'assignment passé en paramètre est le même objet que dans le tableau
    // plus tard on verra comment faire avec une base de données
    // il faudra faire une requête HTTP pour envoyer l'objet modifié
     this.logService.log(assignment.nom, "modifié");
     //return of("Assignment modifié avec succès");
-    return this.http.put<Assignment>(this.uri, assignment);
+    return this.http.put<Assignment>(this.uri, assignment, {headers: this.headers});
   }
 
   deleteAssignment(assignment:Assignment):Observable<any> {
+  
     // on va supprimer l'assignment dans le tableau
     //let pos = this.assignments.indexOf(assignment);
     //this.assignments.splice(pos, 1);
     this.logService.log(assignment.nom, "supprimé");
     //return of("Assignment supprimé avec succès");
-    return this.http.delete(this.uri + "/" + assignment._id);
+    return this.http.delete(this.uri + "/" + assignment._id, {headers: this.headers});
   }
 
   // VERSION NAIVE (on ne peut pas savoir quand l'opération des 1000 insertions est terminée)

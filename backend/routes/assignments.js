@@ -7,8 +7,8 @@ const Controller_assignment = require("../controller/controller.assignments")
 router.post('/assignments', auth, Controller_assignment.postAssignment);
 router.put('/assignments', auth, Controller_assignment.updateAssignment);
 router.get('/assignmentsUser', auth, Controller_assignment.getAssignmentsUtilisateur);
-router.get('/assignments', auth, Controller_assignment.getAssignments);
-router.get('/assignments/:id', auth, Controller_assignment.getAssignment)
+router.get('/assignments', Controller_assignment.getAssignments);
+router.get('/assignments/:id', Controller_assignment.getAssignment)
 router.delete('/assignments/:id', auth, Controller_assignment.deleteAssignment)
 
 module.exports = router;

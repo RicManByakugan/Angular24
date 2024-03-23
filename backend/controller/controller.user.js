@@ -51,14 +51,15 @@ const connexion = (req, res) => {
     User.findOne({ email: req.body.email })
         .then(user => {
             if (!user) {
-                return res.status(401).json({ message: 'Email ou mot de passe incorrecte' });
+                return res.status(200).json({ message: 'Email ou mot de passe incorrecte' });
             }
             bcrypt.compare(req.body.password, user.password)
                 .then(valid => {
                     if (!valid) {
-                        return res.status(401).json({ message: 'Email ou mot de passe incorrecte' });
+                        return res.status(200).json({ message: 'Email ou mot de passe incorrecte' });
                     }
                     res.status(200).json({
+                        message: "Utilisateur connecté",
                         userId: user._id,
                         token: jwt.sign(
                             { userId: user._id },

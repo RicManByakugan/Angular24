@@ -1,41 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { RouterLink } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { AssignmentsComponent } from './pages/assignments/assignments.component';
 import { AuthService } from './shared/service/auth.service';
 import { AssignmentsService } from './shared/service/assignments.service';
+import { NavigationComponent } from './pages/layout/navigation/navigation.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, MatButtonModule, MatDividerModule,
-            MatIconModule, MatSlideToggleModule,
-            AssignmentsComponent],
+  imports: [RouterOutlet, RouterLink, NavigationComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
-  title = 'Application de gestion des assignments';
-
+export class AppComponent implements OnInit {
   constructor(private authService:AuthService,
               private assignmentsService: AssignmentsService,
               private router:Router) {}
 
-  login() {
-    // on utilise le service d'autentification
-    // pour se connecter ou se déconnecter
-    if(!this.authService.loggedIn) {
-      this.authService.logIn();
-    } else {
-      this.authService.logOut();
-      // on navigue vers la page d'accueil
-      this.router.navigate(['/home']);
-    }
+  ngOnInit(): void {
+      this.authService.isAdmin()
+        .then(res =>{
+          if (res){
+            this.router.navigate(['/home']);
+          }else{
+            this.router.navigate(['/login']);
+          }
+        })
+        .catch(() =>{});
   }
+
 
   genererDonneesDeTest() {
     // on utilise le service
