@@ -8,7 +8,8 @@
       <div class="col-lg-6 col-md-8 col-sm-10">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title text-center">Se connecter</h5>
+            <h5 class="mt-2 mb-4 card-title text-center">Connexion</h5>
+            <hr />
             <form ngForm #loginForm (submit)="onSubmit($event)">
               <div class="mb-3">
                 <label for="username" class="form-label">Email</label>
@@ -39,6 +40,9 @@
                 <button type="submit" class="btn btn-outline-secondary">
                   Entrer
                 </button>
+              </div>
+              <div class="mt-2 d-grid">
+                <a [routerLink]="['/register']"> S'inscrire ? </a>
               </div>
             </form>
           </div>
