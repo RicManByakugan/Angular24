@@ -1,22 +1,49 @@
 @if (statusLoading){
 <app-loader></app-loader>
-} @if (ResRequest){
-<small>{{ ResRequest }}</small>
 }
-<form ngForm #loginForm (submit)="onSubmit($event)">
-    <input
-        type="Email"
-        placeholder="Adresse email"
-        required
-        [(ngModel)]="emailUser"
-        name="emailUser"
-    />
-    <input
-        type="password"
-        placeholder="Mot de passe"
-        required
-        [(ngModel)]="passwordUser"
-        name="passwordUser"
-    />
-    <button  type="submit">Entrer</button>
-</form>
+
+<div class="login-container">
+  <div class="container">
+    <div class="row justify-content-center align-content-center h-100">
+      <div class="col-lg-6 col-md-8 col-sm-10">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title text-center">Se connecter</h5>
+            <form ngForm #loginForm (submit)="onSubmit($event)">
+              <div class="mb-3">
+                <label for="username" class="form-label">Email</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  required
+                  [(ngModel)]="emailUser"
+                  name="emailUser"
+                  placeholder="Entrer l'adresse email"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Mot de passe</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  required
+                  [(ngModel)]="passwordUser"
+                  name="passwordUser"
+                  placeholder="Entrer le mot de passe"
+                />
+              </div>
+              @if (ResRequest){
+              <small class="text-danger">{{ ResRequest }}</small>
+              }
+              <div class="d-grid">
+                <button type="submit" class="btn btn-outline-secondary">
+                  Entrer
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
