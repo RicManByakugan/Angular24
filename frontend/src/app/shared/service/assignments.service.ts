@@ -25,6 +25,10 @@ export class AssignmentsService {
   // uri = "https://angularmbdsmadagascar2024.onrender.com/api/assignments";
 
   // retourne tous les assignments
+  getAssignmentsUser():Observable<Assignment[]> {
+    return this.http.get<Assignment[]>(this.uri + "/User", {headers: this.headers});
+  }
+
   getAssignments():Observable<Assignment[]> {
     return this.http.get<Assignment[]>(this.uri, {headers: this.headers});
   }

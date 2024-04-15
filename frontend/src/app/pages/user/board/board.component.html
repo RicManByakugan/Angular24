@@ -1,6 +1,26 @@
 @if(userData){
-    <p>{{ userData.nom }}</p>
-    <p>{{ userData.prenom }}</p>
-    <p>{{ userData.role }}</p>
-    <p>{{ userData.email }}</p>
+<p>{{ userData.nom }}</p>
+<p>{{ userData.prenom }}</p>
+<p>{{ userData.role }}</p>
+<p>{{ userData.email }}</p>
+} @if (statusLoading){
+<app-loader></app-loader>
 }
+<div class="container">
+  <div class="row justify-content-center align-content-center h-100">
+    <div class="col-lg-9 col-md-8 col-sm-10">
+      <div class="card">
+        <div class="card-body text-center">
+          <h5 class="mt-2 mb-4 card-title">Mon compte</h5>
+          <hr />
+          <img src="assets/img/profile.png" width="100" height="100" />
+          @if(userData){
+          <h4 class="mt-2 mb-0">{{ userData.nom }} {{ userData.prenom }}</h4>
+          <small class="mb-4">{{ userData.email }}</small>
+          }
+          <hr />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
