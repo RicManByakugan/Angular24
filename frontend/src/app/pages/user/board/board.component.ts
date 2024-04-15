@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../shared/service/user.service';
 import { LoaderComponent } from '../../../component/loader/loader.component';
 import { AssignmentsService } from '../../../shared/service/assignments.service';
+import { AssignmentCardComponent } from '../../../component/assignment-card/assignment-card.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [LoaderComponent],
+  imports: [LoaderComponent, AssignmentCardComponent, CommonModule],
   templateUrl: './board.component.html',
   styleUrl: './board.component.css'
 })

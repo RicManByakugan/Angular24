@@ -74,8 +74,6 @@ export class AssignmentsService {
   addAssignment(assignment:Assignment):Observable<any> {
     //this.assignments.push(assignment);
     this.logService.log(assignment.nom, "ajouté");
-    this.logService.log(this.token, " : token");
-    this.logService.log(this.token, " : token");
     //return of("Assignment ajouté avec succès");
     return this.http.post<Assignment>(this.uri, assignment, {headers: this.headers});
   }

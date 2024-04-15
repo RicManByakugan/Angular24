@@ -82,7 +82,7 @@ const postAssignment = (req, res) => {
                 assignment.id = req.body.id;
                 assignment.nom = req.body.nom;
                 assignment.dateDeRendu = req.body.dateDeRendu;
-                assignment.rendu = req.body.rendu;
+                assignment.rendu = false;
                 assignment.user = user;
 
                 console.log("POST assignment reçu :");

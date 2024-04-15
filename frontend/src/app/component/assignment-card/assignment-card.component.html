@@ -1,0 +1,15 @@
+@if(dataItem){
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ dataItem.nom }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <hr>
+    <span>
+      <h3 [ngClass]="{ 'text-success': dataItem.rendu, 'text-danger': !dataItem.rendu }">{{ dataItem.rendu ? 'Validé' : 'Non validé' }}</h3>
+      <b>Date de rendu:</b>
+      <br>{{ dataItem.dateDeRendu | date }}
+    </span>
+  </mat-card-content>
+</mat-card>
+}

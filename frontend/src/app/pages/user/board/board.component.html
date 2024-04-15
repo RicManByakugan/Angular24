@@ -1,11 +1,7 @@
-@if(userData){
-<p>{{ userData.nom }}</p>
-<p>{{ userData.prenom }}</p>
-<p>{{ userData.role }}</p>
-<p>{{ userData.email }}</p>
-} @if (statusLoading){
+@if (statusLoading){
 <app-loader></app-loader>
 }
+<div class="main-container">
 <div class="container">
   <div class="row justify-content-center align-content-center h-100">
     <div class="col-lg-9 col-md-8 col-sm-10">
@@ -16,11 +12,23 @@
           <img src="assets/img/profile.png" width="100" height="100" />
           @if(userData){
           <h4 class="mt-2 mb-0">{{ userData.nom }} {{ userData.prenom }}</h4>
-          <small class="mb-4">{{ userData.email }}</small>
+          <small class="mb-4">{{ userData.email }}</small
+          ><br />
+          <small class="mb-4">{{
+            userData.role == "1" ? "ADMIN" : "UTILISATEUR"
+          }}</small>
           }
           <hr />
+          <div class="row">
+            @if(userDataAssignment){
+            <div class="col-sm-4" *ngFor="let item of userDataAssignment">
+              <app-assignment-card [dataItem]="item"></app-assignment-card>
+            </div>
+            }
+          </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 </div>
