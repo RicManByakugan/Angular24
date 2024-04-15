@@ -41,6 +41,21 @@
               <div class="row">
                 <div class="col-sm-12">
                   <div class="mb-3">
+                    <label for="username" class="form-label">Email</label>
+                    <input
+                      type="mail"
+                      class="form-control"
+                      required
+                      [(ngModel)]="emailUser"
+                      name="emailUser"
+                      placeholder="Entrer votre email"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="mb-3">
                     <label for="username" class="form-label">Role</label>
                     <select
                       class="form-control"
@@ -59,7 +74,7 @@
                   <div class="mb-3">
                     <label for="nom" class="form-label">Mot de passe</label>
                     <input
-                      type="text"
+                      type="password"
                       class="form-control"
                       required
                       [(ngModel)]="passwordUser"
@@ -74,7 +89,7 @@
                       >Confirmer le mot de passe</label
                     >
                     <input
-                      type="text"
+                      type="password"
                       class="form-control"
                       required
                       [(ngModel)]="passwordUser2"
@@ -83,18 +98,6 @@
                     />
                   </div>
                 </div>
-              </div>
-
-              <div class="mb-3">
-                <label for="password" class="form-label">Mot de passe</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  required
-                  [(ngModel)]="passwordUser"
-                  name="passwordUser"
-                  placeholder="Entrer le mot de passe"
-                />
               </div>
               @if (ResRequest){
               <small class="text-danger">{{ ResRequest }}</small>

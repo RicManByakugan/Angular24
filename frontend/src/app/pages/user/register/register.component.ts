@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
     event.preventDefault();
     this.statusLoading = true;
     this.ResRequest = ""
-    if ((this.emailUser === "") || (this.passwordUser === undefined) || (this.nomUser === undefined) || (this.roleUser === undefined) || (this.passwordUser === undefined) || (this.passwordUser2 === undefined)) {
+    if ((this.emailUser === "") || (this.passwordUser === undefined) || (this.nomUser === undefined) || (this.roleUser === undefined) || (this.passwordUser2 === undefined)) {
         this.ResRequest = ""
         this.ResRequest = "Entrer les informations"
         this.statusLoading = false;
