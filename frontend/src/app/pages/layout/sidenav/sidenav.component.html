@@ -1,4 +1,8 @@
-<mat-list>
+<mat-list class="sidenav-container">
+  <mat-list-item>
+    <a routerLink="add">Accueil</a>
+  </mat-list-item>
+  <mat-divider></mat-divider>
   @if(isConnected){
   <mat-list-item>
     <a routerLink="add">Nouveau</a>
@@ -6,11 +10,6 @@
   <mat-divider></mat-divider>
   <mat-list-item>
     <a routerLink="board">Mon compte</a>
-  </mat-list-item>
-  <mat-divider></mat-divider>
-  }@else{
-  <mat-list-item>
-    <a routerLink="home">Accueil</a>
   </mat-list-item>
   <mat-divider></mat-divider>
   }

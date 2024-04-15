@@ -3,11 +3,12 @@ import { RouterLink } from '@angular/router';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import { AuthService } from '../../../shared/service/auth.service';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [MatListModule, MatDividerModule, RouterLink],
+  imports: [MatListModule, MatDividerModule, RouterLink, MatToolbarModule],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.css'
 })
