@@ -82,6 +82,9 @@ const postAssignment = (req, res) => {
                 assignment.id = req.body.id;
                 assignment.nom = req.body.nom;
                 assignment.dateDeRendu = req.body.dateDeRendu;
+                assignment.matiere = req.body.matiere;
+                assignment.note = req.body.note;
+                assignment.remarque = req.body.remarque;
                 assignment.rendu = false;
                 assignment.user = user;
 
@@ -152,7 +155,7 @@ const deleteAssignment = (req, res) => {
                                 res.json({ message: "Assignment introuvable" })
                             } else {
                                 if (check.user[0] == user._id.toString('hex')) {
-                                    Assignment.findByIdAndRemove({_id: new ObjectID(req.params.id)})
+                                    Assignment.findByIdAndRemove({ _id: new ObjectID(req.params.id) })
                                         .then(resFinal => {
                                             res.json({ message: "Deleted" })
                                         })

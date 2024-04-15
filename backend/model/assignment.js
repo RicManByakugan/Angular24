@@ -8,6 +8,9 @@ let AssignmentSchema = Schema({
     dateDeRendu: { type: Date, required: true },
     nom: { type: String, required: true },
     rendu: { type: Boolean, required: true },
+    matiere: { type: String, required: true },
+    remarque: { type: String, required: true },
+    note: { type: Number, required: true },
     user: [{ type: Schema.Types.ObjectId, ref: 'User' }]
 });
 
