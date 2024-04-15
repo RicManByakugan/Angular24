@@ -1,23 +1,24 @@
-<ul>
-  <li>
-    <a routerLink="home">Accueil</a>
-  </li>
-  @if(isConnected){
-  <li>
-    <a routerLink="add">Nouveau</a>
-  </li>
-  <li>
-    <a routerLink="board">Mon compte</a>
-  </li>
-  <li>
-    <a (click)="logOut()">Deconnexion</a>
-  </li>
-  }@else{
-  <li>
-    <a routerLink="login">Se connecter</a>
-  </li>
-  <li>
-    <a routerLink="register">S'inscrire</a>
-  </li>
-  }
-</ul>
+<mat-toolbar class="justify-content-between" color="primary">
+  <div>
+    <button mat-icon-button (click)="callback.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  <div>
+    @if(isConnected){
+    <a mat-icon-button routerLink="board">
+      <mat-icon>perm_identity</mat-icon>
+    </a>
+    <a mat-icon-button (click)="logOut()">
+      <mat-icon>power_settings_new</mat-icon>
+    </a>
+    }@else{
+    <a mat-icon-button routerLink="login">
+      <mat-icon>perm_identity</mat-icon>
+    </a>
+    <a mat-icon-button routerLink="register">
+      <mat-icon>supervised_user_circle</mat-icon>
+    </a>
+    }
+  </div>
+</mat-toolbar>

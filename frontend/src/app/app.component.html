@@ -1,2 +1,10 @@
-<app-navigation></app-navigation>
-<router-outlet></router-outlet>
+<mat-drawer-container autosize>
+  <mat-drawer #drawer mode="side">
+    <app-sidenav></app-sidenav>
+  </mat-drawer>
+
+  <div>
+    <app-navigation [callback]="drawer"></app-navigation>
+    <router-outlet></router-outlet>
+  </div>
+</mat-drawer-container>
