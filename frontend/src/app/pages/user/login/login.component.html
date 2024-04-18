@@ -2,52 +2,41 @@
 <app-loader></app-loader>
 }
 
-<div class="login-container">
-  <div class="container">
-    <div class="row justify-content-center align-content-center h-100">
-      <div class="col-lg-9 col-md-8 col-sm-10">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="mt-2 mb-4 card-title text-center">Connexion</h5>
-            <hr />
-            <form ngForm #loginForm (submit)="onSubmit($event)">
-              <div class="mb-3">
-                <label for="username" class="form-label">Email</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  required
-                  [(ngModel)]="emailUser"
-                  name="emailUser"
-                  placeholder="Entrer l'adresse email"
-                />
-              </div>
-              <div class="mb-3">
-                <label for="password" class="form-label">Mot de passe</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  required
-                  [(ngModel)]="passwordUser"
-                  name="passwordUser"
-                  placeholder="Entrer le mot de passe"
-                />
-              </div>
-              @if (ResRequest){
-              <small class="text-danger">{{ ResRequest }}</small>
-              }
-              <div class="d-grid">
-                <button type="submit" class="btn btn-outline-secondary">
-                  Entrer
-                </button>
-              </div>
-              <div class="mt-2 d-grid">
-                <a [routerLink]="['/register']"> S'inscrire ? </a>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="container">
+  <mat-card class="login-card">
+    <mat-card-content>
+      <form
+        class="login-content"
+        #loginForm="ngForm"
+        (ngSubmit)="onSubmit($event)"
+      >
+        <h2>Se connecter</h2>
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            placeholder="Email"
+            [(ngModel)]="emailUser"
+            name="username"
+            required
+          />
+          <mat-error> Veuillez rensigner un email valide </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Mot de passe</mat-label>
+          <input
+            matInput
+            type="password"
+            [(ngModel)]="passwordUser"
+            name="password"
+            required
+          />
+          <mat-error> Veuillez renseigner un mot de passe </mat-error>
+        </mat-form-field>
+        <button class="submit" mat-raised-button color="primary">
+          Se connecter
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>
