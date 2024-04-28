@@ -14,9 +14,19 @@
         [src]="avatarUrl"
         alt="Teacher photo"
       />} @if(assignment.isDone){
-      <mat-icon [ngStyle]="{ color: '#005cbb' }">access_time</mat-icon>
+      <mat-icon
+        [ngStyle]="{ color: '#005cbb' }"
+        matTooltip="En attente"
+        matTooltipPosition="right"
+        >access_time</mat-icon
+      >
       }@else{
-      <mat-icon [ngStyle]="{ color: '#008000' }">check_circle</mat-icon>
+      <mat-icon
+        [ngStyle]="{ color: '#008000' }"
+        matTooltip="Rendu"
+        matTooltipPosition="right"
+        >check_circle</mat-icon
+      >
       }
     </mat-card-actions>
   </mat-card>

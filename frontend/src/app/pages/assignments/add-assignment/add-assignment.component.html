@@ -5,33 +5,24 @@
   (submit)="onSubmit($event); assignmentForm.reset()"
   class="form"
 >
-  <mat-form-field>
-    <input
-      matInput
-      placeholder="Nom"
-      required
-      [(ngModel)]="nomAssignment"
-      name="nom"
-    />
+  <mat-form-field appearance="outline">
+    <mat-label>Titre du devoir</mat-label>
+    <input matInput required [(ngModel)]="newAssignment.title" name="title" />
   </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Date de rendu</mat-label>
-    <input
-      matInput
-      [matDatepicker]="picker"
-      [(ngModel)]="dateDeRendu"
-      name="date"
-    />
-    <mat-hint>dd/MM/YYYY</mat-hint>
-    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
+  <mat-form-field appearance="outline">
+    <mat-label>Matière</mat-label>
+    <mat-select [(ngModel)]="newAssignment.subject" name="subject">
+      @for (subject of subjects; track subject) {
+      <mat-option [value]="subject.type">{{ subject.type }}</mat-option>
+      }
+    </mat-select>
   </mat-form-field>
 
   <button
     mat-stroked-button
     color="primary"
-    [disabled]="nomAssignment == '' || dateDeRendu === undefined"
+    [disabled]="!newAssignment.subject || !newAssignment.title === undefined"
   >
     Ajouter un devoir
   </button>

@@ -7,6 +7,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 // importation des données de test
 import { bdInitialAssignments } from '../data';
+import { Assignment } from '../../interfaces/assignment.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -77,11 +78,11 @@ export class AssignmentsService {
   }
 
   // ajoute un assignment et retourne une confirmation
-  addAssignment(assignment: AssignmentOld): Observable<any> {
+  addAssignment(assignment: Assignment): Observable<any> {
     //this.assignments.push(assignment);
-    this.logService.log(assignment.nom, 'ajouté');
+    this.logService.log(assignment.title, 'ajouté');
     //return of("Assignment ajouté avec succès");
-    return this.http.post<AssignmentOld>(this.uri, assignment, {
+    return this.http.post<Assignment>(this.uri, assignment, {
       headers: this.headers,
     });
   }
@@ -108,34 +109,34 @@ export class AssignmentsService {
     });
   }
 
-  // VERSION NAIVE (on ne peut pas savoir quand l'opération des 1000 insertions est terminée)
-  peuplerBD() {
-    // on utilise les données de test générées avec mockaroo.com pour peupler la base
-    // de données
-    bdInitialAssignments.forEach((a) => {
-      let nouvelAssignment = new AssignmentOld();
-      nouvelAssignment.nom = a.nom;
-      nouvelAssignment.dateDeRendu = new Date(a.dateDeRendu);
-      nouvelAssignment.rendu = a.rendu;
+  // // VERSION NAIVE (on ne peut pas savoir quand l'opération des 1000 insertions est terminée)
+  // peuplerBD() {
+  //   // on utilise les données de test générées avec mockaroo.com pour peupler la base
+  //   // de données
+  //   bdInitialAssignments.forEach((a) => {
+  //     let nouvelAssignment = new AssignmentOld();
+  //     nouvelAssignment.nom = a.nom;
+  //     nouvelAssignment.dateDeRendu = new Date(a.dateDeRendu);
+  //     nouvelAssignment.rendu = a.rendu;
 
-      this.addAssignment(nouvelAssignment).subscribe(() => {
-        console.log('Assignment ' + a.nom + ' ajouté');
-      });
-    });
-  }
+  //     this.addAssignment(nouvelAssignment).subscribe(() => {
+  //       console.log('Assignment ' + a.nom + ' ajouté');
+  //     });
+  //   });
+  // }
 
-  peuplerBDavecForkJoin(): Observable<any> {
-    let appelsVersAddAssignment: Observable<any>[] = [];
+  // peuplerBDavecForkJoin(): Observable<any> {
+  //   let appelsVersAddAssignment: Observable<any>[] = [];
 
-    bdInitialAssignments.forEach((a) => {
-      const nouvelAssignment = new AssignmentOld();
-      nouvelAssignment.nom = a.nom;
-      nouvelAssignment.dateDeRendu = new Date(a.dateDeRendu);
-      nouvelAssignment.rendu = a.rendu;
+  //   bdInitialAssignments.forEach((a) => {
+  //     const nouvelAssignment = new AssignmentOld();
+  //     nouvelAssignment.nom = a.nom;
+  //     nouvelAssignment.dateDeRendu = new Date(a.dateDeRendu);
+  //     nouvelAssignment.rendu = a.rendu;
 
-      appelsVersAddAssignment.push(this.addAssignment(nouvelAssignment));
-    });
+  //     appelsVersAddAssignment.push(this.addAssignment(nouvelAssignment));
+  //   });
 
-    return forkJoin(appelsVersAddAssignment);
-  }
+  //   return forkJoin(appelsVersAddAssignment);
+  // }
 }

@@ -6,6 +6,19 @@ import { MatIconModule } from '@angular/material/icon';
 import { AssignmentsService } from '../../shared/service/assignments.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import {
+  MatDialog,
+  MatDialogRef,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogTitle,
+  MatDialogContent,
+} from '@angular/material/dialog';
+import { FormsModule } from '@angular/forms';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { AddAssignmentComponent } from '../assignments/add-assignment/add-assignment.component';
 
 @Component({
   selector: 'app-student',
@@ -30,7 +43,10 @@ export class StudentComponent {
   hasNextPage!: boolean;
   hasPrevPage!: boolean;
 
-  constructor(private assignmentService: AssignmentsService) {}
+  constructor(
+    private assignmentService: AssignmentsService,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.getAssignments();
@@ -53,5 +69,17 @@ export class StudentComponent {
     this.page = event.pageIndex + 1;
     this.pageSize = event.pageSize;
     this.getAssignments();
+  }
+
+  openDialog(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ): void {
+    this.dialog.open(AddAssignmentComponent, {
+      width: '60vw',
+      height: '50vh',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
   }
 }

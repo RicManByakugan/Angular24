@@ -6,9 +6,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 
-import { AssignmentOld } from '../assignment.model';
 import { AssignmentsService } from '../../../shared/service/assignments.service';
-import { Router } from '@angular/router';
+import { MatDialogRef } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
+import { Assignment } from '../../../interfaces/assignment.interface';
+import { Subject } from '../../../interfaces/subject.interface';
+import { EMTPY_ASSIGNMENT } from '../../../shared/constants/assignment.constants';
+import { SubjectService } from '../../../shared/service/subjects.service';
 
 @Component({
   selector: 'app-add-assignment',
@@ -20,40 +24,39 @@ import { Router } from '@angular/router';
     MatFormFieldModule,
     MatDatepickerModule,
     MatButtonModule,
+    MatSelectModule,
   ],
   templateUrl: './add-assignment.component.html',
   styleUrl: './add-assignment.component.css',
 })
 export class AddAssignmentComponent {
   // champs du formulaire
-  nomAssignment = '';
-  dateDeRendu = undefined;
+  newAssignment: Assignment = EMTPY_ASSIGNMENT;
+  subjects!: Subject[];
 
   constructor(
     private assignmentsService: AssignmentsService,
-    private router: Router
+    public dialogRef: MatDialogRef<AddAssignmentComponent>,
+    private subjectService: SubjectService
   ) {}
 
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.getSubjects();
+  }
+
   onSubmit(event: any) {
-    if (this.nomAssignment == '' || this.dateDeRendu === undefined) return;
-
-    // on crée un nouvel assignment
-    let nouvelAssignment = new AssignmentOld();
-    // on genere un id aléatoire (plus tard ce sera fait coté serveur par
-    // une base de données)
-    nouvelAssignment.nom = this.nomAssignment;
-    nouvelAssignment.dateDeRendu = this.dateDeRendu;
-    nouvelAssignment.rendu = false;
-
-    // on utilise le service pour directement ajouter
-    // le nouvel assignment dans le tableau
     this.assignmentsService
-      .addAssignment(nouvelAssignment)
+      .addAssignment(this.newAssignment)
       .subscribe((reponse) => {
         console.log(reponse);
-        // On navigue pour afficher la liste des assignments
-        // en utilisant le router de manière programmatique
-        this.router.navigate(['/home']);
       });
+  }
+
+  getSubjects() {
+    this.subjectService.getSubjects().subscribe((value) => {
+      this.subjects = value;
+    });
   }
 }
