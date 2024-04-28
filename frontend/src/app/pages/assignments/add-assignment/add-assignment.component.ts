@@ -47,6 +47,8 @@ export class AddAssignmentComponent {
   }
 
   onSubmit(event: any) {
+    this.newAssignment.creationDate = new Date();
+    this.newAssignment.student = localStorage.getItem('user') as string;
     this.assignmentsService
       .addAssignment(this.newAssignment)
       .subscribe((reponse) => {

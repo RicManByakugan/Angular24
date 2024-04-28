@@ -15,7 +15,7 @@ const getAssignments = (req, res){ =>
 }
 */
 
-const getAssignments = (req, res) => {
+const getAssignments = async (req, res) => {
   let aggregateQuery = Assignment.aggregate();
 
   Assignment.aggregatePaginate(
@@ -72,35 +72,22 @@ const getAssignmentsUtilisateur = (req, res) => {
   }
 };
 
-// Ajout d'un assignment (POST)
-const postAssignment = (req, res) => {
+const postAssignment = async (req, res) => {
   if (req.auth.userId) {
-    User.findOne({ _id: new ObjectID(req.auth.userId) })
-      .then((user) => {
-        if (!user) {
-          res.json({ message: "Utilisateur introuvable" });
-        }
-        let assignment = new Assignment();
-        assignment.id = req.body.id;
-        assignment.nom = req.body.nom;
-        assignment.dateDeRendu = req.body.dateDeRendu;
-        assignment.matiere = req.body.matiere;
-        assignment.note = req.body.note;
-        assignment.remarque = req.body.remarque;
-        assignment.rendu = false;
-        assignment.user = user;
-
-        console.log("POST assignment reçu :");
-        console.log(assignment);
-
-        assignment.save((err) => {
-          if (err) {
-            res.send("cant post assignment ", err);
-          }
-          res.json({ message: `${assignment.nom} saved!` });
-        });
-      })
-      .catch((error) => res.json({ message: "Erreur de traitement" }));
+    try {
+      const foundUser = await User.findOne({ _id: new ObjectID(req.auth.userId) })
+        .lean()
+        .exec();
+      if (!foundUser) {
+        res.json({ message: "Utilisateur introuvable" });
+      }
+      const { _id, ...assignment } = req.body;
+      console.log(req.body);
+      const created = await Assignment.create(assignment);
+      res.json(created);
+    } catch (error) {
+      throw new Error(error);
+    }
   } else {
     res.json({ message: "Utilisateur non connecté" });
   }

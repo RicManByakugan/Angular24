@@ -11,4 +11,6 @@ export interface Assignment {
   file: string;
   subject: string | Subject;
   teacher?: string | User;
+  creationDate?: Date;
+  validationDate?: Date;
 }
