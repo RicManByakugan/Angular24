@@ -13,7 +13,7 @@ export class SubjectService {
 
   constructor(private http: HttpClient) {}
 
-  uri = 'http://localhost:3000/api/subjects';
+  uri = 'http://localhost:3000/api';
   // uri = "https://angularmbdsmadagascar2024.onrender.com/api/assignments";
 
   getSubjects(): Observable<Subject[]> {
