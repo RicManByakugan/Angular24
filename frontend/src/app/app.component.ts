@@ -11,27 +11,35 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, NavigationComponent, SidenavComponent, MatSidenavModule, MatButtonModule],
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    NavigationComponent,
+    SidenavComponent,
+    MatSidenavModule,
+    MatButtonModule,
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
-  constructor(private authService:AuthService,
-              private assignmentsService: AssignmentsService,
-              private router:Router) {}
+  constructor(
+    private authService: AuthService,
+    private assignmentsService: AssignmentsService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-      this.authService.isAdmin()
-        .then(res =>{
-          if (res){
-            this.router.navigate(['/home']);
-          }else{
-            this.router.navigate(['/login']);
-          }
-        })
-        .catch(() =>{});
+    // this.authService.isAdmin()
+    //   .then(res =>{
+    //     if (res){
+    //       this.router.navigate(['/home']);
+    //     }else{
+    //       this.router.navigate(['/login']);
+    //     }
+    //   })
+    //   .catch(() =>{});
   }
-
 
   genererDonneesDeTest() {
     // on utilise le service
@@ -40,9 +48,10 @@ export class AppComponent implements OnInit {
     */
 
     // VERSION AVEC Observable
-    this.assignmentsService.peuplerBDavecForkJoin()
-    .subscribe(() => {
-      console.log("Données générées, on rafraichit la page pour voir la liste à jour !");
+    this.assignmentsService.peuplerBDavecForkJoin().subscribe(() => {
+      console.log(
+        'Données générées, on rafraichit la page pour voir la liste à jour !'
+      );
       window.location.reload();
       // On devrait pouvoir le faire avec le router, jussqu'à la version 16 ça fonctionnait avec
       // this.router.navigate(['/home'], {replaceUrl:true});

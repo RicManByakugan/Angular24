@@ -1,0 +1,23 @@
+<div class="container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="inline-ellipsis">{{
+        assignment.title
+      }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-card-subtitle>{{ assignment.subject }}</mat-card-subtitle>
+    </mat-card-content>
+    <mat-card-actions class="inline">
+      @if(avatarUrl){<img
+        mat-card-image
+        [src]="avatarUrl"
+        alt="Teacher photo"
+      />} @if(assignment.isDone){
+      <mat-icon [ngStyle]="{ color: '#005cbb' }">access_time</mat-icon>
+      }@else{
+      <mat-icon [ngStyle]="{ color: '#008000' }">check_circle</mat-icon>
+      }
+    </mat-card-actions>
+  </mat-card>
+</div>

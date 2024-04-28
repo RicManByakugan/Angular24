@@ -3,8 +3,8 @@
     <app-sidenav></app-sidenav>
   </mat-drawer>
 
-  <div>
-    <app-navigation [callback]="drawer"></app-navigation>
+  <app-navigation [callback]="drawer"></app-navigation>
+  <div class="container">
     <router-outlet></router-outlet>
   </div>
 </mat-drawer-container>

@@ -12,6 +12,6 @@ export interface User {
   email: string;
   password: string;
   photo?: string;
-  subjects?: SubjectType[];
+  subject?: SubjectType;
   role: Role;
 }

@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="list">
+    @for(assignment of assignments;track assignment._id){
+    <app-assignment-card [assignment]="assignment"></app-assignment-card>
+    }
+  </div>
+  <div class="actions">
+    <div class="add">
+      <button
+        mat-fab
+        color="accent"
+        aria-label="Ajouter un devoir"
+        matTooltip="Ajouter un devoir"
+        matTooltipPosition="right"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <div class="paginator">
+      <mat-paginator
+        [length]="200"
+        [pageSizeOptions]="[12, 24, 48]"
+        aria-label="Select page"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

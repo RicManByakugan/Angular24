@@ -13,6 +13,5 @@ export enum SubjectType {
 
 export interface Subject {
   _id?: string;
-  teacherId: string | User;
   type: SubjectType;
 }
