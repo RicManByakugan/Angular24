@@ -1,7 +1,9 @@
 <div class="container">
   <div class="list">
     @for(assignment of assignments;track assignment._id){
-    <app-assignment-card [assignment]="assignment"></app-assignment-card>
+    <div class="item">
+      <app-assignment-card [assignment]="assignment"></app-assignment-card>
+    </div>
     }
   </div>
   <div class="actions">
@@ -18,9 +20,11 @@
     </div>
     <div class="paginator">
       <mat-paginator
-        [length]="200"
+        [length]="totalPages"
         [pageSizeOptions]="[12, 24, 48]"
+        [pageIndex]="page"
         aria-label="Select page"
+        (page)="handlePageEvent($event)"
       >
       </mat-paginator>
     </div>
