@@ -1,6 +1,25 @@
-.register-container {
-  height: 90vh;
+.container {
   display: flex;
-  justify-content: center;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
+}
+
+.register-card {
+  width: 50vw;
+}
+
+.register-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+mat-form-field {
+  width: 80%;
+}
+
+.submit {
+  width: 60%;
 }
