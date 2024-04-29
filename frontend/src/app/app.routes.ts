@@ -17,8 +17,10 @@ export const routes: Routes = [
     component: DahsboardComponent,
     canActivate: [authGuard],
     children: [
+      { path: '', component: AssignmentsComponent },
       { path: 'assignment/:id', component: AssignmentDetailComponent, canActivate: [authGuard] },
       { path: 'assignment/:id/edit', component: EditAssignmentComponent, canActivate: [authGuard] },
+      { path: 'add', component: AddAssignmentComponent, canActivate: [authGuard] },
       { path: 'board', component: BoardComponent, canActivate: [authGuard] },
       { path: 'student', component: StudentComponent },
     ]

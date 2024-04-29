@@ -11,6 +11,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { CommonModule } from '@angular/common';
+import { SubjectService } from '../../../shared/service/subjects.service';
+import { Subject } from '../../../interfaces/subject.interface';
 
 @Component({
   selector: 'app-register',
@@ -33,11 +35,13 @@ export class RegisterComponent implements OnInit {
   nomUser: string = "";
   prenomUser: string = "";
   roleUser: string = "";
+  subjectUser: string = "";
   statusLoading: boolean = false;
   ResRequest: string = "";
+  dataSubject: Subject[] = [];
 
 
-  constructor(private userService: UserService, private authService: AuthService, private router: Router) { }
+  constructor(private subjectService: SubjectService, private userService: UserService, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.authService.isAdmin()
@@ -47,13 +51,20 @@ export class RegisterComponent implements OnInit {
         }
       })
       .catch(err => console.log(err))
+    
+    this.subjectService.getSubjects()
+      .subscribe(res => {
+        if (res) {
+          this.dataSubject = res
+        }
+      })
   }
 
   onSubmit(event: any) {
     event.preventDefault();
     this.statusLoading = true;
     this.ResRequest = ""
-    if ((this.emailUser === "") || (this.passwordUser === undefined) || (this.nomUser === undefined) || (this.roleUser === undefined) || (this.passwordUser2 === undefined)) {
+    if ((this.emailUser === "") || (this.passwordUser === undefined) || (this.nomUser === undefined) || (this.roleUser === undefined) || (this.subjectUser === undefined) || (this.passwordUser2 === undefined)) {
       this.ResRequest = ""
       this.ResRequest = "Entrer les informations"
       this.statusLoading = false;
@@ -66,7 +77,7 @@ export class RegisterComponent implements OnInit {
       this.statusLoading = false;
       return
     }
-    this.userService.registerUser(this.nomUser, this.prenomUser, this.roleUser, this.emailUser, this.passwordUser)
+    this.userService.registerUser(this.nomUser, this.prenomUser, this.roleUser, this.subjectUser, this.emailUser, this.passwordUser)
       .subscribe(res => {
         if (res.message === "Utilisateur créé") {
           this.router.navigate(['/login']);
