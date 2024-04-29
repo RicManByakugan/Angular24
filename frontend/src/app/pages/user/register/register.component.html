@@ -1,119 +1,52 @@
 @if (statusLoading){
-  <app-loader></app-loader>
+<app-loader></app-loader>
 }
-<div class="register-container">
-  <div class="container">
-    <div class="row justify-content-center align-content-center h-100">
-      <div class="col-lg-9 col-md-8 col-sm-10">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="mt-2 mb-4 card-title text-center">Inscription</h5>
-            <hr />
-            <form ngForm (submit)="onSubmit($event)">
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="mb-3">
-                    <label for="nom" class="form-label">Nom</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      required
-                      [(ngModel)]="nomUser"
-                      name="nomUser"
-                      placeholder="Entrer votre nom"
-                    />
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="mb-3">
-                    <label for="prenom" class="form-label">Prénom</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      required
-                      [(ngModel)]="prenomUser"
-                      name="prenomUser"
-                      placeholder="Entrer votre prénom"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-12">
-                  <div class="mb-3">
-                    <label for="username" class="form-label">Email</label>
-                    <input
-                      type="mail"
-                      class="form-control"
-                      required
-                      [(ngModel)]="emailUser"
-                      name="emailUser"
-                      placeholder="Entrer votre email"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-12">
-                  <div class="mb-3">
-                    <label for="username" class="form-label">Role</label>
-                    <select
-                      class="form-control"
-                      required
-                      [(ngModel)]="roleUser"
-                      name="roleUser"
-                    >
-                      <option value="1">Administrateur</option>
-                      <option value="0">Utilisateur</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-12">
-                  <div class="mb-3">
-                    <label for="nom" class="form-label">Mot de passe</label>
-                    <input
-                      type="password"
-                      class="form-control"
-                      required
-                      [(ngModel)]="passwordUser"
-                      name="passwordUser"
-                      placeholder="Entrer le mot de passe"
-                    />
-                  </div>
-                </div>
-                <div class="col-sm-12">
-                  <div class="mb-3">
-                    <label for="nom" class="form-label"
-                      >Confirmer le mot de passe</label
-                    >
-                    <input
-                      type="password"
-                      class="form-control"
-                      required
-                      [(ngModel)]="passwordUser2"
-                      name="passwordUser2"
-                      placeholder="Confirmer le mot de passe"
-                    />
-                  </div>
-                </div>
-              </div>
-              @if (ResRequest){
-              <small class="text-danger">{{ ResRequest }}</small>
-              }
-              <div class="d-grid">
-                <button type="submit" class="btn btn-outline-secondary">
-                  Entrer
-                </button>
-              </div>
-              <div class="mt-2 d-grid">
-                <a [routerLink]="['/login']"> Se connecter ? </a>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
+
+
+<div class="container">
+  <mat-card class="register-card">
+    <mat-card-content>
+      <form class="register-content" ngForm (submit)="onSubmit($event)">
+        <h2>S'inscrire</h2>
+        <mat-form-field appearance="outline">
+          <mat-label>Nom</mat-label>
+          <input type="text" matInput placeholder="Entrer votre nom" [(ngModel)]="nomUser" name="nomUser" required />
+          <mat-error> Veuillez entrer votre nom </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Prénom</mat-label>
+          <input type="text" matInput placeholder="Entrer votre prénom" [(ngModel)]="prenomUser" name="prenomUser" required />
+          <mat-error> Veuillez entrer votre prénom </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input type="email" matInput placeholder="Entrer votre prénom" [(ngModel)]="emailUser" name="emailUser" required />
+          <mat-error> Veuillez entrer votre email </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Role</mat-label>
+          <mat-select required [(ngModel)]="roleUser" name="roleUser">
+            <mat-option></mat-option>
+            <mat-option value="1">Etudiant</mat-option>
+            <mat-option value="0">Professeur</mat-option>
+          </mat-select>
+          <mat-error> Veuillez entrer votre role </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Mot de passe</mat-label>
+          <input type="password" matInput placeholder="Entrer votre prénom" [(ngModel)]="passwordUser" name="passwordUser" required />
+          <mat-error> Veuillez entrer votre mot de passe </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Confirmer le mot de passe</mat-label>
+          <input type="password" matInput placeholder="Entrer votre prénom" [(ngModel)]="passwordUser2" name="passwordUser2" required />
+          <mat-error> Veuillez entrer votre mot de passe </mat-error>
+        </mat-form-field>
+        <button class="submit" mat-raised-button color="primary">
+          S'inscrire
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>
