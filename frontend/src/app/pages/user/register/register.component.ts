@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register',
@@ -21,7 +22,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatGridListModule,
     MatInputModule,
     MatSelectModule,
-    MatButtonModule, RouterLink],
+    MatButtonModule, RouterLink, CommonModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })

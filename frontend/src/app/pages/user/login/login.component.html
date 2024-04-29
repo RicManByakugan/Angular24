@@ -17,6 +17,9 @@
           <input matInput type="password" [(ngModel)]="passwordUser" name="password" required />
           <mat-error> Veuillez renseigner un mot de passe </mat-error>
         </mat-form-field>
+        <label [ngClass]="{'text-danger': ResRequest != 'Utilisateur connecté'}">
+          {{ ResRequest }}
+        </label>
         <button class="submit" mat-raised-button color="primary">
           Se connecter
         </button>

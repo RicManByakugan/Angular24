@@ -43,6 +43,9 @@
           <input type="password" matInput placeholder="Entrer votre prénom" [(ngModel)]="passwordUser2" name="passwordUser2" required />
           <mat-error> Veuillez entrer votre mot de passe </mat-error>
         </mat-form-field>
+        <label [ngClass]="{'text-danger': ResRequest != 'Utilisateur créé'}">
+          {{ ResRequest }}
+        </label>
         <button class="submit" mat-raised-button color="primary">
           S'inscrire
         </button>

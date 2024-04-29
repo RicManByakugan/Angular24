@@ -12,12 +12,17 @@ import { DahsboardComponent } from './pages/dashboard/dahsboard/dahsboard.compon
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: DahsboardComponent, canActivate: [authGuard] },
-  { path: 'home/assignment/:id', component: AssignmentDetailComponent, canActivate: [authGuard] },
-  { path: 'home/assignment/:id/edit', component: EditAssignmentComponent, canActivate: [authGuard] },
-  { path: 'home/board', component: BoardComponent, canActivate: [authGuard] },
+  {
+    path: 'home',
+    component: DahsboardComponent,
+    canActivate: [authGuard],
+    children: [
+      { path: 'assignment/:id', component: AssignmentDetailComponent, canActivate: [authGuard] },
+      { path: 'assignment/:id/edit', component: EditAssignmentComponent, canActivate: [authGuard] },
+      { path: 'board', component: BoardComponent, canActivate: [authGuard] },
+      { path: 'student', component: StudentComponent },
+    ]
+  },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  // =====================================
-  { path: 'home/student', component: StudentComponent },
 ];
