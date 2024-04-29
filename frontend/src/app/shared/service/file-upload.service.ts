@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 
@@ -7,6 +7,10 @@ import { Observable, map } from 'rxjs';
 })
 export class FileUploadService {
   uri = 'http://localhost:3000/api';
+  token = localStorage.getItem('user') + ' ' + localStorage.getItem('token');
+  headers = new HttpHeaders({
+    Authorization: this.token,
+  });
 
   constructor(private http: HttpClient) {}
 
@@ -15,11 +19,10 @@ export class FileUploadService {
     const formData = new FormData();
 
     for (const file of files) {
-      file.name
-        ? formData.append('file', file, `${file.name.split('.').pop()}`)
-        : formData.append('paths', file);
+      formData.append('files', file, `${file.name}`);
     }
     return this.http.post(`${this.uri}/upload`, formData, {
+      headers: this.headers,
       reportProgress: true,
       responseType: 'json',
       observe: 'events',
@@ -28,7 +31,7 @@ export class FileUploadService {
 
   delete(fileName: string): Observable<string> {
     return this.http
-      .delete(`${this.uri}/upload/${fileName}`)
+      .delete(`${this.uri}/upload/${fileName}`, { headers: this.headers })
       .pipe(map((response) => response as string));
   }
 }

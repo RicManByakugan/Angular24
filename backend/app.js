@@ -3,6 +3,7 @@ let app = express();
 let bodyParser = require("body-parser");
 const routesAssignment = require("./routes/assignments");
 const routesUser = require("./routes/user");
+const routesUpload = require("./routes/upload");
 const routesSubject = require("./routes/subject");
 let mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
@@ -51,6 +52,7 @@ async function start(port) {
   app.use(prefix, routesAssignment);
   app.use(prefix, routesUser);
   app.use(prefix, routesSubject);
+  app.use(prefix, routesUpload);
 
   // On démarre le serveur
   app.listen(port, "0.0.0.0");

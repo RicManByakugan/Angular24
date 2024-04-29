@@ -78,10 +78,10 @@ export class AddAssignmentComponent {
   }
 
   onFileSelected(event: any) {
-    this.uploadedFile = event.target.files[0];
-    // this.fileUploadService.upload([file]).subscribe((value) => {
-    //   this.newAssignment.file = value;
-    // });
+    this.uploadedFile = event.target.files[0] as File;
+    this.fileUploadService.upload([this.uploadedFile]).subscribe((value) => {
+      this.newAssignment.file = value.body;
+    });
   }
 
   onClearFile() {

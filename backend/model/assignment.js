@@ -12,8 +12,8 @@ let AssignmentSchema = Schema({
   creationDate: { type: Date, required: false, default: new Date() },
   validationDate: { type: Date, required: false },
   file: { type: String, required: false },
-  student: [{ type: Schema.Types.ObjectId, ref: "User" }],
-  teacher: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  student: { type: Schema.Types.ObjectId, ref: "User" },
+  teacher: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
 AssignmentSchema.plugin(mongoosePaginate);
