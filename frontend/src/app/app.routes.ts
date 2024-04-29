@@ -8,20 +8,16 @@ import { LoginComponent } from './pages/user/login/login.component';
 import { RegisterComponent } from './pages/user/register/register.component';
 import { BoardComponent } from './pages/user/board/board.component';
 import { StudentComponent } from './pages/student/student.component';
+import { DahsboardComponent } from './pages/dashboard/dahsboard/dahsboard.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: AssignmentsComponent },
-  { path: 'assignment/:id', component: AssignmentDetailComponent },
-  {
-    path: 'assignment/:id/edit',
-    component: EditAssignmentComponent,
-    canActivate: [authGuard],
-  },
+  { path: 'home', component: DahsboardComponent, canActivate: [authGuard] },
+  { path: 'assignment/:id', component: AssignmentDetailComponent, canActivate: [authGuard] },
+  { path: 'assignment/:id/edit', component: EditAssignmentComponent, canActivate: [authGuard] },
   { path: 'board', component: BoardComponent, canActivate: [authGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-
   // =====================================
   { path: 'student', component: StudentComponent },
 ];

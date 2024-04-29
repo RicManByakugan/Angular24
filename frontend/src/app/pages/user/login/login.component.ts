@@ -19,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    RouterLink
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',

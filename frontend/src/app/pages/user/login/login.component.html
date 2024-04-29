@@ -5,37 +5,24 @@
 <div class="container">
   <mat-card class="login-card">
     <mat-card-content>
-      <form
-        class="login-content"
-        #loginForm="ngForm"
-        (ngSubmit)="onSubmit($event)"
-      >
+      <form class="login-content" #loginForm="ngForm" (ngSubmit)="onSubmit($event)">
         <h2>Se connecter</h2>
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
-          <input
-            matInput
-            placeholder="Email"
-            [(ngModel)]="emailUser"
-            name="username"
-            required
-          />
+          <input matInput placeholder="Email" [(ngModel)]="emailUser" name="username" required />
           <mat-error> Veuillez rensigner un email valide </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Mot de passe</mat-label>
-          <input
-            matInput
-            type="password"
-            [(ngModel)]="passwordUser"
-            name="password"
-            required
-          />
+          <input matInput type="password" [(ngModel)]="passwordUser" name="password" required />
           <mat-error> Veuillez renseigner un mot de passe </mat-error>
         </mat-form-field>
         <button class="submit" mat-raised-button color="primary">
           Se connecter
         </button>
+        <a [routerLink]="['/register']">
+          S'inscrire
+        </a>
       </form>
     </mat-card-content>
   </mat-card>
