@@ -32,6 +32,7 @@ export class UserService {
     nom: string,
     prenom: string,
     role: string,
+    subject: string,
     email: string,
     password: string
   ): Observable<any> {
@@ -39,6 +40,7 @@ export class UserService {
       nom: nom,
       prenom: prenom,
       role: role,
+      subject: subject,
       email: email,
       password: password,
     });
