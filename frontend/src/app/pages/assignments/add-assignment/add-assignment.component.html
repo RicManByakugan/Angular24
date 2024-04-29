@@ -1,29 +1,53 @@
-<h1>Ajout d'un assignment</h1>
-<form
-  ngForm
-  #assignmentForm
-  (submit)="onSubmit($event); assignmentForm.reset()"
-  class="form"
->
-  <mat-form-field appearance="outline">
-    <mat-label>Titre du devoir</mat-label>
-    <input matInput required [(ngModel)]="newAssignment.title" name="title" />
-  </mat-form-field>
+<div class="container">
+  <h1>Rendre un devoir</h1>
+  <form ngForm #assignmentForm class="form">
+    <mat-form-field appearance="outline">
+      <mat-label>Titre du devoir</mat-label>
+      <input matInput required [(ngModel)]="newAssignment.title" name="title" />
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Matière</mat-label>
-    <mat-select [(ngModel)]="newAssignment.subject" name="subject">
-      @for (subject of subjects; track subject) {
-      <mat-option [value]="subject.type">{{ subject.type }}</mat-option>
+    <mat-form-field appearance="outline">
+      <mat-label>Matière</mat-label>
+      <mat-select [(ngModel)]="newAssignment.subject" name="subject">
+        @for (subject of subjects; track subject) {
+        <mat-option [value]="subject.type">{{ subject.type }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <div class="file">
+      @if(uploadedFile){
+      <div>
+        <mat-chip-row (removed)="onClearFile()">
+          {{ uploadedFile.name }}
+          <button matChipRemove aria-label="clear">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip-row>
+      </div>
+      }@else {
+      <button mat-raised-button color="primary" (click)="onClick($event)">
+        <mat-icon>add</mat-icon>
+        Ajouter le devoir
+      </button>
+      <input
+        #fileUpload
+        type="file"
+        class="input_fileupload--hidden"
+        (change)="onFileSelected($event)"
+        [(ngModel)]="newAssignment.file"
+        name="file"
+      />
       }
-    </mat-select>
-  </mat-form-field>
+    </div>
 
-  <button
-    mat-stroked-button
-    color="primary"
-    [disabled]="!newAssignment.subject || !newAssignment.title === undefined"
-  >
-    Ajouter un devoir
-  </button>
-</form>
+    <button
+      mat-stroked-button
+      color="primary"
+      [disabled]="!newAssignment.subject || !newAssignment.title === undefined"
+      (click)="onSubmit($event); assignmentForm.reset()"
+    >
+      Ajouter un devoir
+    </button>
+  </form>
+</div>
