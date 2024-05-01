@@ -16,7 +16,7 @@ const uploadFile = async (req, res) => {
 };
 
 const deleteFile = async (req, res) => {
-  const name = req.param;
+  const name = req.params.filename;
   fs.unlink(`${IMAGE_PATH}/${name}`, (err) => {
     if (err) {
       throw new Error("Error when deleting file");
@@ -25,4 +25,21 @@ const deleteFile = async (req, res) => {
   res.send(true);
 };
 
-module.exports = { uploadFile, deleteFile };
+const downloadFile = async (req, res) => {
+  console.log(req.params);
+  const filename = req.params.filename;
+  const filePath = `${FILE_PATH}/${filename}`;
+  console.log(filePath);
+  fs.exists(filePath, (exists) => {
+    if (exists) {
+      res.setHeader("Content-disposition", "attachment; filename=" + filename);
+      res.setHeader("Content-type", "application/octet-stream");
+      const fileStream = fs.createReadStream(filePath);
+      fileStream.pipe(res);
+    } else {
+      res.status(404).send("File not found");
+    }
+  });
+};
+
+module.exports = { uploadFile, deleteFile, downloadFile };

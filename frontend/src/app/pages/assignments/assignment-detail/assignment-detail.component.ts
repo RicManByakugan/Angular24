@@ -13,6 +13,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Assignment } from '../../../interfaces/assignment.interface';
 import { User } from '../../../interfaces/user.interface';
 import { MatIconModule } from '@angular/material/icon';
+import { FileUploadService } from '../../../shared/service/file-upload.service';
 @Component({
   selector: 'app-assignment-detail',
   standalone: true,
@@ -33,6 +34,7 @@ export class AssignmentDetailComponent implements OnInit {
 
   constructor(
     private assignmentsService: AssignmentsService,
+    private fileUploadService: FileUploadService,
     public dialogRef: MatDialogRef<AssignmentDetailComponent>,
     private router: Router,
     private route: ActivatedRoute
@@ -55,6 +57,11 @@ export class AssignmentDetailComponent implements OnInit {
       .subscribe((value) => {
         this.assignment = value;
       });
+  }
+
+  onDownloadFile(filePath: string) {
+    const fileName = filePath.split('\\').at(-1);
+    this.fileUploadService.downloadFile(fileName as string);
   }
 
   get student() {

@@ -34,4 +34,27 @@ export class FileUploadService {
       .delete(`${this.uri}/upload/${fileName}`, { headers: this.headers })
       .pipe(map((response) => response as string));
   }
+
+  downloadFile(filename: string): void {
+    this.http
+      .get(`${this.uri}/upload/download/${filename}`, {
+        headers: this.headers,
+        responseType: 'blob',
+      })
+      .subscribe(
+        (blob: Blob) => {
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          window.URL.revokeObjectURL(url);
+        },
+        (error) => {
+          console.error('Error downloading file:', error);
+        }
+      );
+  }
 }

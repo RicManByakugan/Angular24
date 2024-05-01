@@ -13,7 +13,11 @@
       </ul>
     </div>
   </div>
-  <button mat-raised-button color="primary">
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onDownloadFile(assignment.file)"
+  >
     <mat-icon>add</mat-icon> Télécharger le devoir
   </button>
   <div class="eval">
