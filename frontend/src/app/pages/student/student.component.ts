@@ -6,19 +6,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { AssignmentsService } from '../../shared/service/assignments.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import {
-  MatDialog,
-  MatDialogRef,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogTitle,
-  MatDialogContent,
-} from '@angular/material/dialog';
-import { FormsModule } from '@angular/forms';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { MatDialog } from '@angular/material/dialog';
+
 import { AddAssignmentComponent } from '../assignments/add-assignment/add-assignment.component';
+import { AssignmentDetailComponent } from '../assignments/assignment-detail/assignment-detail.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-student',
@@ -45,7 +37,8 @@ export class StudentComponent {
 
   constructor(
     private assignmentService: AssignmentsService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -78,6 +71,19 @@ export class StudentComponent {
     this.dialog.open(AddAssignmentComponent, {
       width: '60vw',
       height: '50vh',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+  }
+
+  viewAssignment(
+    assignmentId: string,
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ): void {
+    this.router.navigate(['/home/student'], { queryParams: { assignmentId } });
+    this.dialog.open(AssignmentDetailComponent, {
+      width: '50vw',
       enterAnimationDuration,
       exitAnimationDuration,
     });

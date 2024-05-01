@@ -7,9 +7,7 @@ import { LoginComponent } from './pages/user/login/login.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    RouterOutlet,
-  ],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
@@ -20,15 +18,5 @@ export class AppComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
-    this.authService.isAdmin()
-      .then(res =>{
-        if (res){
-          this.router.navigate(['/home']);
-        }else{
-          this.router.navigate(['/login']);
-        }
-      })
-      .catch(() =>{});
-  }
+  ngOnInit(): void {}
 }

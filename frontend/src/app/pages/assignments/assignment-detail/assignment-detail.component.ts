@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -9,6 +9,10 @@ import { AssignmentOld } from '../assignment.model';
 import { AssignmentsService } from '../../../shared/service/assignments.service';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../shared/service/auth.service';
+import { MatDialogRef } from '@angular/material/dialog';
+import { Assignment } from '../../../interfaces/assignment.interface';
+import { User } from '../../../interfaces/user.interface';
+import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-assignment-detail',
   standalone: true,
@@ -18,64 +22,50 @@ import { AuthService } from '../../../shared/service/auth.service';
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
+    MatIconModule,
   ],
   templateUrl: './assignment-detail.component.html',
   styleUrl: './assignment-detail.component.css',
 })
 export class AssignmentDetailComponent implements OnInit {
-  assignmentTransmis!: AssignmentOld | undefined;
+  assignment!: Assignment | undefined;
+  assignmentId!: string;
 
   constructor(
     private assignmentsService: AssignmentsService,
-    private authService: AuthService,
-    private route: ActivatedRoute,
-    private router: Router
+    public dialogRef: MatDialogRef<AssignmentDetailComponent>,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    // Recuperation des query params (ce qui suit le ? dans l'url)
-    console.log(this.route.snapshot.queryParams);
-    // Recuperation des fragment (ce qui suit le # dans l'url)
-    console.log(this.route.snapshot.fragment);
+    this.getAssignmentId();
+    this.getAssignment();
+  }
 
-    // On recupere l'id de l'assignment dans l'URL à l'aide de ActivatedRoute
-    const id = this.route.snapshot.params['id'];
-    // On utilise le service pour récupérer l'assignment avec cet id
-    this.assignmentsService.getAssignment(id).subscribe((assignment) => {
-      this.assignmentTransmis = assignment;
+  getAssignmentId() {
+    this.route.queryParams.subscribe((params) => {
+      this.assignmentId = params['assignmentId'];
     });
   }
 
-  onAssignmentRendu() {
-    // on a cliqué sur la checkbox, on change le statut de l'assignment
-    if (this.assignmentTransmis) {
-      this.assignmentTransmis.rendu = true;
-      this.assignmentsService
-        .updateAssignment(this.assignmentTransmis)
-        .subscribe((message) => {
-          console.log(message);
-          // on navigue vers la liste des assignments
-          this.router.navigate(['/home']);
-        });
-    }
+  getAssignment() {
+    this.assignmentsService
+      .getAssignment(this.assignmentId)
+      .subscribe((value) => {
+        this.assignment = value;
+      });
   }
 
-  onDelete() {
-    // on va directement utiliser le service
-    if (this.assignmentTransmis) {
-      this.assignmentsService
-        .deleteAssignment(this.assignmentTransmis)
-        .subscribe((message) => {
-          console.log(message);
-          // on va cacher la vue de detail en mettant assignmentTransmis à undefined
-          this.assignmentTransmis = undefined;
-          // on navigue vers la liste des assignments
-          this.router.navigate(['/home']);
-        });
-    }
+  get student() {
+    return this.assignment?.student as User;
   }
 
-  isAdmin() {
-    return this.authService.loggedIn;
+  get teacher() {
+    return this.assignment?.teacher as User;
+  }
+
+  ngOnDestroy(): void {
+    this.router.navigate(['/home/student']);
   }
 }

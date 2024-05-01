@@ -2,7 +2,10 @@
   <div class="list">
     @for(assignment of assignments;track assignment._id){
     <div class="item">
-      <app-assignment-card [assignment]="assignment"></app-assignment-card>
+      <app-assignment-card
+        [assignment]="assignment"
+        (click)="viewAssignment(assignment._id, '50', '50')"
+      ></app-assignment-card>
     </div>
     }
   </div>

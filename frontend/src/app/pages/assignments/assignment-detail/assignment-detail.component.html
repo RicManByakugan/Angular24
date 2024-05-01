@@ -1,32 +1,35 @@
-@if(assignmentTransmis) {
-<h2>Détail de l'assignment:</h2>
-
-<mat-card>
-  <mat-card-content>
-    <mat-card-title>{{ assignmentTransmis.nom }}</mat-card-title>
-    <mat-card-subtitle>{{
-      assignmentTransmis.dateDeRendu | date
-    }}</mat-card-subtitle>
-  </mat-card-content>
-  <mat-card-actions class="container">
-    @if(!assignmentTransmis.rendu) {
-    <mat-checkbox (click)="onAssignmentRendu()">Rendu</mat-checkbox>
+<div class="container">
+  @if(assignment){
+  <h3>{{ assignment?.title }}</h3>
+  <div class="owner">
+    <div>
+      <img [src]="student.photo" alt="profile" />
+    </div>
+    <div>
+      <ul>
+        <li>{{ student.firstName }} {{ student.lastName }}</li>
+        <li>{{ student.email }}</li>
+        <span>Créé le : {{ assignment.creationDate | date : "medium" }}</span>
+      </ul>
+    </div>
+  </div>
+  <button mat-raised-button color="primary">
+    <mat-icon>add</mat-icon> Télécharger le devoir
+  </button>
+  <div class="eval">
+    @if(teacher){
+    <div>
+      <span>{{ assignment.comment }}</span>
+      <span>Note: {{ assignment.score }} / 20</span>
+    </div>
+    <div>
+      <img [src]="teacher.photo" alt="" />
+      <span>{{ teacher.firstName }} {{ teacher.lastName }}</span>
+    </div>
+    <div>
+      <span>Corrigé le: {{ assignment.validationDate | date : "medium" }}</span>
+    </div>
     }
-    <button mat-raised-button color="warn" (click)="onDelete()"
-            [disabled]="!isAdmin()"
-    >
-      DELETE
-    </button>
-    <nav>
-      <a routerLink="edit">
-        <button mat-raised-button color="primary"
-                [disabled]="!isAdmin()"
-        >
-          EDIT
-        </button>
-      </a>
-    </nav>
-  </mat-card-actions>
-</mat-card>
-
-}
+  </div>
+  }
+</div>

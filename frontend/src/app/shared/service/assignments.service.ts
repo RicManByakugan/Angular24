@@ -42,27 +42,10 @@ export class AssignmentsService {
   }
 
   // renvoie un assignment par son id, renvoie undefined si pas trouvé
-  getAssignment(id: number): Observable<AssignmentOld | undefined> {
-    return this.http.get<AssignmentOld>(this.uri + '/' + id).pipe(
-      catchError(
-        this.handleError<any>(
-          '### catchError: getAssignments by id avec id=' + id
-        )
-      )
-      /*
-      map(a => {
-        a.nom += " MODIFIE PAR LE PIPE !"
-        return a;
-      }),
-      tap(a => console.log("Dans le pipe avec " + a.nom)),
-      map(a => {
-        a.nom += " MODIFIE UNE DEUXIEME FOIS PAR LE PIPE !";
-        return a;
-      })
-      */
-    );
-    //let a = this.assignments.find(a => a.id === id);
-    //return of(a);
+  getAssignment(id: string): Observable<Assignment | undefined> {
+    return this.http.get<Assignment>(this.uri + '/' + id, {
+      headers: this.headers,
+    });
   }
 
   // Methode appelée par catchError, elle doit renvoyer

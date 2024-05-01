@@ -35,21 +35,10 @@ const getAssignments = async (req, res) => {
 };
 
 // Récupérer un assignment par son id (GET)
-const getAssignment = (req, res) => {
+const getAssignment = async (req, res) => {
   let assignmentId = req.params.id;
-  Assignment.findById(assignmentId, (err, assignment) => {
-    if (err) {
-      res.send(err);
-    }
-    res.json(assignment);
-  });
-
-  /*
-    Assignment.findOne({id: assignmentId}, (err, assignment) =>{
-        if(err){res.send(err)}
-        res.json(assignment);
-    })
-    */
+  const assignment = await Assignment.findById(assignmentId).populate("teacher").populate("student");
+  res.json(assignment);
 };
 
 // Récupérer tous les assignments d'un utilisateur (GET)

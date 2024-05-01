@@ -8,6 +8,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { AssignmentOld } from '../assignment.model';
 import { AssignmentsService } from '../../../shared/service/assignments.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Assignment } from '../../../interfaces/assignment.interface';
 
 @Component({
   selector: 'app-edit-assignment',
@@ -24,7 +25,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './edit-assignment.component.css',
 })
 export class EditAssignmentComponent implements OnInit {
-  assignment: AssignmentOld | undefined;
+  assignment: Assignment | undefined;
   // Pour les champs de formulaire
   nomAssignment = '';
   dateDeRendu?: Date = undefined;
@@ -38,30 +39,13 @@ export class EditAssignmentComponent implements OnInit {
   ngOnInit() {
     // on récupère l'id dans l'url
     const id = +this.route.snapshot.params['id'];
-    this.assignmentsService.getAssignment(id).subscribe((assignment) => {
+    this.assignmentsService.getAssignment(`${id}`).subscribe((assignment) => {
       this.assignment = assignment;
       // on met à jour les champs du formulaire
       if (assignment !== undefined) {
-        this.nomAssignment = assignment.nom;
-        this.dateDeRendu = assignment.dateDeRendu;
+        this.nomAssignment = assignment.title;
+        this.dateDeRendu = assignment.creationDate;
       }
     });
-  }
-
-  onSaveAssignment() {
-    if (!this.assignment) return;
-    if (this.nomAssignment == '' || this.dateDeRendu === undefined) return;
-
-    // on récupère les valeurs dans le formulaire
-    this.assignment.nom = this.nomAssignment;
-    this.assignment.dateDeRendu = this.dateDeRendu;
-    this.assignmentsService
-      .updateAssignment(this.assignment)
-      .subscribe((message) => {
-        console.log(message);
-
-        // navigation vers la home page
-        this.router.navigate(['/home']);
-      });
   }
 }
