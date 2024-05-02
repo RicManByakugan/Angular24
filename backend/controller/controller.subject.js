@@ -10,4 +10,15 @@ const getSubjects = (req, res) => {
   });
 };
 
-module.exports = { getSubjects };
+
+const getSubject = (req, res) => {
+  let SubjectId = req.params.id;
+  Subject.findOne({ _id: new ObjectID(SubjectId) }, (err, subjects) => {
+    if (err) {
+      res.send(err);
+    }
+    res.json(subjects);
+  });
+};
+
+module.exports = { getSubject, getSubjects };

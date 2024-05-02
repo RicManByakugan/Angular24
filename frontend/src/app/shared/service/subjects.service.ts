@@ -21,4 +21,10 @@ export class SubjectService {
       headers: this.headers,
     });
   }
+
+  getSubject(id: string): Observable<Subject[]> {
+    return this.http.get<Subject[]>(`${this.uri}/subject/` + id, {
+      headers: this.headers,
+    });
+  }
 }

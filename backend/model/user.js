@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Subject = require("./subject");
 let Schema = mongoose.Schema;
 
 let userSchema = Schema({
@@ -7,6 +8,8 @@ let userSchema = Schema({
     nom: { type: String, required: true },
     prenom: { type: String, required: true },
     role: { type: String, required: true },
+    photo: { type: String, required: false, undefined: true },
+    subject: { type: Schema.Types.ObjectId, ref: "Subject" },
 });
 
 module.exports = mongoose.model('User', userSchema);

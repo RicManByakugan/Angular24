@@ -20,7 +20,7 @@ const utilisateur_actif = (req, res) => {
 }
 
 // INSCRIPTION UTILISATEUR
-// data : email, password, role, nom, prenom
+// data : email, password, role, nom, prenom, subject
 const inscription = (req, res) => {
     User.findOne({ email: req.body.email })
         .then(user => {
@@ -34,6 +34,7 @@ const inscription = (req, res) => {
                             role: req.body.role,
                             nom: req.body.nom,
                             prenom: req.body.prenom,
+                            subject: req.body.subject,
                             password: hash
                         });
                         user.save()

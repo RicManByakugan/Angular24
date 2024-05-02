@@ -81,7 +81,6 @@ export class RegisterComponent implements OnInit {
       .subscribe(res => {
         if (res.message === "Utilisateur créé") {
           this.router.navigate(['/login']);
-          window.location.reload();
         }
         this.ResRequest = res.message
         this.statusLoading = false;
