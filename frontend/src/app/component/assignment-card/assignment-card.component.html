@@ -8,7 +8,7 @@
     <span>
       <h3 [ngClass]="{ 'text-success': dataItem.rendu, 'text-danger': !dataItem.rendu }">{{ dataItem.rendu ? 'Validé' : 'Non validé' }}</h3>
       <b>Date de rendu:</b>
-      <br>{{ dataItem.dateDeRendu | date }}
+      <br>{{ dataItem.dateDeRendu | date: 'dd/MM/yyyy' }}
     </span>
   </mat-card-content>
 </mat-card>

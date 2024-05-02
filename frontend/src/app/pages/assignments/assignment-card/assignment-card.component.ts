@@ -7,11 +7,12 @@ import { User } from '../../../interfaces/user.interface';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-assignment-card',
   standalone: true,
-  imports: [MatCardModule, MatIconModule, CommonModule, MatTooltipModule],
+  imports: [MatCardModule, MatIconModule, CommonModule, MatTooltipModule, RouterLink],
   templateUrl: './assignment-card.component.html',
   styleUrl: './assignment-card.component.css',
 })
