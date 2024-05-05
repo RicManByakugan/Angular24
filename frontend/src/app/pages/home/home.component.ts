@@ -1,6 +1,9 @@
 import { Component, NgZone, ViewChild } from '@angular/core';
 import { AssignmentOld } from '../assignments/assignment.model';
-import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
+import {
+  CdkVirtualScrollViewport,
+  ScrollingModule,
+} from '@angular/cdk/scrolling';
 import { AssignmentsService } from '../../shared/service/assignments.service';
 import { filter, map, pairwise, tap, throttleTime } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
@@ -10,6 +13,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatCardModule } from '@angular/material/card';
 import { AssignmentCardComponent } from '../assignments/assignment-card/assignment-card.component';
+import { Criteria } from '../../interfaces/criteria.interface';
 
 @Component({
   selector: 'app-home',
@@ -22,11 +26,11 @@ import { AssignmentCardComponent } from '../assignments/assignment-card/assignme
     AssignmentCardComponent,
   ],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.css',
 })
 export class HomeComponent {
   titre = 'Liste des assignments';
-  
+
   // Pour la pagination
   page = 1;
   limit = 10;
@@ -49,7 +53,7 @@ export class HomeComponent {
   constructor(
     private assignmentsService: AssignmentsService,
     private ngZone: NgZone
-  ) { }
+  ) {}
 
   getColor(a: any) {
     return a.rendu ? 'green' : 'red';
@@ -104,7 +108,7 @@ export class HomeComponent {
   getAssignmentsFromService() {
     // on récupère les assignments depuis le service
     this.assignmentsService
-      .getAssignmentsPagines(this.page, this.limit)
+      .getAssignmentsPagines({ page: this.page, limit: this.limit } as Criteria)
       .subscribe((data) => {
         // les données arrivent ici au bout d'un certain temps
         console.log('Données arrivées');
@@ -122,7 +126,7 @@ export class HomeComponent {
   getAssignmentsFromServicePourScrollInfini() {
     // on récupère les assignments depuis le service
     this.assignmentsService
-      .getAssignmentsPagines(this.page, this.limit)
+      .getAssignmentsPagines({ page: this.page, limit: this.limit } as Criteria)
       .subscribe((data) => {
         // les données arrivent ici au bout d'un certain temps
         console.log('Données arrivées');

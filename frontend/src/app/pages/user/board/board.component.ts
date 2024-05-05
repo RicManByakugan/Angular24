@@ -7,44 +7,57 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { SubjectService } from '../../../shared/service/subjects.service';
+import { FilePathPipe } from '../../../shared/pipes/file-path.pipe';
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [LoaderComponent, AssignmentCardComponent, CommonModule, MatCardModule, MatGridListModule],
+  imports: [
+    LoaderComponent,
+    AssignmentCardComponent,
+    CommonModule,
+    MatCardModule,
+    MatGridListModule,
+    FilePathPipe,
+  ],
   templateUrl: './board.component.html',
-  styleUrl: './board.component.css'
+  styleUrl: './board.component.css',
 })
 export class BoardComponent implements OnInit {
   userData: any;
   userDataAssignment: any;
   statusLoading: any;
 
-  constructor(private userService: UserService, private assignmentService: AssignmentsService, private subjectService: SubjectService){}
+  constructor(
+    private userService: UserService,
+    private assignmentService: AssignmentsService,
+    private subjectService: SubjectService
+  ) {}
 
   ngOnInit(): void {
-    this.loadData()
+    this.loadData();
   }
 
-  loadData (){
-    this.statusLoading = true
-    this.userService.getUserConnected().subscribe(user => {
+  loadData() {
+    this.statusLoading = true;
+    this.userService.getUserConnected().subscribe((user) => {
       if (user) {
-        this.userData = user.useractif
-        this.subjectService.getSubject(this.userData.subject).subscribe(res => {
-          if(res){
-            this.statusLoading = false
-            this.userData.subject = res
-          }
-        })
+        this.userData = user.useractif;
+        this.subjectService
+          .getSubject(this.userData.subject)
+          .subscribe((res) => {
+            if (res) {
+              this.statusLoading = false;
+              this.userData.subject = res;
+            }
+          });
       }
-    })
-    this.assignmentService.getAssignmentsUser().subscribe(res => {
+    });
+    this.assignmentService.getAssignmentsUser().subscribe((res) => {
       if (res) {
-        this.userDataAssignment = res
-        this.statusLoading = false
+        this.userDataAssignment = res;
+        this.statusLoading = false;
       }
-    })
+    });
   }
-
 }

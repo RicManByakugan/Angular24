@@ -8,6 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 // importation des données de test
 import { bdInitialAssignments } from '../data';
 import { Assignment } from '../../interfaces/assignment.interface';
+import { Criteria } from '../../interfaces/criteria.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -32,19 +33,20 @@ export class AssignmentsService {
   }
 
   getAssignmentsSubject(subject: string): Observable<Assignment[]> {
-    return this.http.get<Assignment[]>(this.uri + '/Subject/' + subject , {
+    return this.http.get<Assignment[]>(this.uri + '/Subject/' + subject, {
       headers: this.headers,
     });
   }
 
-  getAssignments(): Observable<AssignmentOld[]> {
-    return this.http.get<AssignmentOld[]>(this.uri, { headers: this.headers });
+  getAssignments(criteria: Criteria): Observable<Assignment[]> {
+    return this.http.get<Assignment[]>(this.uri, { headers: this.headers });
   }
 
-  getAssignmentsPagines(page: number, limit: number): Observable<any> {
-    return this.http.get<AssignmentOld[]>(
-      this.uri + '?page=' + page + '&limit=' + limit
-    );
+  getAssignmentsPagines(criteria: Criteria): Observable<any> {
+    return this.http.get<AssignmentOld[]>(this.uri, {
+      params: { ...criteria },
+      headers: this.headers,
+    });
   }
 
   // renvoie un assignment par son id, renvoie undefined si pas trouvé
@@ -53,7 +55,6 @@ export class AssignmentsService {
       headers: this.headers,
     });
   }
-  
 
   // Methode appelée par catchError, elle doit renvoyer
   // i, Observable<T> où T est le type de l'objet à renvoyer

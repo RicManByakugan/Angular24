@@ -16,6 +16,7 @@ import { EMTPY_ASSIGNMENT } from '../../../shared/constants/assignment.constants
 import { SubjectService } from '../../../shared/service/subjects.service';
 import { MatIconModule } from '@angular/material/icon';
 import { FileUploadService } from '../../../shared/service/file-upload.service';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-assignment',
@@ -30,6 +31,7 @@ import { FileUploadService } from '../../../shared/service/file-upload.service';
     MatSelectModule,
     MatIconModule,
     MatChipsModule,
+    MatSnackBarModule,
   ],
   templateUrl: './add-assignment.component.html',
   styleUrl: './add-assignment.component.css',
@@ -47,7 +49,8 @@ export class AddAssignmentComponent {
     private assignmentsService: AssignmentsService,
     public dialogRef: MatDialogRef<AddAssignmentComponent>,
     private subjectService: SubjectService,
-    private fileUploadService: FileUploadService
+    private fileUploadService: FileUploadService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -63,7 +66,9 @@ export class AddAssignmentComponent {
     this.assignmentsService
       .addAssignment(this.newAssignment)
       .subscribe((reponse) => {
-        console.log(reponse);
+        this.snackBar.open('Devoir créé avec succès', undefined, {
+          duration: 3000,
+        });
       });
   }
 

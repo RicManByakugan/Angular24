@@ -19,6 +19,7 @@ import { AddAssignmentComponent } from './add-assignment/add-assignment.componen
 import { AssignmentsService } from '../../shared/service/assignments.service';
 import { RouterLink } from '@angular/router';
 import { filter, map, pairwise, tap, throttleTime } from 'rxjs/operators';
+import { Criteria } from '../../interfaces/criteria.interface';
 @Component({
   selector: 'app-assignments',
   standalone: true,
@@ -120,7 +121,7 @@ export class AssignmentsComponent implements OnInit {
   getAssignmentsFromService() {
     // on récupère les assignments depuis le service
     this.assignmentsService
-      .getAssignmentsPagines(this.page, this.limit)
+      .getAssignmentsPagines({ page: this.page, limit: this.limit } as Criteria)
       .subscribe((data) => {
         // les données arrivent ici au bout d'un certain temps
         console.log('Données arrivées');
@@ -138,7 +139,7 @@ export class AssignmentsComponent implements OnInit {
   getAssignmentsFromServicePourScrollInfini() {
     // on récupère les assignments depuis le service
     this.assignmentsService
-      .getAssignmentsPagines(this.page, this.limit)
+      .getAssignmentsPagines({ page: this.page, limit: this.limit } as Criteria)
       .subscribe((data) => {
         // les données arrivent ici au bout d'un certain temps
         console.log('Données arrivées');

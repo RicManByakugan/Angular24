@@ -15,23 +15,37 @@ const getAssignments = (req, res){ =>
 }
 */
 
+const buildSearch = (searchFields, searchTerm, additionalCriteria) => {
+  console.log(searchTerm);
+  if (searchTerm) {
+    const orConditions = searchFields.map((field) => ({
+      [field]: { $regex: `${searchTerm}`, $options: "i" },
+    }));
+    return {
+      $or: orConditions,
+      ...additionalCriteria,
+    };
+  } else {
+    return additionalCriteria;
+  }
+};
+
 const getAssignments = async (req, res) => {
+  const { page, limit, userId, search } = req.query;
+  const additionalCriteria = {
+    student: new ObjectID(userId),
+  };
+  const searchFields = ["title", "subject"];
+  const criteria = buildSearch(searchFields, search, additionalCriteria);
+
   let aggregateQuery = Assignment.aggregate();
+  aggregateQuery.match(criteria);
 
-  Assignment.aggregatePaginate(
-    aggregateQuery,
-    {
-      page: parseInt(req.query.page) || 1,
-      limit: parseInt(req.query.limit) || 10,
-    },
-    (err, data) => {
-      if (err) {
-        res.send(err);
-      }
-
-      res.send(data);
-    }
-  );
+  const assignments = await Assignment.aggregatePaginate(aggregateQuery, {
+    page: parseInt(page) || 1,
+    limit: parseInt(limit) || 10,
+  });
+  res.send(assignments);
 };
 
 // Récupérer un assignment par son id (GET)
@@ -60,7 +74,6 @@ const getAssignmentsUtilisateur = (req, res) => {
     res.json({ message: "Utilisateur non connecté" });
   }
 };
-
 
 // Récupérer tous les assignments d'un utilisateur (GET)
 const getAssignmentsSubject = (req, res) => {
