@@ -1,6 +1,7 @@
 let Assignment = require("../model/assignment");
 const { ObjectID } = require("bson");
 const User = require("../model/user");
+const { buildSearch } = require("../utils/search");
 
 // Récupérer tous les assignments (GET)
 /*
@@ -14,21 +15,6 @@ const getAssignments = (req, res){ =>
     });
 }
 */
-
-const buildSearch = (searchFields, searchTerm, additionalCriteria) => {
-  console.log(searchTerm);
-  if (searchTerm) {
-    const orConditions = searchFields.map((field) => ({
-      [field]: { $regex: `${searchTerm}`, $options: "i" },
-    }));
-    return {
-      $or: orConditions,
-      ...additionalCriteria,
-    };
-  } else {
-    return additionalCriteria;
-  }
-};
 
 const getAssignments = async (req, res) => {
   const { page, limit, userId, search } = req.query;
