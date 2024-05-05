@@ -10,6 +10,7 @@ import { BoardComponent } from './pages/user/board/board.component';
 import { StudentComponent } from './pages/student/student.component';
 import { DahsboardComponent } from './pages/dashboard/dahsboard/dahsboard.component';
 import { HomeComponent } from './pages/home/home.component';
+import { TeacherComponent } from './pages/teacher/teacher.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -25,6 +26,7 @@ export const routes: Routes = [
       { path: 'add', component: AddAssignmentComponent, canActivate: [authGuard] },
       { path: 'board', component: BoardComponent, canActivate: [authGuard] },
       { path: 'student', component: StudentComponent, canActivate: [authGuard] },
+      { path: 'teacher', component: TeacherComponent, canActivate: [authGuard] },
     ]
   },
   { path: 'login', component: LoginComponent },

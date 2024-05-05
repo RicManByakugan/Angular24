@@ -1,0 +1,45 @@
+@if (statusLoading){
+    <app-loader></app-loader>
+}
+<mat-card>
+    <mat-card-content>
+        @if(userData){
+            <h5 class="mt-2 mb-4">{{ userData.subject.type }}</h5>
+            <hr />
+        }
+        <div class="mt-2 d-flex justify-content-between align-item-center" cdkDropListGroup>
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Non rendu</mat-card-title>
+                    <mat-card-subtitle>Date</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="example-container">
+                        <div cdkDropList [cdkDropListData]="items" class="example-list" cdkDropListSortingDisabled
+                            (cdkDropListDropped)="drop($event)">
+                            @for (item of items; track item) {
+                            <div class="example-box" cdkDrag>{{item}}</div>
+                            }
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Rendu</mat-card-title>
+                    <mat-card-subtitle>Date</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="example-container">
+                        <div cdkDropList [cdkDropListData]="basket" class="example-list"
+                            (cdkDropListDropped)="drop($event)">
+                            @for (item of basket; track item) {
+                            <div class="example-box" cdkDrag>{{item}}</div>
+                            }
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </mat-card-content>
+</mat-card>

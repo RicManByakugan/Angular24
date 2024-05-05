@@ -61,6 +61,20 @@ const getAssignmentsUtilisateur = (req, res) => {
   }
 };
 
+
+// Récupérer tous les assignments d'un utilisateur (GET)
+const getAssignmentsSubject = (req, res) => {
+  if (req.params.subject) {
+    Assignment.find({ subject: req.params.subject })
+      .then((assignmentS) => {
+        res.json(assignmentS);
+      })
+      .catch((error) => res.json({ message: "Erreur de traitement" }));
+  } else {
+    res.json({ message: "Paramètre incomplète" });
+  }
+};
+
 const postAssignment = async (req, res) => {
   if (req.auth.userId) {
     try {
@@ -151,4 +165,4 @@ const deleteAssignment = (req, res) => {
   }
 };
 
-module.exports = { getAssignments, getAssignmentsUtilisateur, postAssignment, getAssignment, updateAssignment, deleteAssignment };
+module.exports = { getAssignments, getAssignmentsUtilisateur, postAssignment, getAssignment, updateAssignment, deleteAssignment, getAssignmentsSubject };

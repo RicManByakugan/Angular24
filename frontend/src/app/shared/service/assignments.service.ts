@@ -31,6 +31,12 @@ export class AssignmentsService {
     });
   }
 
+  getAssignmentsSubject(subject: string): Observable<Assignment[]> {
+    return this.http.get<Assignment[]>(this.uri + '/Subject/' + subject , {
+      headers: this.headers,
+    });
+  }
+
   getAssignments(): Observable<AssignmentOld[]> {
     return this.http.get<AssignmentOld[]>(this.uri, { headers: this.headers });
   }
@@ -47,6 +53,7 @@ export class AssignmentsService {
       headers: this.headers,
     });
   }
+  
 
   // Methode appelée par catchError, elle doit renvoyer
   // i, Observable<T> où T est le type de l'objet à renvoyer

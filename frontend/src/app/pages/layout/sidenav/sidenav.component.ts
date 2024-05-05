@@ -4,6 +4,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import { AuthService } from '../../../shared/service/auth.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { UserService } from '../../../shared/service/user.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -13,9 +14,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   styleUrl: './sidenav.component.css'
 })
 export class SidenavComponent {
+  userData: any;
   isConnected = false;
   
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private userService: UserService) { }
 
   ngOnInit(): void {
     this.authService.isAdmin()
@@ -27,6 +29,12 @@ export class SidenavComponent {
       }
     })
     .catch(err => console.log(err))
+
+    this.userService.getUserConnected().subscribe(user => {
+      if (user) {
+        this.userData = user.useractif
+      }
+    })
   }
   
   logOut(){
