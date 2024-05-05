@@ -20,14 +20,38 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       { path: '', component: HomeComponent },
-      { path: 'accueilR', component: AssignmentsComponent, canActivate: [authGuard] },
-      { path: 'assignment/:id', component: AssignmentDetailComponent, canActivate: [authGuard] },
-      { path: 'assignment/:id/edit', component: EditAssignmentComponent, canActivate: [authGuard] },
-      { path: 'add', component: AddAssignmentComponent, canActivate: [authGuard] },
+      {
+        path: 'accueilR',
+        component: AssignmentsComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'assignment/:id',
+        component: AssignmentDetailComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'assignment/:id/edit',
+        component: EditAssignmentComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'add',
+        component: AddAssignmentComponent,
+        canActivate: [authGuard],
+      },
       { path: 'board', component: BoardComponent, canActivate: [authGuard] },
-      { path: 'student', component: StudentComponent, canActivate: [authGuard] },
-      { path: 'teacher', component: TeacherComponent, canActivate: [authGuard] },
-    ]
+      {
+        path: 'student',
+        component: StudentComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'teacher',
+        component: TeacherComponent,
+        canActivate: [authGuard],
+      },
+    ],
   },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
