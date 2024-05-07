@@ -1,8 +1,10 @@
 @if (statusLoading){
-<app-loader></app-loader>
+  <app-loader></app-loader>
 }
-
-<div class="container">
+@if (ResRequest){
+  <app-alert [message]="ResRequest"></app-alert>
+}
+<div class="h-100 container">
   <mat-card class="login-card">
     <mat-card-content>
       <form class="login-content" #loginForm="ngForm" (ngSubmit)="onSubmit($event)">
@@ -17,10 +19,12 @@
           <input matInput type="password" [(ngModel)]="passwordUser" name="password" required />
           <mat-error> Veuillez renseigner un mot de passe </mat-error>
         </mat-form-field>
-        <label [ngClass]="{'text-danger': ResRequest != 'Utilisateur connecté'}">
+        @if(ResRequest){
+          <label [ngClass]="{'text-danger': ResRequest != 'Utilisateur connecté'}">
           {{ ResRequest }}
         </label>
-        <button class="submit" mat-raised-button color="primary">
+        }
+        <button class="w-100" class="submit" mat-raised-button color="primary">
           Se connecter
         </button>
         <a [routerLink]="['/register']">

@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { AlertComponent } from '../../../component/alert/alert.component';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ import { CommonModule } from '@angular/common';
     MatInputModule,
     MatButtonModule,
     RouterLink,
-    CommonModule
+    CommonModule, 
+    AlertComponent
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',

@@ -1,59 +1,81 @@
 @if (statusLoading){
-<app-loader></app-loader>
+  <app-loader></app-loader>
 }
-
-<div class="container">
+@if (ResRequest){
+  <app-alert [message]="ResRequest"></app-alert>
+}
+<div class="h-100 container">
   <mat-card class="register-card">
     <mat-card-content>
       <form class="register-content" ngForm (submit)="onSubmit($event)">
         <h2>S'inscrire</h2>
-        <mat-form-field appearance="outline">
-          <mat-label>Nom</mat-label>
-          <input type="text" matInput placeholder="Entrer votre nom" [(ngModel)]="nomUser" name="nomUser" required />
-          <mat-error> Veuillez entrer votre nom </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Prénom</mat-label>
-          <input type="text" matInput placeholder="Entrer votre prénom" [(ngModel)]="prenomUser" name="prenomUser" required />
-          <mat-error> Veuillez entrer votre prénom </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Email</mat-label>
-          <input type="email" matInput placeholder="Entrer votre prénom" [(ngModel)]="emailUser" name="emailUser" required />
-          <mat-error> Veuillez entrer votre email </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Role</mat-label>
-          <mat-select required [(ngModel)]="roleUser" name="roleUser">
-            <mat-option></mat-option>
-            <mat-option value="STUDENT">Etudiant</mat-option>
-            <mat-option value="TEACHER">Professeur</mat-option>
-          </mat-select>
-          <mat-error> Veuillez entrer votre role </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Matière</mat-label>
-          <mat-select required [(ngModel)]="subjectUser" name="subjectUser">
-            <mat-option *ngFor="let subject of dataSubject" [value]="subject">
-              {{ subject.type }}
-            </mat-option>
-          </mat-select>
-          <mat-error> Veuillez entrer votre role </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Mot de passe</mat-label>
-          <input type="password" matInput placeholder="Entrer votre prénom" [(ngModel)]="passwordUser" name="passwordUser" required />
-          <mat-error> Veuillez entrer votre mot de passe </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Confirmer le mot de passe</mat-label>
-          <input type="password" matInput placeholder="Entrer votre prénom" [(ngModel)]="passwordUser2" name="passwordUser2" required />
-          <mat-error> Veuillez entrer votre mot de passe </mat-error>
-        </mat-form-field>
-        <label [ngClass]="{'text-danger': ResRequest != 'Utilisateur créé'}">
-          {{ ResRequest }}
-        </label>
-        <button class="submit" mat-raised-button color="primary">
+        <mat-stepper headerPosition="top" #stepper>
+          <mat-step>
+            <ng-template matStepLabel>Identité</ng-template>
+            <div class="w-100">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Nom</mat-label>
+                <input type="text" matInput placeholder="Entrer votre nom" [(ngModel)]="nomUser" name="nomUser" required />
+                <mat-error> Veuillez entrer votre nom </mat-error>
+              </mat-form-field>
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Prénom</mat-label>
+                <input type="text" matInput placeholder="Entrer votre prénom" [(ngModel)]="prenomUser" name="prenomUser" required />
+                <mat-error> Veuillez entrer votre prénom </mat-error>
+              </mat-form-field>
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Email</mat-label>
+                <input type="email" matInput placeholder="Entrer votre prénom" [(ngModel)]="emailUser" name="emailUser" required />
+                <mat-error> Veuillez entrer votre email </mat-error>
+              </mat-form-field>
+            </div>
+          </mat-step>
+          <mat-step>
+            <ng-template matStepLabel>Place</ng-template>
+            <div class="w-100">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Role</mat-label>
+                <mat-select required [(ngModel)]="roleUser" name="roleUser">
+                  <mat-option></mat-option>
+                  <mat-option value="STUDENT">Etudiant</mat-option>
+                  <mat-option value="TEACHER">Professeur</mat-option>
+                </mat-select>
+                <mat-error> Veuillez entrer votre role </mat-error>
+              </mat-form-field>
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Matière</mat-label>
+                <mat-select required [(ngModel)]="subjectUser" name="subjectUser">
+                  <mat-option *ngFor="let subject of dataSubject" [value]="subject">
+                    {{ subject.type }}
+                  </mat-option>
+                </mat-select>
+                <mat-error> Veuillez entrer votre role </mat-error>
+              </mat-form-field>
+            </div>
+          </mat-step>
+          <mat-step>
+            <ng-template matStepLabel>Mot de passe</ng-template>
+            <div class="w-100">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Mot de passe</mat-label>
+                <input type="password" matInput placeholder="Entrer votre prénom" [(ngModel)]="passwordUser" name="passwordUser" required />
+                <mat-error> Veuillez entrer votre mot de passe </mat-error>
+              </mat-form-field>
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Confirmer le mot de passe</mat-label>
+                <input type="password" matInput placeholder="Entrer votre prénom" [(ngModel)]="passwordUser2" name="passwordUser2" required />
+                <mat-error> Veuillez entrer votre mot de passe </mat-error>
+              </mat-form-field>
+            </div>
+          </mat-step>
+        </mat-stepper>
+        @if(ResRequest){
+          <hr>
+          <label [ngClass]="{'text-danger': ResRequest != 'Utilisateur créé'}">
+            {{ ResRequest }}
+          </label>
+        }
+        <button class="w-100" class="submit" mat-raised-button color="primary">
           S'inscrire
         </button>
         <a [routerLink]="['/login']">

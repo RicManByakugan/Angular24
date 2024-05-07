@@ -1,5 +1,7 @@
 .container-item {
     width: 400px;
+    height: 250px;
+    overflow-y: scroll !important;;
     max-width: 100%;
     margin: 0 25px 25px 0;
     display: inline-block;

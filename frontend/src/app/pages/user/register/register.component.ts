@@ -7,12 +7,14 @@ import { LoaderComponent } from '../../../component/loader/loader.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { CommonModule } from '@angular/common';
 import { SubjectService } from '../../../shared/service/subjects.service';
 import { Subject } from '../../../interfaces/subject.interface';
+import { AlertComponent } from '../../../component/alert/alert.component';
 
 @Component({
   selector: 'app-register',
@@ -24,7 +26,7 @@ import { Subject } from '../../../interfaces/subject.interface';
     MatGridListModule,
     MatInputModule,
     MatSelectModule,
-    MatButtonModule, RouterLink, CommonModule],
+    MatButtonModule, RouterLink, CommonModule, MatStepperModule, AlertComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
