@@ -1,0 +1,38 @@
+.callout {
+    z-index: 9999;
+    position: fixed;
+    top: 35px;
+    right: 20px;
+    width: 20%;
+}
+
+.callout-contain {
+    color: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.closebtn {
+    position: absolute;
+    top: 15%;
+    right: 15px;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.closebtn:hover {
+    color: lightgrey;
+}
+
+.hide {
+    display: none;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-2px) rotate(-1deg); }
+    50% { transform: translateX(2px) rotate(1deg); }
+    75% { transform: translateX(-2px) rotate(-1deg); }
+    100% { transform: translateX(0); }
+}

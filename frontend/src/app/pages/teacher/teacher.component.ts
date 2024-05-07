@@ -15,11 +15,15 @@ import { AssignmentsService } from '../../shared/service/assignments.service';
 import { Assignment } from '../../interfaces/assignment.interface';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { DialogComponent } from '../../component/dialog/dialog.component';
+import { Router } from '@angular/router';
+import { AuthService } from '../../shared/service/auth.service';
+import { AlertComponent } from '../../component/alert/alert.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-teacher',
   standalone: true,
-  imports: [CdkDropListGroup, CdkDropList, CdkDrag, MatCardModule, LoaderComponent, MatDialogModule],
+  imports: [CdkDropListGroup, CdkDropList, CdkDrag, MatCardModule, LoaderComponent, MatDialogModule, AlertComponent, DatePipe],
   templateUrl: './teacher.component.html',
   styleUrl: './teacher.component.css'
 })
@@ -29,24 +33,52 @@ export class TeacherComponent {
   allDataSubject: Assignment[] = [];
   dataDone: Assignment[] = [];
   dataNotDone: Assignment[] = [];
+  resRequest: string | undefined;
 
-  constructor(public dialog: MatDialog, private userService: UserService, private subjectService: SubjectService, private assignmentService: AssignmentsService) { }
+  constructor(public dialog: MatDialog, private userService: UserService, private authService: AuthService, private subjectService: SubjectService, private assignmentService: AssignmentsService, private route: Router) { }
 
-  openDialog(dataAssignment: Assignment): void {
+  openDialog(dataAssignment: Assignment, event: CdkDragDrop<Assignment[]>): void {
+    this.resRequest = undefined;
+    transferArrayItem(
+      event.previousContainer.data,
+      event.container.data,
+      event.previousIndex,
+      event.currentIndex,
+    );
     const dialogRef = this.dialog.open(DialogComponent, {
       data: dataAssignment,
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+    dialogRef.afterClosed().subscribe(Assignmentresult => {
+      if (Assignmentresult !== undefined && Assignmentresult.isDone !== undefined) {
+        console.log(Assignmentresult._id);
+        this.assignmentService.rendreAssignment(Assignmentresult._id, Assignmentresult)
+          .subscribe(resUpdate => {
+            if(resUpdate.message === "Updated"){
+              this.resRequest = "Assignment rendu"     
+            }else{
+              this.resRequest = resUpdate.message     
+            }
+          })   
+      } else {
+        transferArrayItem(
+          event.container.data,
+          event.previousContainer.data,
+          event.currentIndex,
+          event.previousIndex,
+        );
+        this.resRequest = "Assignment non rendu" 
+      }
     });
   }
 
-
-
   ngOnInit(): void {
     this.userService.getUserConnected().subscribe(user => {
-      if (user) {
+      this.resRequest = undefined;
+      if (user.message === "Invalid token" || user.message === "Utilisateur invalide") {
+        this.authService.logOut();
+        this.route.navigate(['/login']);
+        this.resRequest = "Veuiller vous reconnectez" 
+      } else {
         this.userData = user.useractif
         this.subjectService.getSubject(this.userData.subject).subscribe(res => {
           if (res) {
@@ -69,31 +101,14 @@ export class TeacherComponent {
         })
       }
     })
-
   }
 
   drop(event: CdkDragDrop<Assignment[]>) {
-    console.log(event.container.data[0]);
-    this.openDialog(event.container.data[0])
     if (event.previousContainer === event.container) {
-      // moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      // alert("Transfert")
-
-      // alert(event.container.data[0].isDone)
-      // alert(event.previousIndex)
-      // alert(event.currentIndex)
-
-      // transferArrayItem(
-      //   event.previousContainer.data,
-      //   event.container.data,
-      //   event.previousIndex,
-      //   event.currentIndex,
-      // );
+      this.openDialog(this.dataNotDone[event.previousIndex], event)
     }
   }
-
-
-
 
 }

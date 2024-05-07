@@ -1,0 +1,6 @@
+<div class="callout" [ngClass]="{'hide': !isVisible}" [@slideInOut]>
+    <div class="p-4 bg-dark callout-contain d-flex justify-content-between align-item-center">
+        <div>{{ message }}</div>
+        <span class="closebtn" (click)="hideCallout()">&times;</span>
+    </div>
+</div>

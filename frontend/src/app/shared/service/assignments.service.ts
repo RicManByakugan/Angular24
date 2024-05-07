@@ -78,15 +78,17 @@ export class AssignmentsService {
     });
   }
 
-  updateAssignment(assignment: AssignmentOld): Observable<any> {
+  updateAssignment(id: string, assignment: Assignment): Observable<any> {
     // l'assignment passé en paramètre est le même objet que dans le tableau
     // plus tard on verra comment faire avec une base de données
     // il faudra faire une requête HTTP pour envoyer l'objet modifié
-    this.logService.log(assignment.nom, 'modifié');
+    this.logService.log(assignment.title, 'modifié');
     //return of("Assignment modifié avec succès");
-    return this.http.put<AssignmentOld>(this.uri, assignment, {
-      headers: this.headers,
-    });
+    return this.http.put<Assignment>(this.uri + "/" + id, assignment, { headers: this.headers });
+  }
+
+  rendreAssignment(id: string, assignment: Assignment): Observable<any> {
+    return this.http.post<Assignment>(this.uri + "/rendre/" + id, {score: assignment.score}, { headers: this.headers });
   }
 
   deleteAssignment(assignment: AssignmentOld): Observable<any> {

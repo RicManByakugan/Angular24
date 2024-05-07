@@ -1,13 +1,13 @@
-@if(data){
-    <mat-dialog-content>
-      <p>{{ data.title }}</p>
-      <mat-form-field>
-        <mat-label>Note</mat-label>
-        <input matInput [(ngModel)]="data.score">
-      </mat-form-field>
-    </mat-dialog-content>
-    <mat-dialog-actions>
-      <button mat-button>Annuler</button>
-      <button mat-button cdkFocusInitial>Entrer</button>
-    </mat-dialog-actions>
-}
+<ng-container *ngIf="dataReceived">
+  <mat-dialog-content>
+    <p>{{ dataReceived.title }}</p>
+    <mat-form-field>
+      <mat-label>Note</mat-label>
+      <input matInput [(ngModel)]="dataReceived.score">
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button (click)="closeDialog()">Annuler</button>
+    <button mat-button cdkFocusInitial [mat-dialog-close]="dataReceived">Entrer</button>
+  </mat-dialog-actions>
+</ng-container>

@@ -13,7 +13,7 @@ const utilisateur_actif = (req, res) => {
         }
         res.json({ useractif: user });
       })
-      .catch((error) => res.status(400).json({ error }));
+      .catch((error) => res.status(200).json({ message: "Utilisateur invalide" }));
   } else {
     res.json({ message: "Token invalide" });
   }
