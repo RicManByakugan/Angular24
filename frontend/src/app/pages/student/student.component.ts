@@ -11,6 +11,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddAssignmentComponent } from '../assignments/add-assignment/add-assignment.component';
 import { AssignmentDetailComponent } from '../assignments/assignment-detail/assignment-detail.component';
 import { Router } from '@angular/router';
+import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-student',
@@ -21,6 +24,9 @@ import { Router } from '@angular/router';
     MatIconModule,
     MatButtonModule,
     MatTooltipModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatInputModule,
   ],
   templateUrl: './student.component.html',
   styleUrl: './student.component.css',
@@ -34,6 +40,7 @@ export class StudentComponent {
   prevPage!: number;
   hasNextPage!: boolean;
   hasPrevPage!: boolean;
+  searchTerm = '';
 
   constructor(
     private assignmentService: AssignmentsService,
@@ -47,14 +54,14 @@ export class StudentComponent {
 
   getAssignments() {
     this.assignmentService
-      .getAssignmentsPagines(this.page, this.pageSize)
+      .getAssignmentsPagines({
+        page: this.page,
+        limit: this.pageSize,
+        search: this.searchTerm,
+        userId: localStorage.getItem('user') as string,
+      })
       .subscribe((value) => {
-        this.assignments = value.docs;
-        this.totalPages = value.totalPages;
-        this.nextPage = value.nextPage;
-        this.prevPage = value.prevPage;
-        this.hasNextPage = value.hasNextPage;
-        this.hasPrevPage = value.hasPrevPage;
+        this.setValues(value);
       });
   }
 
@@ -62,6 +69,28 @@ export class StudentComponent {
     this.page = event.pageIndex + 1;
     this.pageSize = event.pageSize;
     this.getAssignments();
+  }
+
+  search(): void {
+    this.assignmentService
+      .getAssignmentsPagines({
+        page: this.page,
+        limit: this.pageSize,
+        search: this.searchTerm,
+        userId: localStorage.getItem('user') as string,
+      })
+      .subscribe((value) => {
+        this.setValues(value);
+      });
+  }
+
+  private setValues(value: any) {
+    this.assignments = value.docs;
+    this.totalPages = value.totalPages;
+    this.nextPage = value.nextPage;
+    this.prevPage = value.prevPage;
+    this.hasNextPage = value.hasNextPage;
+    this.hasPrevPage = value.hasPrevPage;
   }
 
   openDialog(

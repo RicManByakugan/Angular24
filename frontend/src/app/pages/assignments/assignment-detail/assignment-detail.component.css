@@ -1,4 +1,124 @@
 .container {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
   display: flex;
+  flex-direction: column;
+  gap: 10px;
   justify-content: space-between;
+  overflow: auto;
+}
+
+.container h3 {
+  width: 100%;
+  color: rgba(0, 0, 0, 0.608);
+}
+
+mat-icon {
+  color: rgba(0, 0, 0, 0.608);
+}
+
+.owner {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+
+.owner p {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.state {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.eval {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.owner div:last-child {
+  width: 100%;
+}
+
+.owner div:last-child ul {
+  width: 100%;
+  list-style: none;
+}
+
+button {
+  width: 50%;
+  align-self: flex-end;
+}
+
+.eval div {
+  width: 100%;
+}
+
+h5 {
+  color: rgba(0, 0, 0, 0.608);
+}
+
+.score {
+  font-size: 35px;
+  font-weight: 600;
+}
+
+.profile {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+.done {
+  background-color: #008000 !important;
+  color: white !important;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.pending {
+  background-color: #005cbb !important;
+  color: white !important;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.comment {
+  width: 100%;
+  text-align: justify;
+}
+
+.author {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.author div:first-child {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+.author img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }

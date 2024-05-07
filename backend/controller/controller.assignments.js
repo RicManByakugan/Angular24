@@ -1,6 +1,7 @@
 let Assignment = require("../model/assignment");
 const { ObjectID } = require("bson");
 const User = require("../model/user");
+const { buildSearch } = require("../utils/search");
 
 // Récupérer tous les assignments (GET)
 /*
@@ -16,22 +17,21 @@ const getAssignments = (req, res){ =>
 */
 
 const getAssignments = async (req, res) => {
+  const { page, limit, userId, search } = req.query;
+  const additionalCriteria = {
+    student: new ObjectID(userId),
+  };
+  const searchFields = ["title", "subject"];
+  const criteria = buildSearch(searchFields, search, additionalCriteria);
+
   let aggregateQuery = Assignment.aggregate();
+  aggregateQuery.match(criteria);
 
-  Assignment.aggregatePaginate(
-    aggregateQuery,
-    {
-      page: parseInt(req.query.page) || 1,
-      limit: parseInt(req.query.limit) || 10,
-    },
-    (err, data) => {
-      if (err) {
-        res.send(err);
-      }
-
-      res.send(data);
-    }
-  );
+  const assignments = await Assignment.aggregatePaginate(aggregateQuery, {
+    page: parseInt(page) || 1,
+    limit: parseInt(limit) || 10,
+  });
+  res.send(assignments);
 };
 
 // Récupérer un assignment par son id (GET)
@@ -60,7 +60,6 @@ const getAssignmentsUtilisateur = (req, res) => {
     res.json({ message: "Utilisateur non connecté" });
   }
 };
-
 
 // Récupérer tous les assignments d'un utilisateur (GET)
 const getAssignmentsSubject = (req, res) => {

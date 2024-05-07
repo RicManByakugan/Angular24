@@ -12,8 +12,11 @@ import { AuthService } from '../../../shared/service/auth.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Assignment } from '../../../interfaces/assignment.interface';
 import { User } from '../../../interfaces/user.interface';
-import { MatIconModule } from '@angular/material/icon';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { FileUploadService } from '../../../shared/service/file-upload.service';
+import { FilePathPipe } from '../../../shared/pipes/file-path.pipe';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatChipsModule } from '@angular/material/chips';
 @Component({
   selector: 'app-assignment-detail',
   standalone: true,
@@ -23,6 +26,10 @@ import { FileUploadService } from '../../../shared/service/file-upload.service';
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
+    MatIconModule,
+    FilePathPipe,
+    MatDividerModule,
+    MatChipsModule,
     MatIconModule,
   ],
   templateUrl: './assignment-detail.component.html',

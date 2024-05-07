@@ -1,37 +1,70 @@
 <div class="container">
   @if(assignment){
-  <h3>{{ assignment.title }}</h3>
+  <h3>{{ assignment.subject }} - {{ assignment.title }}</h3>
+  <mat-divider></mat-divider>
   <div class="owner">
     <div>
-      <img [src]="student.photo" alt="profile" />
+      <img [src]="student.photo | filePath" alt="profile" class="profile" />
     </div>
     <div>
-      <ul>
-        <li>{{ student.firstName }} {{ student.lastName }}</li>
-        <li>{{ student.email }}</li>
-        <span>Créé le : {{ assignment.creationDate | date : "medium" }}</span>
-      </ul>
+      <p>
+        <mat-icon inline [ngStyle]="{ color: 'rgba(0, 0, 0, 0.608)' }"
+          >account_circle</mat-icon
+        >{{ student.firstName }}
+        {{ student.lastName }}
+      </p>
+      <p>
+        <mat-icon inline [ngStyle]="{ color: 'rgba(0, 0, 0, 0.608)' }"
+          >alternate_email</mat-icon
+        >{{ student.email }}
+      </p>
+      <p>
+        <mat-icon inline [ngStyle]="{ color: 'rgba(0, 0, 0, 0.608)' }"
+          >date_range</mat-icon
+        >Créé le :
+        {{ assignment.creationDate | date : "dd/MM/yyyy" }}
+      </p>
     </div>
   </div>
-  <button
-    mat-raised-button
-    color="primary"
-    (click)="onDownloadFile(assignment.file)"
-  >
-    <mat-icon>add</mat-icon> Télécharger le devoir
-  </button>
+  <mat-divider></mat-divider>
+  <div class="state">
+    <mat-chip
+      [class]="assignment.isDone ? 'done' : 'pending'"
+      [ngStyle]="{ color: 'white' }"
+      >{{ assignment.isDone ? "Rendu" : "En attente" }}</mat-chip
+    >
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onDownloadFile(assignment.file)"
+    >
+      <mat-icon [ngStyle]="{ color: 'white' }">download</mat-icon> Télécharger
+      le devoir
+    </button>
+  </div>
+  <mat-divider></mat-divider>
   <div class="eval">
     @if(teacher){
     <div>
-      <span>{{ assignment.comment }}</span>
-      <span>Note: {{ assignment.score }} / 20</span>
+      <h5>Note</h5>
+      <span class="score">{{ assignment.score }}</span>
     </div>
-    <div>
-      <img [src]="teacher.photo" alt="" />
-      <span>{{ teacher.firstName }} {{ teacher.lastName }}</span>
-    </div>
-    <div>
-      <span>Corrigé le: {{ assignment.validationDate | date : "medium" }}</span>
+    <div class="comment">
+      <h5>Commentaire</h5>
+      <span class="comment">{{ assignment.comment }}</span>
+      <mat-divider></mat-divider>
+      <div class="author">
+        <div>
+          <img [src]="teacher.photo | filePath" alt="" />
+          <span>{{ teacher.firstName }} {{ teacher.lastName }}</span>
+        </div>
+        <div>
+          <span
+            >Corrigé le:
+            {{ assignment.validationDate | date : "dd/MM/yyyy" }}</span
+          >
+        </div>
+      </div>
     </div>
     }
   </div>
