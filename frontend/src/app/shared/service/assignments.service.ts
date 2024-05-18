@@ -9,6 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { bdInitialAssignments } from '../data';
 import { Assignment } from '../../interfaces/assignment.interface';
 import { Criteria } from '../../interfaces/criteria.interface';
+import { environment } from '../../../environment/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,8 @@ export class AssignmentsService {
 
   constructor(private logService: LoggingService, private http: HttpClient) {}
 
-  uri = 'http://localhost:3000/api/assignments';
+  uri = `${environment.apiBaseUrl}/assignments`;
+  // uri = 'http://localhost:3000/api/assignments';
   // uri = "https://angularmbdsmadagascar2024.onrender.com/api/assignments";
 
   // retourne tous les assignments

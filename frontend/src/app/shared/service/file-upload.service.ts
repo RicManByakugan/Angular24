@@ -1,12 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
+import { environment } from '../../../environment/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FileUploadService {
-  uri = 'http://localhost:3000/api';
+  uri = environment.apiBaseUrl;
   token = localStorage.getItem('user') + ' ' + localStorage.getItem('token');
   headers = new HttpHeaders({
     Authorization: this.token,

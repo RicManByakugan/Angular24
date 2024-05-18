@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { LoggingService } from './logging.service';
 import { Observable } from 'rxjs';
 import { Subject } from '../../interfaces/subject.interface';
+import { environment } from '../../../environment/environment';
 
 @Injectable({ providedIn: 'root' })
 export class SubjectService {
@@ -13,7 +14,7 @@ export class SubjectService {
 
   constructor(private http: HttpClient) {}
 
-  uri = 'http://localhost:3000/api';
+  uri = environment.apiBaseUrl;
   // uri = "https://angularmbdsmadagascar2024.onrender.com/api/assignments";
 
   getSubjects(): Observable<Subject[]> {
