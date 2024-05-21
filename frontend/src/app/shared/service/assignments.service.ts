@@ -86,11 +86,15 @@ export class AssignmentsService {
     // il faudra faire une requête HTTP pour envoyer l'objet modifié
     this.logService.log(assignment.title, 'modifié');
     //return of("Assignment modifié avec succès");
-    return this.http.put<Assignment>(this.uri + "/" + id, assignment, { headers: this.headers });
+    return this.http.put<Assignment>(this.uri + '/' + id, assignment, {
+      headers: this.headers,
+    });
   }
 
   rendreAssignment(id: string, assignment: Assignment): Observable<any> {
-    return this.http.post<Assignment>(this.uri + "/rendre/" + id, {score: assignment.score}, { headers: this.headers });
+    return this.http.put<Assignment>(this.uri + '/rendre/' + id, assignment, {
+      headers: this.headers,
+    });
   }
 
   deleteAssignment(assignment: AssignmentOld): Observable<any> {

@@ -24,6 +24,7 @@ import { AuthService } from '../../shared/service/auth.service';
 import { AlertComponent } from '../../component/alert/alert.component';
 import { DatePipe } from '@angular/common';
 import { User } from '../../interfaces/user.interface';
+import { AssignmentDetailComponent } from '../assignments/assignment-detail/assignment-detail.component';
 
 @Component({
   selector: 'app-teacher',
@@ -55,7 +56,7 @@ export class TeacherComponent {
     private authService: AuthService,
     private subjectService: SubjectService,
     private assignmentService: AssignmentsService,
-    private route: Router
+    private router: Router
   ) {}
 
   openDialog(
@@ -70,6 +71,7 @@ export class TeacherComponent {
       event.currentIndex
     );
     const dialogRef = this.dialog.open(DialogComponent, {
+      width: '50vw',
       data: dataAssignment,
     });
     dialogRef.afterClosed().subscribe((Assignmentresult) => {
@@ -107,7 +109,7 @@ export class TeacherComponent {
         user.message === 'Utilisateur invalide'
       ) {
         this.authService.logOut();
-        this.route.navigate(['/login']);
+        this.router.navigate(['/login']);
         this.resRequest = 'Veuiller vous reconnectez';
       } else {
         this.userData = user.useractif;
@@ -151,5 +153,18 @@ export class TeacherComponent {
 
   getStudent(assignment: Assignment) {
     return assignment.student as User;
+  }
+
+  viewAssignment(
+    assignmentId: string,
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ): void {
+    this.router.navigate(['/home/teacher'], { queryParams: { assignmentId } });
+    this.dialog.open(AssignmentDetailComponent, {
+      width: '50vw',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
   }
 }

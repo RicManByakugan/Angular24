@@ -127,33 +127,13 @@ const updateAssignment = (req, res) => {
   }
 };
 
-const rendreAssignment = (req, res) => {
-  if (req.auth.userId && req.params.id && req.body.score) {
-    User.findOne({ _id: new ObjectID(req.auth.userId) })
-      .then((user) => {
-        if (!user) {
-          res.json({ message: "Utilisateur introuvable" });
-        } else {
-          Assignment.findOne({ _id: new ObjectID(req.params.id) })
-            .then((assignmentRes) => {
-              if (assignmentRes) {
-                assignmentRes.isDone = true;
-                assignmentRes.score = req.body.score;
-                assignmentRes.validationDate = new Date();
-                Assignment.findByIdAndUpdate(req.params.id, assignmentRes, { new: true })
-                  .then((resUpdate) => {
-                    res.json({ message: "Updated" });
-                  })
-                  .catch((error) => res.json({ message: "Erreur de traitement" }));
-              } else {
-                res.json({ message: "Assignment introuvable" });
-              }
-            })
-            .catch((error) => res.json({ message: "Erreur de traitement" }));
-        }
-      })
-      .catch((error) => res.json({ message: "Erreur de traitement" }));
+const rendreAssignment = async (req, res) => {
+  const { _id, ...assignment } = req.body;
+  if (req.auth.userId) {
+    await Assignment.findByIdAndUpdate(_id, { $set: assignment }, { new: true });
+    res.json({ message: "Devoir rendu" });
   } else {
+    res.status = 401;
     res.json({ message: "Utilisateur non connecté" });
   }
 };

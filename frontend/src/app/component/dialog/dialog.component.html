@@ -1,13 +1,25 @@
 <ng-container *ngIf="dataReceived">
-  <mat-dialog-content>
-    <p>{{ dataReceived.title }}</p>
-    <mat-form-field>
+  <mat-dialog-content class="column">
+    <h4>{{ dataReceived.title }}</h4>
+    <mat-form-field appearance="outline">
       <mat-label>Note</mat-label>
-      <input matInput [(ngModel)]="dataReceived.score">
+      <input
+        type="number"
+        min="0"
+        max="20"
+        matInput
+        [(ngModel)]="dataReceived.score"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Commentaire</mat-label>
+      <textarea matInput [(ngModel)]="dataReceived.comment"></textarea>
     </mat-form-field>
   </mat-dialog-content>
   <mat-dialog-actions>
     <button mat-button (click)="closeDialog()">Annuler</button>
-    <button mat-button cdkFocusInitial [mat-dialog-close]="dataReceived">Entrer</button>
+    <button mat-button cdkFocusInitial [mat-dialog-close]="dataReceived">
+      Valider
+    </button>
   </mat-dialog-actions>
 </ng-container>

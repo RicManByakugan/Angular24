@@ -80,6 +80,9 @@ export class AssignmentDetailComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.router.navigate(['/home/student']);
+    const currentUrl = this.router.url;
+    this.router.navigate([
+      currentUrl.includes('student') ? '/home/student' : '/home/teacher',
+    ]);
   }
 }
