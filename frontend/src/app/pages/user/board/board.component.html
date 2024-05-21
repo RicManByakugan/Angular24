@@ -9,7 +9,15 @@
         <div>
           <h5 class="mt-2 mb-4">Mon compte</h5>
           <hr />
-          <img [src]="userData.photo | filePath" width="100" height="100" />
+          <img
+            [src]="
+              userData.photo
+                ? (userData.photo | filePath)
+                : '/assets/img/profile.png'
+            "
+            width="100"
+            height="100"
+          />
           @if(userData){
           <h4 class="mt-2 mb-0">{{ userData.nom }} {{ userData.prenom }}</h4>
           <small>{{ userData.email }}</small

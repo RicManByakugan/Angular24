@@ -29,7 +29,6 @@ const downloadFile = async (req, res) => {
   console.log(req.params);
   const filename = req.params.filename;
   const filePath = `${FILE_PATH}/${filename}`;
-  console.log(filePath);
   fs.exists(filePath, (exists) => {
     if (exists) {
       res.setHeader("Content-disposition", "attachment; filename=" + filename);

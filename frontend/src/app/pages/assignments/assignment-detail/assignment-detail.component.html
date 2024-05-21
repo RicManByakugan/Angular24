@@ -1,6 +1,5 @@
 <div class="container">
   @if(assignment){
-  {{ teacher }}
   <h3>{{ assignment.subject }} - {{ assignment.title }}</h3>
   <mat-divider></mat-divider>
   <div class="owner">
@@ -62,7 +61,14 @@
       <mat-divider></mat-divider>
       <div class="author">
         <div>
-          <img [src]="teacher.photo | filePath" alt="" />
+          <img
+            [src]="
+              teacher.photo
+                ? (teacher.photo | filePath)
+                : '/assets/img/profile.png'
+            "
+            alt=""
+          />
           <span>{{ teacher.firstName }} {{ teacher.lastName }}</span>
         </div>
         <div>
