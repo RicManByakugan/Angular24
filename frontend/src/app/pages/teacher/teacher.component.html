@@ -1,56 +1,77 @@
 @if (statusLoading){
-    <app-loader></app-loader>
-}
-@if (resRequest){
-    <app-alert [message]="resRequest"></app-alert>
+<app-loader></app-loader>
+} @if (resRequest){
+<app-alert [message]="resRequest"></app-alert>
 }
 <mat-card class="mt-4">
-    <mat-card-content>
-        @if(userData){
-        <h5 class="mt-2 mb-4">{{ userData.subject.type }}</h5>
-        <hr />
-        }
-        <div class="mt-2 d-flex justify-content-between align-item-center" cdkDropListGroup>
-            <mat-card>
-                <mat-card-header>
-                    <mat-card-title>Non rendu</mat-card-title>
-                </mat-card-header>
-                <mat-card-content class="mt-4">
-                    <div class="container-item">
-                        <div cdkDropList [cdkDropListData]="dataNotDone" class="list-item" cdkDropListSortingDisabled>
-                            @for (item of dataNotDone; track item) {
-                                <div class="box-assignment" cdkDrag>
-                                    <div>
-                                        <h4>Note : 0</h4>
-                                        <h6>{{ item.title }}</h6>
-                                        <small>Date creation : {{ item.creationDate | date:'dd-MM-yyyy' }}</small>
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                </mat-card-content>
-            </mat-card>
-            <mat-card>
-                <mat-card-header>
-                    <mat-card-title>Rendu</mat-card-title>
-                </mat-card-header>
-                <mat-card-content class="mt-4">
-                    <div class="container-item">
-                        <div cdkDropList [cdkDropListData]="dataDone" class="list-item" (cdkDropListDropped)="drop($event)">
-                            @for (item of dataDone; track item) {
-                                <div class="box-assignment" cdkDrag>
-                                    <div>
-                                        <h4>Note : {{ item.score }}</h4>
-                                        <h6>{{ item.title }}</h6>
-                                        <small>Date rendu : {{ item.validationDate | date:'dd-MM-yyyy' }}</small>
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                </mat-card-content>
-            </mat-card>
-        </div>
-    </mat-card-content>
+  <mat-card-content>
+    @if(userData){
+    <h5 class="mt-2 mb-4">{{ userData.subject.type }}</h5>
+    <hr />
+    }
+    <div
+      class="mt-2 d-flex justify-content-between align-item-center"
+      cdkDropListGroup
+    >
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Non rendu</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="mt-4">
+          <div class="container-item">
+            <div
+              cdkDropList
+              [cdkDropListData]="dataNotDone"
+              class="list-item"
+              cdkDropListSortingDisabled
+            >
+              @for (item of dataNotDone; track item) {
+              <div class="box-assignment" cdkDrag>
+                <div>
+                  <h4>{{ item.title }}</h4>
+                  <h6>
+                    {{ getStudent(item).firstName }}
+                    {{ getStudent(item).lastName }}
+                  </h6>
+                  <small
+                    >Date creation :
+                    {{ item.creationDate | date : "dd-MM-yyyy" }}</small
+                  >
+                </div>
+              </div>
+              }
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Rendu</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="mt-4">
+          <div class="container-item">
+            <div
+              cdkDropList
+              [cdkDropListData]="dataDone"
+              class="list-item"
+              (cdkDropListDropped)="drop($event)"
+            >
+              @for (item of dataDone; track item) {
+              <div class="box-assignment" cdkDrag>
+                <div>
+                  <h4>Note : {{ item.score }}</h4>
+                  <h6>{{ item.title }}</h6>
+                  <small
+                    >Date rendu :
+                    {{ item.validationDate | date : "dd-MM-yyyy" }}</small
+                  >
+                </div>
+              </div>
+              }
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-card-content>
 </mat-card>

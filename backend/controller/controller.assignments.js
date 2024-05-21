@@ -62,13 +62,10 @@ const getAssignmentsUtilisateur = (req, res) => {
 };
 
 // Récupérer tous les assignments d'un utilisateur (GET)
-const getAssignmentsSubject = (req, res) => {
+const getAssignmentsSubject = async (req, res) => {
   if (req.params.subject) {
-    Assignment.find({ subject: req.params.subject })
-      .then((assignmentS) => {
-        res.json(assignmentS);
-      })
-      .catch((error) => res.json({ message: "Erreur de traitement" }));
+    const assignments = await Assignment.find({ subject: req.params.subject }).populate("student").populate("teacher");
+    res.json(assignments);
   } else {
     res.json({ message: "Paramètre incomplète" });
   }
@@ -133,34 +130,33 @@ const updateAssignment = (req, res) => {
 const rendreAssignment = (req, res) => {
   if (req.auth.userId && req.params.id && req.body.score) {
     User.findOne({ _id: new ObjectID(req.auth.userId) })
-    .then((user) => {
-      if (!user) {
-        res.json({ message: "Utilisateur introuvable" });
-      } else {
-        Assignment.findOne({ _id: new ObjectID(req.params.id) })
-        .then((assignmentRes) => {
-          if (assignmentRes) {
-            assignmentRes.isDone = true
-            assignmentRes.score = req.body.score
-            assignmentRes.validationDate = new Date()
-            Assignment.findByIdAndUpdate(req.params.id, assignmentRes, { new: true })
-              .then((resUpdate) => {
-                res.json({ message: "Updated" });
-              })
-              .catch((error) => res.json({ message: "Erreur de traitement" }));
-          } else {
-            res.json({ message: "Assignment introuvable" });
-          }
-        })
-        .catch((error) => res.json({ message: "Erreur de traitement" }));
-
-      }
-    })
-    .catch((error) => res.json({ message: "Erreur de traitement" }));
+      .then((user) => {
+        if (!user) {
+          res.json({ message: "Utilisateur introuvable" });
+        } else {
+          Assignment.findOne({ _id: new ObjectID(req.params.id) })
+            .then((assignmentRes) => {
+              if (assignmentRes) {
+                assignmentRes.isDone = true;
+                assignmentRes.score = req.body.score;
+                assignmentRes.validationDate = new Date();
+                Assignment.findByIdAndUpdate(req.params.id, assignmentRes, { new: true })
+                  .then((resUpdate) => {
+                    res.json({ message: "Updated" });
+                  })
+                  .catch((error) => res.json({ message: "Erreur de traitement" }));
+              } else {
+                res.json({ message: "Assignment introuvable" });
+              }
+            })
+            .catch((error) => res.json({ message: "Erreur de traitement" }));
+        }
+      })
+      .catch((error) => res.json({ message: "Erreur de traitement" }));
   } else {
     res.json({ message: "Utilisateur non connecté" });
   }
-}
+};
 
 // suppression d'un assignment (DELETE)
 // l'id est bien le _id de mongoDB
