@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environment/environment';
+import { User } from '../../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -30,20 +31,20 @@ export class UserService {
 
   // Inscription d'un utilisateur vers le backend
   registerUser(
-    nom: string,
-    prenom: string,
+    firstName: string,
+    lastName: string,
     role: string,
     subject: string,
     email: string,
     password: string
   ): Observable<any> {
-    return this.http.post<any>(this.uri + '/inscription', {
-      nom: nom,
-      prenom: prenom,
-      role: role,
-      subject: subject,
-      email: email,
-      password: password,
+    return this.http.post<User>(this.uri + '/inscription', {
+      firstName,
+      lastName,
+      role,
+      subject,
+      email,
+      password,
     });
   }
 }

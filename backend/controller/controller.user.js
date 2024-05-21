@@ -33,8 +33,8 @@ const inscription = (req, res) => {
             const user = new User({
               email: req.body.email,
               role: req.body.role,
-              nom: req.body.nom,
-              prenom: req.body.prenom,
+              firstName: req.body.firstName,
+              lastName: req.body.lastName,
               subject: req.body.subject,
               password: hash,
             });
