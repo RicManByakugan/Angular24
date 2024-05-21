@@ -1,10 +1,10 @@
 <mat-drawer-container autosize class="body-child">
-    <mat-drawer #drawer mode="side">
-        <app-sidenav></app-sidenav>
-    </mat-drawer>
+  <mat-drawer #drawer mode="side">
+    <app-sidenav></app-sidenav>
+  </mat-drawer>
 
-    <app-navigation [callback]="drawer"></app-navigation>
-    <div class="container">
-        <router-outlet></router-outlet>
-    </div>
+  <app-navigation [callback]="drawer"></app-navigation>
+  <div class="container h-100">
+    <router-outlet></router-outlet>
+  </div>
 </mat-drawer-container>

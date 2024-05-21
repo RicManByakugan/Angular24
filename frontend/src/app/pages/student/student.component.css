@@ -1,11 +1,12 @@
-.container {
+.main {
   width: 100%;
   height: 100%;
-  display: grid;
-  grid-template-rows: 10% 80% 10%;
+  display: flex;
+  flex-direction: column;
 }
 
 .list {
+  flex-grow: 1;
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
@@ -28,7 +29,7 @@
 
 .search-bar {
   width: 100%;
-  height: 100%;
+  margin-top: 20px;
   display: flex;
   align-items: center;
   justify-content: center;

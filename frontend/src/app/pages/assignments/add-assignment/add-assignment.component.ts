@@ -17,6 +17,7 @@ import { SubjectService } from '../../../shared/service/subjects.service';
 import { MatIconModule } from '@angular/material/icon';
 import { FileUploadService } from '../../../shared/service/file-upload.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-assignment',
@@ -50,7 +51,8 @@ export class AddAssignmentComponent {
     public dialogRef: MatDialogRef<AddAssignmentComponent>,
     private subjectService: SubjectService,
     private fileUploadService: FileUploadService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -69,6 +71,8 @@ export class AddAssignmentComponent {
         this.snackBar.open('Devoir créé avec succès', undefined, {
           duration: 3000,
         });
+        this.router.navigate(['home', 'student'], { queryParams: null });
+        this.dialogRef.close();
       });
   }
 

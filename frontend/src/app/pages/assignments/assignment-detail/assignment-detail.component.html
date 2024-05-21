@@ -4,7 +4,13 @@
   <mat-divider></mat-divider>
   <div class="owner">
     <div>
-      <img [src]="student.photo | filePath" alt="profile" class="profile" />
+      <img
+        [src]="
+          student.photo ? (student.photo | filePath) : '/assets/img/profile.png'
+        "
+        alt="profile"
+        class="profile"
+      />
     </div>
     <div>
       <p>
