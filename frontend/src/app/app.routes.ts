@@ -3,7 +3,7 @@ import { AssignmentsComponent } from './pages/assignments/assignments.component'
 import { AddAssignmentComponent } from './pages/assignments/add-assignment/add-assignment.component';
 import { AssignmentDetailComponent } from './pages/assignments/assignment-detail/assignment-detail.component';
 import { EditAssignmentComponent } from './pages/assignments/edit-assignment/edit-assignment.component';
-import { authGuard } from './shared/guard/auth.guard';
+import { AuthGuard } from './shared/guard/auth.guard';
 import { LoginComponent } from './pages/user/login/login.component';
 import { RegisterComponent } from './pages/user/register/register.component';
 import { BoardComponent } from './pages/user/board/board.component';
@@ -17,39 +17,38 @@ export const routes: Routes = [
   {
     path: 'home',
     component: DahsboardComponent,
-    canActivate: [authGuard],
     children: [
-      { path: '', component: HomeComponent },
+      { path: '', component: HomeComponent, canActivate: [AuthGuard] },
       {
-        path: 'accueilR',
+        path: 'accueil',
         component: AssignmentsComponent,
-        canActivate: [authGuard],
+        canActivate: [AuthGuard],
       },
       {
         path: 'assignment/:id',
         component: AssignmentDetailComponent,
-        canActivate: [authGuard],
+        canActivate: [AuthGuard],
       },
       {
         path: 'assignment/:id/edit',
         component: EditAssignmentComponent,
-        canActivate: [authGuard],
+        canActivate: [AuthGuard],
       },
       {
         path: 'add',
         component: AddAssignmentComponent,
-        canActivate: [authGuard],
+        canActivate: [AuthGuard],
       },
-      { path: 'board', component: BoardComponent, canActivate: [authGuard] },
+      { path: 'board', component: BoardComponent, canActivate: [AuthGuard] },
       {
         path: 'student',
         component: StudentComponent,
-        canActivate: [authGuard],
+        canActivate: [AuthGuard],
       },
       {
         path: 'teacher',
         component: TeacherComponent,
-        canActivate: [authGuard],
+        canActivate: [AuthGuard],
       },
     ],
   },
