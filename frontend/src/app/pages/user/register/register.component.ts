@@ -53,7 +53,7 @@ export class RegisterComponent implements OnInit {
     private userService: UserService,
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.authService
@@ -76,27 +76,27 @@ export class RegisterComponent implements OnInit {
     event.preventDefault();
     this.statusLoading = true;
     this.ResRequest = '';
-    if (
-      !this.emailUser ||
-      !this.roleUser ||
-      !this.passwordUser ||
-      !this.nomUser ||
-      !this.prenomUser ||
-      !this.passwordUser2 ||
-      !this.subjectUser
-    ) {
-      this.ResRequest = '';
-      this.ResRequest = 'Entrer les informations';
+
+    if (!this.emailUser || !this.roleUser || !this.passwordUser || !this.nomUser || !this.prenomUser || !this.passwordUser2) {
+      this.ResRequest = 'Veuillez entrer toutes les informations requises';
       this.statusLoading = false;
       return;
     }
 
     if (this.passwordUser2 !== this.passwordUser) {
-      this.ResRequest = '';
-      this.ResRequest = 'Deux mots de passe incorrecte';
+      this.ResRequest = 'Les mots de passe ne correspondent pas';
       this.statusLoading = false;
       return;
     }
+
+    if (this.roleUser === 'STUDENT') {
+      this.subjectUser = '';
+    } else if (!this.subjectUser) {
+      this.ResRequest = 'Veuillez sélectionner une matière';
+      this.statusLoading = false;
+      return;
+    }
+
     this.userService
       .registerUser(
         this.nomUser,
@@ -114,4 +114,5 @@ export class RegisterComponent implements OnInit {
         this.statusLoading = false;
       });
   }
+
 }
