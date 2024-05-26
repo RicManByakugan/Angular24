@@ -12,5 +12,6 @@ router.get("/assignments/Subject/:subject", auth, Controller_assignment.getAssig
 router.get("/assignments", Controller_assignment.getAssignments);
 router.get("/assignments/:id", Controller_assignment.getAssignment);
 router.delete("/assignments/:id", auth, Controller_assignment.deleteAssignment);
+router.get("/assignments/user/:id", auth, Controller_assignment.getAssigmentsByUser);
 
 module.exports = router;

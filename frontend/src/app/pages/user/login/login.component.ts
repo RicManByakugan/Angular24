@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
           } else {
             this.router.navigate(['/home/teacher']);
           }
-          // window.location.reload();
+          window.location.reload();
         }
         this.ResRequest = res.message;
         this.statusLoading = false;

@@ -108,6 +108,14 @@ export class AssignmentsService {
     });
   }
 
+  getAssignmentByUserSubject(userId: string): Observable<Assignment[]> {
+    return this.http
+      .get<{ data: any }>(`${this.uri}/user/${userId}`, {
+        headers: this.headers,
+      })
+      .pipe(map((response) => response.data as Assignment[]));
+  }
+
   // // VERSION NAIVE (on ne peut pas savoir quand l'opération des 1000 insertions est terminée)
   // peuplerBD() {
   //   // on utilise les données de test générées avec mockaroo.com pour peupler la base

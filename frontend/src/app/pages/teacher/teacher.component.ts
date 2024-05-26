@@ -22,9 +22,10 @@ import { DialogComponent } from '../../component/dialog/dialog.component';
 import { Router } from '@angular/router';
 import { AuthService } from '../../shared/service/auth.service';
 import { AlertComponent } from '../../component/alert/alert.component';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { User } from '../../interfaces/user.interface';
 import { AssignmentDetailComponent } from '../assignments/assignment-detail/assignment-detail.component';
+import { AssignmentCardComponent } from '../assignments/assignment-card/assignment-card.component';
 
 @Component({
   selector: 'app-teacher',
@@ -37,14 +38,17 @@ import { AssignmentDetailComponent } from '../assignments/assignment-detail/assi
     LoaderComponent,
     MatDialogModule,
     AlertComponent,
+    AssignmentCardComponent,
     DatePipe,
+    CommonModule,
   ],
   templateUrl: './teacher.component.html',
   styleUrl: './teacher.component.css',
 })
 export class TeacherComponent {
   userData: any;
-  statusLoading: any;
+  subject!: string;
+  statusLoading = true;
   allDataSubject: Assignment[] = [];
   dataDone: Assignment[] = [];
   dataNotDone: Assignment[] = [];
@@ -52,9 +56,6 @@ export class TeacherComponent {
 
   constructor(
     public dialog: MatDialog,
-    private userService: UserService,
-    private authService: AuthService,
-    private subjectService: SubjectService,
     private assignmentService: AssignmentsService,
     private router: Router
   ) {}
@@ -77,9 +78,10 @@ export class TeacherComponent {
     dialogRef.afterClosed().subscribe((Assignmentresult) => {
       if (
         Assignmentresult !== undefined &&
-        Assignmentresult.isDone !== undefined
+        Assignmentresult.score !== undefined
       ) {
-        console.log(Assignmentresult._id);
+        Assignmentresult.isDone = true;
+        Assignmentresult.validationDate = new Date();
         this.assignmentService
           .rendreAssignment(Assignmentresult._id, Assignmentresult)
           .subscribe((resUpdate) => {
@@ -102,41 +104,23 @@ export class TeacherComponent {
   }
 
   ngOnInit(): void {
-    this.userService.getUserConnected().subscribe((user) => {
-      this.resRequest = undefined;
-      if (
-        user.message === 'Invalid token' ||
-        user.message === 'Utilisateur invalide'
-      ) {
-        this.authService.logOut();
-        this.router.navigate(['/login']);
-        this.resRequest = 'Veuiller vous reconnectez';
-      } else {
-        this.userData = user.useractif;
-        this.subjectService
-          .getSubject(this.userData.subject)
-          .subscribe((res) => {
-            if (res) {
-              this.userData.subject = res;
-              this.assignmentService
-                .getAssignmentsSubject(this.userData.subject.type)
-                .subscribe((resData) => {
-                  if (resData) {
-                    this.statusLoading = false;
-                    this.allDataSubject = resData;
-                    this.allDataSubject.map((item) => {
-                      if (item.isDone) {
-                        this.dataDone.push(item);
-                      } else if (!item.isDone) {
-                        this.dataNotDone.push(item);
-                      }
-                    });
-                  }
-                });
+    const userId = localStorage.getItem('user');
+    this.assignmentService
+      .getAssignmentByUserSubject(userId as string)
+      .subscribe((value) => {
+        if (value) {
+          this.subject = value[0].subject as string;
+          this.statusLoading = false;
+          this.allDataSubject = value;
+          this.allDataSubject.map((item) => {
+            if (item.isDone) {
+              this.dataDone.push(item);
+            } else if (!item.isDone) {
+              this.dataNotDone.push(item);
             }
           });
-      }
-    });
+        }
+      });
   }
 
   drop(event: CdkDragDrop<Assignment[]>) {

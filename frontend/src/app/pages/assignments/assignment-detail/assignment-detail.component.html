@@ -28,7 +28,7 @@
         <mat-icon inline [ngStyle]="{ color: 'rgba(0, 0, 0, 0.608)' }"
           >date_range</mat-icon
         >Créé le :
-        {{ assignment.creationDate | date : "dd/MM/yyyy" }}
+        {{ assignment.creationDate | date : "dd/MM/yyyy  HH:mm" }}
       </p>
     </div>
   </div>
@@ -74,7 +74,7 @@
         <div>
           <span
             >Corrigé le:
-            {{ assignment.validationDate | date : "dd/MM/yyyy" }}</span
+            {{ assignment.validationDate | date : "dd/MM/yyyy HH:mm" }}</span
           >
         </div>
       </div>

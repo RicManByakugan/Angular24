@@ -40,10 +40,8 @@ export class DialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.dataReceived = data;
-    this.dataReceived.isDone = true;
     this.dataReceived.comment = this.comment;
     this.dataReceived.teacher = localStorage.getItem('user') as string;
-    this.dataReceived.validationDate = new Date();
   }
 
   closeDialog(): void {

@@ -79,7 +79,7 @@ export class RegisterComponent implements OnInit {
     if (
       !this.emailUser ||
       !this.roleUser ||
-      this.passwordUser ||
+      !this.passwordUser ||
       !this.nomUser ||
       !this.prenomUser ||
       !this.passwordUser2 ||

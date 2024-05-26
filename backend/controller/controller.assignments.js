@@ -138,6 +138,23 @@ const rendreAssignment = async (req, res) => {
   }
 };
 
+const getAssigmentsByUser = async (req, res) => {
+  const userId = req.param;
+  if (userId) {
+    const user = await User.findOne({ _id: new ObjectID(req.auth.userId) }).populate("subject");
+    if (user) {
+      const assignments = await Assignment.find({ subject: user.subject.type });
+      res.json({ data: assignments });
+    } else {
+      res.status = 404;
+      res.json({ message: "Utilisateur non trouvé" });
+    }
+  } else {
+    res.status = 400;
+    res.json({ message: "Requête incorrecte" });
+  }
+};
+
 // suppression d'un assignment (DELETE)
 // l'id est bien le _id de mongoDB
 const deleteAssignment = (req, res) => {
@@ -172,4 +189,14 @@ const deleteAssignment = (req, res) => {
   }
 };
 
-module.exports = { getAssignments, getAssignmentsUtilisateur, postAssignment, getAssignment, updateAssignment, deleteAssignment, getAssignmentsSubject, rendreAssignment };
+module.exports = {
+  getAssignments,
+  getAssignmentsUtilisateur,
+  postAssignment,
+  getAssignment,
+  updateAssignment,
+  deleteAssignment,
+  getAssignmentsSubject,
+  rendreAssignment,
+  getAssigmentsByUser,
+};
