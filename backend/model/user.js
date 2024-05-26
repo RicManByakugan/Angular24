@@ -9,7 +9,7 @@ let userSchema = Schema({
   lastName: { type: String, required: true },
   role: { type: String, required: true },
   photo: { type: String, required: false, undefined: true },
-  subject: { type: Schema.Types.ObjectId, ref: "Subject", undefined: true },
+  subject: { type: Schema.Types.ObjectId, ref: "Subject", undefined: true, required: false },
 });
 
 module.exports = mongoose.model("User", userSchema);

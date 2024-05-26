@@ -108,6 +108,7 @@ export class RegisterComponent implements OnInit {
       )
       .subscribe((res) => {
         if (res.message === 'Utilisateur créé') {
+          this.ResRequest = "Connectez-vous maintenant";
           this.router.navigate(['/login']);
         }
         this.ResRequest = res.message;

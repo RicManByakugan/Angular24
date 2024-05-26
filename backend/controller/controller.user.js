@@ -30,14 +30,25 @@ const inscription = (req, res) => {
         bcrypt
           .hash(req.body.password, 10)
           .then((hash) => {
-            const user = new User({
+            const userData = {
               email: req.body.email,
               role: req.body.role,
               firstName: req.body.firstName,
               lastName: req.body.lastName,
-              subject: req.body.subject,
               password: hash,
-            });
+            };
+            if (req.body.role === "TEACHER") {
+              userData.subject = req.body.subject;
+            }
+            const user = new User(userData);
+            // const user = new User({
+            //   email: req.body.email,
+            //   role: req.body.role,
+            //   firstName: req.body.firstName,
+            //   lastName: req.body.lastName,
+            //   subject: req.body.subject,
+            //   password: hash,
+            // });
             user
               .save()
               .then(() => res.status(201).json({ message: "Utilisateur créé" }))
