@@ -11,6 +11,9 @@ import { StudentComponent } from './pages/student/student.component';
 import { DahsboardComponent } from './pages/dashboard/dahsboard/dahsboard.component';
 import { HomeComponent } from './pages/home/home.component';
 import { TeacherComponent } from './pages/teacher/teacher.component';
+import { ResetpassComponent } from './pages/user/resetpass/resetpass.component';
+import { CodeValidatorComponent } from './pages/user/code-validator/code-validator.component';
+import { ForgotpassComponent } from './pages/user/forgotpass/forgotpass.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -33,4 +36,7 @@ export const routes: Routes = [
   },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'forgot', component: ForgotpassComponent },
+  { path: 'code', component: CodeValidatorComponent },
+  { path: 'reset', component: ResetpassComponent },
 ];

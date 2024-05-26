@@ -60,7 +60,7 @@ export class RegisterComponent implements OnInit {
       .isAdmin()
       .then((res) => {
         if (res) {
-          this.router.navigate(['/home']);
+          this.router.navigate(['/home/board']);
         }
       })
       .catch((err) => console.log(err));

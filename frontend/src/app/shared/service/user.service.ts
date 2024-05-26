@@ -29,6 +29,29 @@ export class UserService {
     });
   }
 
+  // Mot de passe oublié vers le backend
+  forgotUser(email: string): Observable<any> {
+    return this.http.post<any>(this.uri + '/mdpoulbie', {
+      email: email,
+    });
+  }
+
+  // Verification via code vers le backend
+  codeUser(email: string, code: number): Observable<any> {
+    return this.http.post<any>(this.uri + '/mdpoulbieVerification', {
+      email: email,
+      code: code,
+    });
+  }
+
+  // Reset mot de passe vers le backend
+  resetUser(email: string, newPassword: string): Observable<any> {
+    return this.http.post<any>(this.uri + '/resetpass', {
+      email: email,
+      newPassword: newPassword,
+    });
+  }
+
   // Inscription d'un utilisateur vers le backend
   registerUser(
     firstName: string,

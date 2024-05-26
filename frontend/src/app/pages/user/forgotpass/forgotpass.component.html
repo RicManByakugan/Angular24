@@ -1,0 +1,35 @@
+@if (statusLoading){
+<app-loader></app-loader>
+} @if (ResRequest){
+<app-alert [message]="ResRequest"></app-alert>
+}
+
+<div class="d-lg-flex half">
+    <div class="bg order-1 order-md-2 h-100 background" style="background-image: url('/assets/img/bg-login.webp')">
+    </div>
+    <div class="contents order-2 order-md-1">
+        <div class="container h-100">
+            <div class="w-100 row-center">
+                <div class="w-100 h-100">
+                    <h3 class="text-center"><strong>Assignment</strong></h3>
+                    <p class="text-center">Mot de passe oublié</p>
+                    <form class="login-content" #loginForm="ngForm" (ngSubmit)="onSubmit($event)">
+                        <div class="form-group first">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Email</mat-label>
+                                <input matInput placeholder="Email" [(ngModel)]="emailUser" name="username" required />
+                                <mat-error> Veuillez rensigner un email valide </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <button class="w-100" class="submit" mat-raised-button color="primary">
+                            Entrer
+                        </button>
+                        <div class="d-flex mb-5 align-items-center">
+                            <span class="ml-auto"><a [routerLink]="['/login']" class="forgot-pass">Se connecter</a></span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
