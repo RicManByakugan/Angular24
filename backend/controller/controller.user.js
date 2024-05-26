@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const utilisateur_actif = (req, res) => {
   if (req.auth.userId) {
     User.findOne({ _id: new ObjectID(req.auth.userId) })
+      .populate('subject') 
       .then((user) => {
         if (!user) {
           res.json({ message: "Utilisateur introuvable" });

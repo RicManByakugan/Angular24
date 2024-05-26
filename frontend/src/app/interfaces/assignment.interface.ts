@@ -9,7 +9,7 @@ export interface Assignment {
   comment?: string;
   isDone: boolean;
   file: string;
-  subject: string | Subject;
+  subject?: string | Subject;
   teacher?: string | User;
   creationDate?: Date;
   validationDate?: Date;

@@ -26,6 +26,8 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { User } from '../../interfaces/user.interface';
 import { AssignmentDetailComponent } from '../assignments/assignment-detail/assignment-detail.component';
 import { AssignmentCardComponent } from '../assignments/assignment-card/assignment-card.component';
+import { MatButtonModule } from '@angular/material/button';
+import { SubjectType } from '../../interfaces/subject.interface';
 
 @Component({
   selector: 'app-teacher',
@@ -41,6 +43,7 @@ import { AssignmentCardComponent } from '../assignments/assignment-card/assignme
     AssignmentCardComponent,
     DatePipe,
     CommonModule,
+    MatCardModule, MatButtonModule
   ],
   templateUrl: './teacher.component.html',
   styleUrl: './teacher.component.css',
@@ -49,6 +52,7 @@ export class TeacherComponent {
   userData: any;
   subject!: string;
   statusLoading = true;
+  dataVide = false;
   allDataSubject: Assignment[] = [];
   dataDone: Assignment[] = [];
   dataNotDone: Assignment[] = [];
@@ -57,8 +61,9 @@ export class TeacherComponent {
   constructor(
     public dialog: MatDialog,
     private assignmentService: AssignmentsService,
+    private userService: UserService,
     private router: Router
-  ) {}
+  ) { }
 
   openDialog(
     dataAssignment: Assignment,
@@ -108,9 +113,10 @@ export class TeacherComponent {
     this.assignmentService
       .getAssignmentByUserSubject(userId as string)
       .subscribe((value) => {
-        if (value) {
+        if (value && value.length > 0) {
           this.subject = value[0].subject as string;
           this.statusLoading = false;
+          this.dataVide = false;
           this.allDataSubject = value;
           this.allDataSubject.map((item) => {
             if (item.isDone) {
@@ -119,8 +125,19 @@ export class TeacherComponent {
               this.dataNotDone.push(item);
             }
           });
+        } else {
+          this.dataVide = true;
+          this.statusLoading = false;
+          this.resRequest = 'Aucun assignment trouvé';
         }
       });
+
+    this.userService.getUserConnected().subscribe(resUser => {
+      if (resUser) {
+        this.userData = resUser.useractif
+        console.log(this.userData);
+      }
+    })
   }
 
   drop(event: CdkDragDrop<Assignment[]>) {
