@@ -12,6 +12,7 @@
   display: inline-block;
   vertical-align: top;
   gap: 50px;
+  box-shadow: 0px 0px 5px rgb(71, 71, 71);  
 }
 
 .h-100 {

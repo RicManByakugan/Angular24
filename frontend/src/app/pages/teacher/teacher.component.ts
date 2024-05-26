@@ -28,6 +28,7 @@ import { AssignmentDetailComponent } from '../assignments/assignment-detail/assi
 import { AssignmentCardComponent } from '../assignments/assignment-card/assignment-card.component';
 import { MatButtonModule } from '@angular/material/button';
 import { SubjectType } from '../../interfaces/subject.interface';
+import { MatDivider } from '@angular/material/divider';
 
 @Component({
   selector: 'app-teacher',
@@ -43,7 +44,7 @@ import { SubjectType } from '../../interfaces/subject.interface';
     AssignmentCardComponent,
     DatePipe,
     CommonModule,
-    MatCardModule, MatButtonModule
+    MatCardModule, MatButtonModule, MatDivider
   ],
   templateUrl: './teacher.component.html',
   styleUrl: './teacher.component.css',
@@ -135,7 +136,9 @@ export class TeacherComponent {
     this.userService.getUserConnected().subscribe(resUser => {
       if (resUser) {
         this.userData = resUser.useractif
-        console.log(this.userData);
+        if (resUser.role == "STUDENT") {
+          this.router.navigate(['/home/student']);
+        }
       }
     })
   }

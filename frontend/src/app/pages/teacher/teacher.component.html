@@ -16,32 +16,35 @@
     </mat-card-content>
   </mat-card>
   }
-  <div class="two-col h-100" cdkDropListGroup>
-    <div class="w-80 h-100">
-      @if(dataNotDone.length > 0){
-      <h5>Nouveaux</h5>
-      <div class="container-item">
-        <div cdkDropList [cdkDropListData]="dataNotDone" class="list-item" cdkDropListSortingDisabled>
-          @for (item of dataNotDone; track item) {
-          <app-assignment-card cdkDrag [assignment]="item" (click)="viewAssignment(item._id, '50', '50')"
-            [ngStyle]="{ width: '100%' }"></app-assignment-card>
-          }
+  @if(dataNotDone.length > 0){
+    <mat-card class="mt-4 example-card">
+      <mat-card-content>
+        <div class="two-col h-100" cdkDropListGroup>
+          <div class="container-data w-80 h-100">
+            <h5 class="mb-4">Pas encore rendu</h5>
+            <div class="container-item">
+              <div cdkDropList [cdkDropListData]="dataNotDone" class="list-item" cdkDropListSortingDisabled>
+                @for (item of dataNotDone; track item) {
+                <app-assignment-card cdkDrag [assignment]="item" (click)="viewAssignment(item._id, '50', '50')"
+                  [ngStyle]="{ width: '100%' }"></app-assignment-card>
+                }
+              </div>
+            </div>
+          </div>
+          <div class="container-data w-80 h-100">
+            <h5 class="mb-4">Rendu</h5>
+            <div class="container-item">
+              <div cdkDropList [cdkDropListData]="dataDone" class="list-item" (cdkDropListDropped)="drop($event)">
+                @for (item of dataDone; track item) {
+                <app-assignment-card cdkDrag [assignment]="item" [ngStyle]="{ width: '100%' }"
+                  (click)="viewAssignment(item._id, '50', '50')"></app-assignment-card>
+                }
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      }
-    </div>
-    <div class="w-80 h-100">
-      @if(dataDone.length > 0){
-      <h5>Rendu</h5>
-      <div class="container-item">
-        <div cdkDropList [cdkDropListData]="dataDone" class="list-item" (cdkDropListDropped)="drop($event)">
-          @for (item of dataDone; track item) {
-          <app-assignment-card cdkDrag [assignment]="item" [ngStyle]="{ width: '100%' }"
-            (click)="viewAssignment(item._id, '50', '50')"></app-assignment-card>
-          }
-        </div>
-      </div>
-      }
-    </div>
-  </div>
+      </mat-card-content>
+    </mat-card>
+  }
+
 </div>

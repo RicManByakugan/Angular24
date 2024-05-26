@@ -24,13 +24,6 @@
           <hr />
         </div>
       </div>
-      <mat-grid-list cols="2" rowHeight="2:1">
-        @if(userDataAssignment){
-        <mat-grid-tile *ngFor="let item of userDataAssignment">
-          <app-assignment-card [dataItem]="item"></app-assignment-card>
-        </mat-grid-tile>
-        }
-      </mat-grid-list>
     </mat-card-content>
   </mat-card>
 </div>
