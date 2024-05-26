@@ -66,6 +66,7 @@ const connexion = (req, res) => {
           res.status(200).json({
             message: "Utilisateur connecté",
             userId: user._id,
+            role: user.role,
             token: jwt.sign({ userId: user._id }, "KEY_ANGULAR_24", { expiresIn: "3600s" }),
           });
         })

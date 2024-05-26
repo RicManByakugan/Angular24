@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { AlertComponent } from '../../../component/alert/alert.component';
+import { Role } from '../../../interfaces/user.interface';
 
 @Component({
   selector: 'app-login',
@@ -22,8 +23,8 @@ import { AlertComponent } from '../../../component/alert/alert.component';
     MatInputModule,
     MatButtonModule,
     RouterLink,
-    CommonModule, 
-    AlertComponent
+    CommonModule,
+    AlertComponent,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
@@ -67,8 +68,12 @@ export class LoginComponent implements OnInit {
         if (res.message === 'Utilisateur connecté') {
           localStorage.setItem('token', res.token);
           localStorage.setItem('user', res.userId);
-          this.router.navigate(['/home']);
-          window.location.reload();
+          if (res.role === Role.STUDENT) {
+            this.router.navigate(['/home/student']);
+          } else {
+            this.router.navigate(['/home/teacher']);
+          }
+          // window.location.reload();
         }
         this.ResRequest = res.message;
         this.statusLoading = false;

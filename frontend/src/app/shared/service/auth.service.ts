@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   // propriété pour savoir si l'utilisateur est connecté
   loggedIn = false;
 
-  constructor(private route: Router) { 
-    this.loggedIn = !!localStorage.getItem("token");
+  constructor(private route: Router) {
+    this.loggedIn = !!localStorage.getItem('token');
   }
 
   // méthode pour connecter l'utilisateur
@@ -24,8 +24,7 @@ export class AuthService {
   logOut() {
     this.loggedIn = false;
     localStorage.clear();
-    this.route.navigate(['/home']);
-    window.location.reload();
+    this.route.navigate(['/login']);
   }
 
   // methode qui indique si on est connecté en tant qu'admin ou pas

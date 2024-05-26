@@ -5,20 +5,11 @@
     </button>
   </div>
   <div>
-    @if(isConnected){
     <a mat-icon-button routerLink="board">
       <mat-icon>perm_identity</mat-icon>
     </a>
     <a mat-icon-button (click)="logOut()">
       <mat-icon>power_settings_new</mat-icon>
     </a>
-    }@else{
-    <a mat-icon-button routerLink="login">
-      <mat-icon>perm_identity</mat-icon>
-    </a>
-    <a mat-icon-button routerLink="register">
-      <mat-icon>supervised_user_circle</mat-icon>
-    </a>
-    }
   </div>
 </mat-toolbar>

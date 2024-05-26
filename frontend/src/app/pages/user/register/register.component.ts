@@ -19,76 +19,99 @@ import { AlertComponent } from '../../../component/alert/alert.component';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [LoaderComponent,
+  imports: [
+    LoaderComponent,
     FormsModule,
     MatCardModule,
     MatFormFieldModule,
     MatGridListModule,
     MatInputModule,
     MatSelectModule,
-    MatButtonModule, RouterLink, CommonModule, MatStepperModule, AlertComponent],
+    MatButtonModule,
+    RouterLink,
+    CommonModule,
+    MatStepperModule,
+    AlertComponent,
+  ],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrl: './register.component.css',
 })
 export class RegisterComponent implements OnInit {
-  emailUser: string = "";
-  passwordUser: string = "";
-  passwordUser2: string = "";
-  nomUser: string = "";
-  prenomUser: string = "";
-  roleUser: string = "";
-  subjectUser: string = "";
+  emailUser: string = '';
+  passwordUser: string = '';
+  passwordUser2: string = '';
+  nomUser: string = '';
+  prenomUser: string = '';
+  roleUser: string = '';
+  subjectUser: string = '';
   statusLoading: boolean = false;
-  ResRequest: string = "";
+  ResRequest: string = '';
   dataSubject: Subject[] = [];
 
-
-  constructor(private subjectService: SubjectService, private userService: UserService, private authService: AuthService, private router: Router) { }
+  constructor(
+    private subjectService: SubjectService,
+    private userService: UserService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.authService.isAdmin()
-      .then(res => {
+    this.authService
+      .isAdmin()
+      .then((res) => {
         if (res) {
           this.router.navigate(['/home']);
         }
       })
-      .catch(err => console.log(err))
-    
-    this.subjectService.getSubjects()
-      .subscribe(res => {
-        if (res) {
-          this.dataSubject = res
-        }
-      })
+      .catch((err) => console.log(err));
+
+    this.subjectService.getSubjects().subscribe((res) => {
+      if (res) {
+        this.dataSubject = res;
+      }
+    });
   }
 
   onSubmit(event: any) {
     event.preventDefault();
     this.statusLoading = true;
-    this.ResRequest = ""
-    if ((this.emailUser === "") || (this.passwordUser === undefined) || (this.nomUser === undefined) || (this.roleUser === undefined) || (this.subjectUser === undefined) || (this.passwordUser2 === undefined)) {
-      this.ResRequest = ""
-      this.ResRequest = "Entrer les informations"
+    this.ResRequest = '';
+    if (
+      !this.emailUser ||
+      !this.roleUser ||
+      this.passwordUser ||
+      !this.nomUser ||
+      !this.prenomUser ||
+      !this.passwordUser2 ||
+      !this.subjectUser
+    ) {
+      this.ResRequest = '';
+      this.ResRequest = 'Entrer les informations';
       this.statusLoading = false;
-      return
-    };
+      return;
+    }
 
     if (this.passwordUser2 !== this.passwordUser) {
-      this.ResRequest = ""
-      this.ResRequest = "Deux mots de passe incorrecte"
+      this.ResRequest = '';
+      this.ResRequest = 'Deux mots de passe incorrecte';
       this.statusLoading = false;
-      return
+      return;
     }
-    this.userService.registerUser(this.nomUser, this.prenomUser, this.roleUser, this.subjectUser, this.emailUser, this.passwordUser)
-      .subscribe(res => {
-        if (res.message === "Utilisateur créé") {
+    this.userService
+      .registerUser(
+        this.nomUser,
+        this.prenomUser,
+        this.roleUser,
+        this.subjectUser,
+        this.emailUser,
+        this.passwordUser
+      )
+      .subscribe((res) => {
+        if (res.message === 'Utilisateur créé') {
           this.router.navigate(['/login']);
         }
-        this.ResRequest = res.message
+        this.ResRequest = res.message;
         this.statusLoading = false;
-      })
+      });
   }
-
-
-
 }
