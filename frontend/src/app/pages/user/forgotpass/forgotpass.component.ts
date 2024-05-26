@@ -14,7 +14,8 @@ import { AuthService } from '../../../shared/service/auth.service';
 @Component({
   selector: 'app-forgotpass',
   standalone: true,
-  imports: [LoaderComponent,
+  imports: [
+    LoaderComponent,
     FormsModule,
     MatCardModule,
     MatFormFieldModule,
@@ -22,7 +23,8 @@ import { AuthService } from '../../../shared/service/auth.service';
     MatButtonModule,
     RouterLink,
     CommonModule,
-    AlertComponent,],
+    AlertComponent
+  ],
   templateUrl: './forgotpass.component.html',
   styleUrl: './forgotpass.component.css'
 })
