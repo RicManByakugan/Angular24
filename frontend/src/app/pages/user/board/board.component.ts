@@ -43,14 +43,6 @@ export class BoardComponent implements OnInit {
     this.userService.getUserConnected().subscribe((user) => {
       if (user) {
         this.userData = user.useractif;
-        this.subjectService
-          .getSubject(this.userData.subject)
-          .subscribe((res) => {
-            if (res) {
-              this.statusLoading = false;
-              this.userData.subject = res;
-            }
-          });
       }
     });
     this.assignmentService.getAssignmentsUser().subscribe((res) => {

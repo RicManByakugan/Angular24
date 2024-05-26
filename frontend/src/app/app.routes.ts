@@ -18,12 +18,11 @@ export const routes: Routes = [
     path: 'home',
     component: DahsboardComponent,
     children: [
-      { path: '', component: HomeComponent, canActivate: [AuthGuard] },
-      {
-        path: 'accueil',
-        component: AssignmentsComponent,
-        canActivate: [AuthGuard],
-      },
+      // {
+      //   path: 'accueil',
+      //   component: AssignmentsComponent,
+      //   canActivate: [AuthGuard],
+      // },
       {
         path: 'assignment/:id',
         component: AssignmentDetailComponent,

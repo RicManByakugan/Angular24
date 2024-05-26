@@ -143,8 +143,12 @@ const getAssigmentsByUser = async (req, res) => {
   if (userId) {
     const user = await User.findOne({ _id: new ObjectID(req.auth.userId) }).populate("subject");
     if (user) {
-      const assignments = await Assignment.find({ subject: user.subject.type });
-      res.json({ data: assignments });
+      if (user.role == "STUDENT") {
+        res.json({ data: [], message: "Utilisateur etudiant" });
+      }else{
+        const assignments = await Assignment.find({ subject: user.subject.type });
+        res.json({ data: assignments });
+      }
     } else {
       res.status = 404;
       res.json({ message: "Utilisateur non trouvé" });
