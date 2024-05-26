@@ -14,20 +14,19 @@
                     <h3 class="text-center"><strong>Assignment</strong></h3>
                     <p class="text-center">Réinitialisé votre mot de passe</p>
                     <form class="login-content" #loginForm="ngForm" (ngSubmit)="onSubmit($event)">
-                        <div class="form-group first">
-                            <mat-form-field class="w-100" appearance="outline">
-                                <mat-label>Mot de passe</mat-label>
-                                <input type="password" matInput placeholder="Entrer votre prénom"
-                                    [(ngModel)]="pass1" name="pass1" required />
-                                <mat-error> Veuillez entrer votre mot de passe </mat-error>
-                            </mat-form-field>
-                            <mat-form-field class="w-100" appearance="outline">
-                                <mat-label>Confirmer le mot de passe</mat-label>
-                                <input type="password" matInput placeholder="Entrer votre prénom"
-                                    [(ngModel)]="pass2" name="pass2" required />
-                                <mat-error> Veuillez entrer votre mot de passe </mat-error>
-                            </mat-form-field>
-                        </div>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Mot de passe</mat-label>
+                            <input type="password" matInput placeholder="Entrer votre prénom" [(ngModel)]="pass1"
+                                name="pass1" required />
+                            <mat-error> Veuillez entrer votre mot de passe </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Confirmer le mot de passe</mat-label>
+                            <input type="password" matInput placeholder="Entrer votre prénom" [(ngModel)]="pass2"
+                                name="pass2" required />
+                            <mat-error> Veuillez entrer votre mot de passe </mat-error>
+                        </mat-form-field>
                         <button class="w-100" class="submit" mat-raised-button color="primary">
                             Entrer
                         </button>

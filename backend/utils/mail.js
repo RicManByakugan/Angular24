@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer')
 
+// ANCIEN CODE D'ENVOIE EMAIL MASTER 1
 const SendMail = async (userEmail, subject, content, DataHTML) => {
     const transporter = nodemailer.createTransport({
         service: 'gmail',

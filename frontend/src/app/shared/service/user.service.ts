@@ -36,6 +36,13 @@ export class UserService {
     });
   }
 
+  // Réenvoye le code utilisateur vers le backend
+  resendUser(email: string): Observable<any> {
+    return this.http.post<any>(this.uri + '/resend', {
+      email: email,
+    });
+  }
+
   // Verification via code vers le backend
   codeUser(email: string, code: number): Observable<any> {
     return this.http.post<any>(this.uri + '/mdpoulbieVerification', {

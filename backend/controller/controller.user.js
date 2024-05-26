@@ -113,6 +113,30 @@ const verification = (req, res) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
+
+// REENVOIE EMAIL UTILISATEUR
+const resend = (req, res) => {
+  User.findOne({ email: req.body.email })
+    .then((user) => {
+      if (!user) {
+        return res.status(200).json({ message: "Email ou mot de passe incorrecte" });
+      } else {
+        const subject = 'Mot de passe oublié';
+        const content = `Votre code de validation est : ${user.code}`;
+        const DataHTML = `<p>Votre code de validation est : <strong>${user.code}</strong></p>`;
+        SendMail(user.email, subject, content, DataHTML)
+          .then(() => {
+            res.status(200).json({ message: "Code réenvoyé" });
+          })
+          .catch((error) => {
+            console.error("Erreur d'envoi de l'email : ", error);
+            res.status(500).json({ message: "Erreur lors de l'envoi de l'email" });
+          });
+      }
+    })
+    .catch((error) => res.status(500).json({ error }));
+};
+
 // VERIFICATION CODE UTILISATEUR
 const verificationCode = (req, res) => {
   const { email, code } = req.body;
@@ -133,7 +157,7 @@ const verificationCode = (req, res) => {
             res.status(500).json({ message: "Erreur lors de la mise à jour de l'utilisateur" });
           });
       } else {
-        res.status(400).json({ message: "Code de validation incorrect" });
+        res.status(200).json({ message: "Code de validation incorrect" });
       }
     })
     .catch((error) => res.status(500).json({ error }));
@@ -181,4 +205,4 @@ const deconnexion = (req, res) => {
   res.status(200).json({ message: "Deconnexion réussi" });
 };
 
-module.exports = { inscription, connexion, deconnexion, utilisateur_actif, verification, verificationCode, resetpass };
+module.exports = { inscription, connexion, deconnexion, utilisateur_actif, verification, verificationCode, resetpass, resend };

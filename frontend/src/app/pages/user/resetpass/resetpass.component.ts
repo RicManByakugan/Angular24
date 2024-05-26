@@ -36,7 +36,7 @@ export class ResetpassComponent {
   emailUser: any;
 
   constructor(private userService: UserService, private authService: AuthService, private router: Router) {
-    this.emailUser = localStorage.getItem("Email")
+    this.emailUser = localStorage.getItem("emailCode")
   }
 
   ngOnInit(): void {

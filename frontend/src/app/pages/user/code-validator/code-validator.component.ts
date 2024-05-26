@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { AlertComponent } from '../../../component/alert/alert.component';
 import { UserService } from '../../../shared/service/user.service';
 import { AuthService } from '../../../shared/service/auth.service';
+import { MatDivider } from '@angular/material/divider';
 
 @Component({
   selector: 'app-code-validator',
@@ -23,7 +24,8 @@ import { AuthService } from '../../../shared/service/auth.service';
     MatButtonModule,
     RouterLink,
     CommonModule,
-    AlertComponent
+    AlertComponent,
+    MatDivider
   ],
   templateUrl: './code-validator.component.html',
   styleUrl: './code-validator.component.css'
@@ -35,7 +37,7 @@ export class CodeValidatorComponent {
   ResRequest: string = '';
 
   constructor(private userService: UserService, private authService: AuthService, private router: Router) {
-    this.emailUser = localStorage.getItem("Email")
+    this.emailUser = localStorage.getItem("emailCode")
   }
 
   ngOnInit(): void {
@@ -51,6 +53,24 @@ export class CodeValidatorComponent {
     if (this.emailUser == undefined) {
       this.router.navigate(['/login']);
     }
+  }
+
+  resend(){
+    this.statusLoading = true;
+    this.ResRequest = '';
+    if (this.emailUser === '') {
+      this.ResRequest = '';
+      this.ResRequest = "Une erreur s'est produite";
+      this.statusLoading = false;
+      return;
+    }
+
+    this.userService
+      .resendUser(this.emailUser)
+      .subscribe((res) => {
+        this.ResRequest = res.message;
+        this.statusLoading = false;
+      });
   }
 
   onSubmit(event: any) {
