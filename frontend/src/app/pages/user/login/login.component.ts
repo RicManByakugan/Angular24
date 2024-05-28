@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
         if (res.message == 'Utilisateur connecté') {
           localStorage.setItem('token', res.token);
           localStorage.setItem('user', res.userId);
-          this.cdr.markForCheck();
+          window.location.reload();
           setTimeout(() => {
             this.authService.logIn();
             if (res.role == 'STUDENT') {
