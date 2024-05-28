@@ -29,7 +29,7 @@ import { UserService } from '../../shared/service/user.service';
     MatFormFieldModule,
     FormsModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
   ],
   templateUrl: './student.component.html',
   styleUrl: './student.component.css',
@@ -50,21 +50,23 @@ export class StudentComponent {
     private assignmentService: AssignmentsService,
     public dialog: MatDialog,
     private router: Router,
-    private userService: UserService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
-    this.userService.getUserConnected().subscribe(resUser => {
-      if (resUser.useractif) {
-        this.userData = resUser.useractif
-        if (resUser.useractif.role == "TEACHER") {
-          this.router.navigate(['/home/teacher']);
+    setTimeout(() => {
+      this.userService.getUserConnected().subscribe((resUser) => {
+        if (resUser.useractif) {
+          this.userData = resUser.useractif;
+          if (resUser.useractif.role == 'TEACHER') {
+            this.router.navigate(['/home/teacher']);
+          }
+          this.getAssignments();
+        } else {
+          this.router.navigate(['/login']);
         }
-        this.getAssignments()
-      }else{
-        this.router.navigate(['/login']);
-      }
-    })
+      });
+    });
   }
 
   getAssignments() {
