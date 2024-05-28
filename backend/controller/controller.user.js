@@ -5,17 +5,14 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 // UTILISATEUR CONNECTEE
-const utilisateur_actif = (req, res) => {
+const utilisateur_actif = async (req, res) => {
   if (req.auth.userId) {
-    User.findOne({ _id: new ObjectID(req.auth.userId) })
-      .populate('subject')
-      .then((user) => {
-        if (!user) {
-          res.json({ message: "Utilisateur introuvable" });
-        }
-        res.json({ useractif: user });
-      })
-      .catch((error) => res.status(200).json({ message: "Utilisateur invalide" }));
+    const user = await User.findOne({ _id: new ObjectID(req.auth.userId) }).populate("subject");
+    if (!user) {
+      res.json({ message: "Utilisateur introuvable" });
+    }
+    console.log(user);
+    res.json({ useractif: user });
   } else {
     res.json({ message: "Token invalide" });
   }
@@ -80,7 +77,6 @@ const connexion = (req, res) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
-
 // VERIFICATION EMAIL UTILISATEUR
 const verification = (req, res) => {
   User.findOne({ email: req.body.email })
@@ -90,9 +86,10 @@ const verification = (req, res) => {
       } else {
         const validationCode = Math.floor(10000 + Math.random() * 90000);
         user.code = validationCode;
-        user.save()
+        user
+          .save()
           .then(() => {
-            const subject = 'Mot de passe oublié';
+            const subject = "Mot de passe oublié";
             const content = `Votre code de validation est : ${validationCode}`;
             const DataHTML = `<p>Votre code de validation est : <strong>${validationCode}</strong></p>`;
             SendMail(user.email, subject, content, DataHTML)
@@ -113,7 +110,6 @@ const verification = (req, res) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
-
 // REENVOIE EMAIL UTILISATEUR
 const resend = (req, res) => {
   User.findOne({ email: req.body.email })
@@ -121,7 +117,7 @@ const resend = (req, res) => {
       if (!user) {
         return res.status(200).json({ message: "Email ou mot de passe incorrecte" });
       } else {
-        const subject = 'Mot de passe oublié';
+        const subject = "Mot de passe oublié";
         const content = `Votre code de validation est : ${user.code}`;
         const DataHTML = `<p>Votre code de validation est : <strong>${user.code}</strong></p>`;
         SendMail(user.email, subject, content, DataHTML)
@@ -148,7 +144,8 @@ const verificationCode = (req, res) => {
       if (user.code === parseInt(code, 10)) {
         user.code = null;
         user.codeVerifier = true;
-        user.save()
+        user
+          .save()
           .then(() => {
             res.status(200).json({ message: "Code vérifié avec succès" });
           })
@@ -175,12 +172,14 @@ const resetpass = (req, res) => {
       if (!user.codeVerifier) {
         return res.status(400).json({ message: "Utilisateur ne peut pas changer le mot de passe" });
       }
-      bcrypt.hash(newPassword, 10)
+      bcrypt
+        .hash(newPassword, 10)
         .then((hash) => {
           user.password = hash;
           user.code = null;
           user.codeVerifier = false;
-          user.save()
+          user
+            .save()
             .then(() => {
               res.status(200).json({ message: "Mot de passe réinitialisé avec succès" });
             })
