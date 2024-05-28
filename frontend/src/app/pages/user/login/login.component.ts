@@ -68,12 +68,14 @@ export class LoginComponent implements OnInit {
         if (res.message === 'Utilisateur connecté') {
           localStorage.setItem('token', res.token);
           localStorage.setItem('user', res.userId);
+          this.authService.logIn()
           if (res.role === Role.STUDENT) {
             this.router.navigate(['/home/student']);
           } else {
             this.router.navigate(['/home/teacher']);
           }
         }
+        console.log(res);
         this.ResRequest = res.message;
         this.statusLoading = false;
       });

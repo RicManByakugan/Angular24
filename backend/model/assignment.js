@@ -1,12 +1,13 @@
 let mongoose = require("mongoose");
 let Schema = mongoose.Schema;
 const User = require("./user");
+const Subject = require("./subject");
 const mongoosePaginate = require("mongoose-aggregate-paginate-v2");
 
 let AssignmentSchema = Schema({
   title: { type: String, required: true },
   isDone: { type: Boolean, required: true },
-  subject: { type: String, required: true },
+  subject: { type: Schema.Types.ObjectId, ref: "Subject" },
   comment: { type: String, required: false },
   score: { type: Number, required: false },
   creationDate: { type: Date, required: false, default: new Date() },

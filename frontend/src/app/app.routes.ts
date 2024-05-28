@@ -21,18 +21,11 @@ export const routes: Routes = [
     path: 'home',
     component: DahsboardComponent,
     children: [
-      { path: 'board', component: BoardComponent, canActivate: [AuthGuard] },
-      {
-        path: 'student',
-        component: StudentComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'teacher',
-        component: TeacherComponent,
-        canActivate: [AuthGuard],
-      },
+      { path: 'board', component: BoardComponent },
+      { path: 'student', component: StudentComponent },
+      { path: 'teacher', component: TeacherComponent },
     ],
+    canActivate: [AuthGuard]
   },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },

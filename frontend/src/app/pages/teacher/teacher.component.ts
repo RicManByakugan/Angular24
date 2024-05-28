@@ -37,7 +37,6 @@ import { MatDivider } from '@angular/material/divider';
     CdkDropListGroup,
     CdkDropList,
     CdkDrag,
-    MatCardModule,
     LoaderComponent,
     MatDialogModule,
     AlertComponent,

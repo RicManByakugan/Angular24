@@ -37,14 +37,14 @@ const getAssignments = async (req, res) => {
 // Récupérer un assignment par son id (GET)
 const getAssignment = async (req, res) => {
   let assignmentId = req.params.id;
-  const assignment = await Assignment.findById(assignmentId).populate("teacher").populate("student");
+  const assignment = await Assignment.findById(assignmentId).populate("teacher").populate("student").populate('subject');
   res.json(assignment);
 };
 
 // Récupérer tous les assignments d'un utilisateur (GET)
 const getAssignmentsUtilisateur = (req, res) => {
   if (req.auth.userId) {
-    User.findOne({ _id: new ObjectID(req.auth.userId) })
+    User.findOne({ _id: new ObjectID(req.auth.userId) }).populate('subject')
       .then((user) => {
         if (!user) {
           res.json({ message: "Utilisateur introuvable" });
@@ -64,7 +64,7 @@ const getAssignmentsUtilisateur = (req, res) => {
 // Récupérer tous les assignments d'un utilisateur (GET)
 const getAssignmentsSubject = async (req, res) => {
   if (req.params.subject) {
-    const assignments = await Assignment.find({ subject: req.params.subject }).populate("student").populate("teacher");
+    const assignments = await Assignment.find({ subject: req.params.subject }).populate("student").populate("teacher").populate('subject');
     res.json(assignments);
   } else {
     res.json({ message: "Paramètre incomplète" });
