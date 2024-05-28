@@ -44,19 +44,21 @@ const getAssignments = async (req, res) => {
 // Récupérer un assignment par son id (GET)
 const getAssignment = async (req, res) => {
   let assignmentId = req.params.id;
-  const assignment = await Assignment.findById(assignmentId).populate("teacher").populate("student").populate('subject');
+  const assignment = await Assignment.findById(assignmentId).populate("teacher").populate("student").populate("subject");
   res.json(assignment);
 };
 
 // Récupérer tous les assignments d'un utilisateur (GET)
 const getAssignmentsUtilisateur = (req, res) => {
   if (req.auth.userId) {
-    User.findOne({ _id: new ObjectID(req.auth.userId) }).populate('subject')
+    User.findOne({ _id: new ObjectID(req.auth.userId) })
+      .populate("subject")
       .then((user) => {
         if (!user) {
           res.json({ message: "Utilisateur introuvable" });
         }
-        Assignment.find({ user: user }).populate('subject')
+        Assignment.find({ user: user })
+          .populate("subject")
           .then((assignmentUser) => {
             res.json(assignmentUser);
           })
@@ -71,7 +73,7 @@ const getAssignmentsUtilisateur = (req, res) => {
 // Récupérer tous les assignments d'un utilisateur (GET)
 const getAssignmentsSubject = async (req, res) => {
   if (req.params.subject) {
-    const assignments = await Assignment.find({ subject: req.params.subject }).populate("student").populate("teacher").populate('subject');
+    const assignments = await Assignment.find({ subject: req.params.subject }).populate("student").populate("teacher").populate("subject");
     res.json(assignments);
   } else {
     res.json({ message: "Paramètre incomplète" });
@@ -81,7 +83,8 @@ const getAssignmentsSubject = async (req, res) => {
 const postAssignment = async (req, res) => {
   if (req.auth.userId) {
     try {
-      const foundUser = await User.findOne({ _id: new ObjectID(req.auth.userId) }).populate('subject')
+      const foundUser = await User.findOne({ _id: new ObjectID(req.auth.userId) })
+        .populate("subject")
         .lean()
         .exec();
       if (!foundUser) {
@@ -102,12 +105,14 @@ const postAssignment = async (req, res) => {
 // Update d'un assignment (PUT)
 const updateAssignment = (req, res) => {
   if (req.auth.userId) {
-    User.findOne({ _id: new ObjectID(req.auth.userId) }).populate('subject')
+    User.findOne({ _id: new ObjectID(req.auth.userId) })
+      .populate("subject")
       .then((user) => {
         if (!user) {
           res.json({ message: "Utilisateur introuvable" });
         } else {
-          Assignment.findOne({ _id: new ObjectID(req.body._id) }).populate('subject')
+          Assignment.findOne({ _id: new ObjectID(req.body._id) })
+            .populate("subject")
             .then((check) => {
               if (check) {
                 if (check.user[0] == user._id.toString("hex")) {
@@ -152,8 +157,8 @@ const getAssigmentsByUser = async (req, res) => {
     if (user) {
       if (user.role == "STUDENT") {
         res.json({ data: [], message: "Utilisateur etudiant" });
-      }else{
-        const assignments = await Assignment.find({ subject: user.subject });
+      } else {
+        const assignments = await Assignment.find({ subject: user.subject }).populate("subject");
         res.json({ data: assignments });
       }
     } else {
