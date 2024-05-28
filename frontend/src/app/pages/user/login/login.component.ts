@@ -71,9 +71,9 @@ export class LoginComponent implements OnInit {
           this.authService.logIn()
           localStorage.setItem('token', res.token);
           localStorage.setItem('user', res.userId);
+          this.router.navigate(['/home']);
           window.location.reload();          
         }
-        console.log(res);
         this.ResRequest = res.message;
         this.statusLoading = false;
       });
