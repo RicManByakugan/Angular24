@@ -27,8 +27,8 @@ import { User } from '../../interfaces/user.interface';
 import { AssignmentDetailComponent } from '../assignments/assignment-detail/assignment-detail.component';
 import { AssignmentCardComponent } from '../assignments/assignment-card/assignment-card.component';
 import { MatButtonModule } from '@angular/material/button';
-import { SubjectType } from '../../interfaces/subject.interface';
 import { MatDivider } from '@angular/material/divider';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-teacher',
@@ -114,7 +114,7 @@ export class TeacherComponent {
       .getAssignmentByUserSubject(userId as string)
       .subscribe((value) => {
         if (value && value.length > 0) {
-          this.subject = value[0].subject as string;
+          this.subject = value[0].subject.type as string;
           this.statusLoading = false;
           this.dataVide = false;
           this.allDataSubject = value;
@@ -133,11 +133,14 @@ export class TeacherComponent {
       });
 
     this.userService.getUserConnected().subscribe(resUser => {
-      if (resUser) {
+      if (resUser.useractif) {
         this.userData = resUser.useractif
-        if (resUser.role == "STUDENT") {
-          this.router.navigate(['/home/student']);
-        }
+        console.log(resUser.useractif)
+        // if (resUser.useractif.role == "STUDENT") {
+        //   this.router.navigate(['/home/student']);
+        // }
+      }else{
+        this.router.navigate(['/login']);
       }
     })
   }

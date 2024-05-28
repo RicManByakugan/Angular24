@@ -45,7 +45,7 @@ export class AssignmentsService {
   }
 
   getAssignmentsPagines(criteria: Criteria): Observable<any> {
-    return this.http.get<AssignmentOld[]>(this.uri, {
+    return this.http.get<Assignment[]>(this.uri, {
       params: { ...criteria },
       headers: this.headers,
     });

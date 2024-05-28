@@ -15,7 +15,7 @@
                 ? (userData.photo | filePath)
                 : '/assets/img/profile.png'
             " width="100" height="100" />
-          <h4 class="mt-2 mb-0">{{ userData.nom }} {{ userData.prenom }}</h4>
+          <h4 class="mt-2 mb-0">{{ userData.lastName }} {{ userData.firstName }}</h4>
           <small>{{ userData.email }}</small><br />
           <small>
             {{ userData.role == "STUDENT" ? "ETUDIANT" : "ENSEIGNANT : " + userData.subject.type  }}

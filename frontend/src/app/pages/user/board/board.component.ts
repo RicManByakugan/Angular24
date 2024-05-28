@@ -8,6 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { SubjectService } from '../../../shared/service/subjects.service';
 import { FilePathPipe } from '../../../shared/pipes/file-path.pipe';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-board',
@@ -31,11 +32,19 @@ export class BoardComponent implements OnInit {
   constructor(
     private userService: UserService,
     private assignmentService: AssignmentsService,
-    private subjectService: SubjectService
-  ) {}
+    private subjectService: SubjectService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
-    this.loadData();
+    this.userService.getUserConnected().subscribe(resUser => {
+      if (resUser.useractif) {
+        this.userData = resUser.useractif
+        this.loadData();
+      } else {
+        this.router.navigate(['/login']);
+      }
+    })
   }
 
   loadData() {

@@ -10,7 +10,7 @@
       <mat-label>Matière</mat-label>
       <mat-select [(ngModel)]="newAssignment.subject" name="subject">
         @for (subject of subjects; track subject) {
-        <mat-option [value]="subject.type">{{ subject.type }}</mat-option>
+        <mat-option [value]="subject._id">{{ subject.type }}</mat-option>
         }
       </mat-select>
     </mat-form-field>

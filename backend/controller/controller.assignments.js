@@ -26,6 +26,13 @@ const getAssignments = async (req, res) => {
 
   let aggregateQuery = Assignment.aggregate();
   aggregateQuery.match(criteria);
+  aggregateQuery.lookup({
+    from: "subjects",
+    localField: "subject",
+    foreignField: "_id",
+    as: "subject",
+  });
+  aggregateQuery.unwind("$subject");
 
   const assignments = await Assignment.aggregatePaginate(aggregateQuery, {
     page: parseInt(page) || 1,
@@ -74,7 +81,7 @@ const getAssignmentsSubject = async (req, res) => {
 const postAssignment = async (req, res) => {
   if (req.auth.userId) {
     try {
-      const foundUser = await User.findOne({ _id: new ObjectID(req.auth.userId) })
+      const foundUser = await User.findOne({ _id: new ObjectID(req.auth.userId) }).populate('subject')
         .lean()
         .exec();
       if (!foundUser) {

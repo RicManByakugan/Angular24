@@ -39,17 +39,14 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.authService
-      .isAdmin()
-      .then((res) => {
-        if (res) {
-          this.router.navigate(['/home/board']);
-        }
-      })
-      .catch((err) => console.log(err));
+    this.userService.getUserConnected().subscribe(resUser => {
+      if (resUser.useractif) {
+        this.router.navigate(['/home/board']);
+      }
+    })
   }
 
   onSubmit(event: any) {
@@ -65,11 +62,12 @@ export class LoginComponent implements OnInit {
     this.userService
       .loginUser(this.emailUser, this.passwordUser)
       .subscribe((res) => {
-        if (res.message === 'Utilisateur connecté') {
+        if (res.message == 'Utilisateur connecté') {
+          localStorage.clear();
+          this.authService.logIn()
           localStorage.setItem('token', res.token);
           localStorage.setItem('user', res.userId);
-          this.authService.logIn()
-          if (res.role === Role.STUDENT) {
+          if (res.role == "STUDENT") {
             this.router.navigate(['/home/student']);
           } else {
             this.router.navigate(['/home/teacher']);

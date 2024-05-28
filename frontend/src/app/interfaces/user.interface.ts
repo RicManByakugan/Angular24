@@ -1,4 +1,4 @@
-import { SubjectType } from './subject.interface';
+import { Subject } from './subject.interface';
 
 export enum Role {
   STUDENT = 'STUDENT',
@@ -12,6 +12,6 @@ export interface User {
   email: string;
   password: string;
   photo?: string;
-  subject?: SubjectType;
+  subject?: Subject;
   role: Role;
 }

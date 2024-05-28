@@ -16,7 +16,7 @@ import { CodeValidatorComponent } from './pages/user/code-validator/code-validat
 import { ForgotpassComponent } from './pages/user/forgotpass/forgotpass.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: '/home/board', pathMatch: 'full' },
   {
     path: 'home',
     component: DahsboardComponent,

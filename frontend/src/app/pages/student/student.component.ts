@@ -15,6 +15,7 @@ import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
+import { UserService } from '../../shared/service/user.service';
 
 @Component({
   selector: 'app-student',
@@ -35,6 +36,7 @@ import { MatCardModule } from '@angular/material/card';
 })
 export class StudentComponent {
   assignments!: Assignment[];
+  userData: any;
   page = 1;
   pageSize = 12;
   totalPages!: number;
@@ -47,11 +49,22 @@ export class StudentComponent {
   constructor(
     private assignmentService: AssignmentsService,
     public dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private userService: UserService,
   ) {}
 
   ngOnInit(): void {
-    this.getAssignments();
+    this.userService.getUserConnected().subscribe(resUser => {
+      if (resUser.useractif) {
+        this.userData = resUser.useractif
+        if (resUser.useractif.role == "TEACHER") {
+          this.router.navigate(['/home/teacher']);
+        }
+        this.getAssignments()
+      }else{
+        this.router.navigate(['/login']);
+      }
+    })
   }
 
   getAssignments() {
@@ -87,6 +100,7 @@ export class StudentComponent {
   }
 
   private setValues(value: any) {
+    console.log(value.docs);
     this.assignments = value.docs;
     this.totalPages = value.totalPages;
     this.nextPage = value.nextPage;

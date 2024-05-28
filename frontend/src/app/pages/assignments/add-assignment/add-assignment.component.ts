@@ -68,10 +68,11 @@ export class AddAssignmentComponent {
     this.assignmentsService
       .addAssignment(this.newAssignment)
       .subscribe((reponse) => {
+        console.log(reponse);
         this.snackBar.open('Devoir créé avec succès', undefined, {
           duration: 3000,
         });
-        this.router.navigate(['home', 'student'], { queryParams: null });
+        // this.router.navigate(['home', 'student'], { queryParams: null });
         this.dialogRef.close();
       });
   }

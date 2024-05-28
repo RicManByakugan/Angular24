@@ -1,4 +1,4 @@
-import { Subject, SubjectType } from './subject.interface';
+import { Subject } from './subject.interface';
 import { User } from './user.interface';
 
 export interface Assignment {
@@ -9,7 +9,7 @@ export interface Assignment {
   comment?: string;
   isDone: boolean;
   file: string;
-  subject?: string | Subject;
+  subject?: any;
   teacher?: string | User;
   creationDate?: Date;
   validationDate?: Date;
