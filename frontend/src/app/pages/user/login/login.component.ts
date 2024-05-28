@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../shared/service/auth.service';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { UserService } from '../../../shared/service/user.service';
 import { LoaderComponent } from '../../../component/loader/loader.component';
 import { FormsModule } from '@angular/forms';
@@ -10,7 +10,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { AlertComponent } from '../../../component/alert/alert.component';
-import { Role } from '../../../interfaces/user.interface';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +23,7 @@ import { Role } from '../../../interfaces/user.interface';
     MatButtonModule,
     RouterLink,
     CommonModule,
+    RouterModule,
     AlertComponent,
   ],
   templateUrl: './login.component.html',
@@ -39,18 +39,18 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
     private authService: AuthService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.userService.getUserConnected().subscribe(resUser => {
+    this.userService.getUserConnected().subscribe((resUser) => {
       if (resUser.useractif) {
-        if (resUser.useractif.role == "STUDENT") {
+        if (resUser.useractif.role == 'STUDENT') {
           this.router.navigate(['/home/student']);
         } else {
           this.router.navigate(['/home/teacher']);
         }
       }
-    })
+    });
   }
 
   onSubmit(event: any) {
@@ -69,6 +69,11 @@ export class LoginComponent implements OnInit {
       .subscribe((res) => {
         if (res.message == 'Utilisateur connecté') {
           this.authService.logIn(res.token, res.userId);
+          if (res.role == 'STUDENT') {
+            this.router.navigate(['/home/student']);
+          } else {
+            this.router.navigate(['/home/teacher']);
+          }
         }
         this.ResRequest = res.message;
         this.statusLoading = false;
