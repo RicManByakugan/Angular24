@@ -86,7 +86,7 @@ const verification = (req, res) => {
   User.findOne({ email: req.body.email })
     .then((user) => {
       if (!user) {
-        return res.status(200).json({ message: "Email ou mot de passe incorrecte" });
+        return res.status(200).json({ message: "Email incorrecte" });
       } else {
         const validationCode = Math.floor(10000 + Math.random() * 90000);
         user.code = validationCode;
