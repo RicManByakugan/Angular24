@@ -20,7 +20,7 @@ export class AuthService {
     localStorage.setItem('token', token);
     localStorage.setItem('user', userId);
     this.loggedIn = true;
-    this.route.navigate(['/']).then(r => window.location.reload());
+    this.route.navigate(['/']);
   }
 
   // méthode pour déconnecter l'utilisateur
