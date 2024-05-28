@@ -71,7 +71,11 @@ export class LoginComponent implements OnInit {
           this.authService.logIn()
           localStorage.setItem('token', res.token);
           localStorage.setItem('user', res.userId);
-          this.router.navigate(['/home']);
+          if (res.role == "STUDENT") {
+            this.router.navigate(['/home/student']);
+          }else{
+            this.router.navigate(['/home/teacher']);
+          }
           window.location.reload();          
         }
         this.ResRequest = res.message;
