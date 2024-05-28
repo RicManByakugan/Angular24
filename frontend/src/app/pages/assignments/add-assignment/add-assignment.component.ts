@@ -72,7 +72,7 @@ export class AddAssignmentComponent {
         this.snackBar.open('Devoir créé avec succès', undefined, {
           duration: 3000,
         });
-        // this.router.navigate(['home', 'student'], { queryParams: null });
+        this.router.navigate(['home', 'student'], { queryParams: null });
         this.dialogRef.close();
       });
   }

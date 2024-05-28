@@ -1,15 +1,10 @@
 import { Routes } from '@angular/router';
-import { AssignmentsComponent } from './pages/assignments/assignments.component';
-import { AddAssignmentComponent } from './pages/assignments/add-assignment/add-assignment.component';
-import { AssignmentDetailComponent } from './pages/assignments/assignment-detail/assignment-detail.component';
-import { EditAssignmentComponent } from './pages/assignments/edit-assignment/edit-assignment.component';
 import { AuthGuard } from './shared/guard/auth.guard';
 import { LoginComponent } from './pages/user/login/login.component';
 import { RegisterComponent } from './pages/user/register/register.component';
 import { BoardComponent } from './pages/user/board/board.component';
 import { StudentComponent } from './pages/student/student.component';
 import { DahsboardComponent } from './pages/dashboard/dahsboard/dahsboard.component';
-import { HomeComponent } from './pages/home/home.component';
 import { TeacherComponent } from './pages/teacher/teacher.component';
 import { ResetpassComponent } from './pages/user/resetpass/resetpass.component';
 import { CodeValidatorComponent } from './pages/user/code-validator/code-validator.component';
@@ -17,6 +12,11 @@ import { ForgotpassComponent } from './pages/user/forgotpass/forgotpass.componen
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home/board', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'forgot', component: ForgotpassComponent },
+  { path: 'code', component: CodeValidatorComponent },
+  { path: 'reset', component: ResetpassComponent },
   {
     path: 'home',
     component: DahsboardComponent,
@@ -27,9 +27,4 @@ export const routes: Routes = [
     ],
     canActivate: [AuthGuard]
   },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'forgot', component: ForgotpassComponent },
-  { path: 'code', component: CodeValidatorComponent },
-  { path: 'reset', component: ResetpassComponent },
 ];
