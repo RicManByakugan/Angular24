@@ -16,9 +16,7 @@ export class AuthService {
   // Typiquement, il faudrait qu'elle accepte en paramètres
   // un nom d'utilisateur et un mot de passe, que l'on vérifierait
   // auprès d'un serveur...
-  logIn(token: string, userId: string) {
-    localStorage.setItem('token', token);
-    localStorage.setItem('user', userId);
+  logIn() {
     this.loggedIn = true;
   }
 

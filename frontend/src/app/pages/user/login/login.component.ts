@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../shared/service/auth.service';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { UserService } from '../../../shared/service/user.service';
@@ -38,7 +38,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private userService: UserService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -68,7 +69,10 @@ export class LoginComponent implements OnInit {
       .loginUser(this.emailUser, this.passwordUser)
       .subscribe((res) => {
         if (res.message == 'Utilisateur connecté') {
-          this.authService.logIn(res.token, res.userId);
+          localStorage.setItem('token', res.token);
+          localStorage.setItem('user', res.userId);
+          this.cdr.markForCheck();
+          this.authService.logIn();
           if (res.role == 'STUDENT') {
             this.router.navigate(['/home/student']);
           } else {
