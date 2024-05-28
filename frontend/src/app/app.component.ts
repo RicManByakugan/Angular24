@@ -16,9 +16,12 @@ import { AuthGuard } from './shared/guard/auth.guard';
 export class AppComponent implements OnInit {
   constructor(
     private authService: AuthService,
-    private assignmentsService: AssignmentsService,
     private router: Router
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit() {
+    if (!this.authService.isAdmin()) {
+      this.router.navigate(['/login']);
+    }
+  }
 }

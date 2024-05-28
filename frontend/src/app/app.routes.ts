@@ -11,7 +11,7 @@ import { CodeValidatorComponent } from './pages/user/code-validator/code-validat
 import { ForgotpassComponent } from './pages/user/forgotpass/forgotpass.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/home/board', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'forgot', component: ForgotpassComponent },
@@ -20,11 +20,11 @@ export const routes: Routes = [
   {
     path: 'home',
     component: DahsboardComponent,
+    canActivate: [AuthGuard],
     children: [
       { path: 'board', component: BoardComponent },
       { path: 'student', component: StudentComponent },
       { path: 'teacher', component: TeacherComponent },
-    ],
-    canActivate: [AuthGuard]
+    ]
   },
 ];

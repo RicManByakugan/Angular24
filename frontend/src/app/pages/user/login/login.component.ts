@@ -68,11 +68,7 @@ export class LoginComponent implements OnInit {
       .loginUser(this.emailUser, this.passwordUser)
       .subscribe((res) => {
         if (res.message == 'Utilisateur connecté') {
-          this.authService.logIn()
-          localStorage.setItem('token', res.token);
-          localStorage.setItem('user', res.userId);
-          this.router.navigate(['/']);
-          window.location.reload()
+          this.authService.logIn(res.token, res.userId);
         }
         this.ResRequest = res.message;
         this.statusLoading = false;

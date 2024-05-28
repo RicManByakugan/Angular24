@@ -16,13 +16,18 @@ export class AuthService {
   // Typiquement, il faudrait qu'elle accepte en paramètres
   // un nom d'utilisateur et un mot de passe, que l'on vérifierait
   // auprès d'un serveur...
-  logIn() {
+  logIn(token: string, userId: string) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', userId);
     this.loggedIn = true;
+    window.location.reload()
   }
 
   // méthode pour déconnecter l'utilisateur
   logOut() {
     this.loggedIn = false;
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     localStorage.clear();
     this.route.navigate(['/login']);
   }
@@ -44,5 +49,9 @@ export class AuthService {
     });
 
     return promesse;
+  }
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('token');
   }
 }
