@@ -89,7 +89,7 @@ const verification = (req, res) => {
         user
           .save()
           .then(() => {
-            const subject = "Mot de passe oublié";
+            const subject = "Mot de passe oublié : Assignment App";
             const content = `Votre code de validation est : ${validationCode}`;
             const DataHTML = `<p>Votre code de validation est : <strong>${validationCode}</strong></p>`;
             SendMail(user.email, subject, content, DataHTML)
@@ -117,9 +117,9 @@ const resend = (req, res) => {
       if (!user) {
         return res.status(200).json({ message: "Email ou mot de passe incorrecte" });
       } else {
-        const subject = "Mot de passe oublié";
-        const content = `Votre code de validation est : ${user.code}`;
-        const DataHTML = `<p>Votre code de validation est : <strong>${user.code}</strong></p>`;
+        const subject = "Mot de passe oublié : Assignment App";
+        const content = `Votre code de validation est : ${validationCode}`;
+        const DataHTML = `<p>Votre code de validation est : <strong>${validationCode}</strong></p>`;
         SendMail(user.email, subject, content, DataHTML)
           .then(() => {
             res.status(200).json({ message: "Code réenvoyé" });
