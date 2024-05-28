@@ -135,10 +135,9 @@ export class TeacherComponent {
     this.userService.getUserConnected().subscribe(resUser => {
       if (resUser.useractif) {
         this.userData = resUser.useractif
-        console.log(resUser.useractif)
-        // if (resUser.useractif.role == "STUDENT") {
-        //   this.router.navigate(['/home/student']);
-        // }
+        if (resUser.useractif.role == "STUDENT") {
+          this.router.navigate(['/home/student']);
+        }
       }else{
         this.router.navigate(['/login']);
       }

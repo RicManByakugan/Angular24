@@ -50,8 +50,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(event: any) {
-    event.preventDefault();
-    this.statusLoading = true;
+    event.preventDefault();this.statusLoading = true;
     this.ResRequest = '';
     if (this.emailUser === '' || this.passwordUser === undefined) {
       this.ResRequest = '';
@@ -69,7 +68,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('user', res.userId);
           if (res.role == "STUDENT") {
             this.router.navigate(['/home/student']);
-          } else {
+          }else{
             this.router.navigate(['/home/teacher']);
           }
         }

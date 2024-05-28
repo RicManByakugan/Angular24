@@ -56,7 +56,7 @@ const getAssignmentsUtilisateur = (req, res) => {
         if (!user) {
           res.json({ message: "Utilisateur introuvable" });
         }
-        Assignment.find({ user: user })
+        Assignment.find({ user: user }).populate('subject')
           .then((assignmentUser) => {
             res.json(assignmentUser);
           })
@@ -102,12 +102,12 @@ const postAssignment = async (req, res) => {
 // Update d'un assignment (PUT)
 const updateAssignment = (req, res) => {
   if (req.auth.userId) {
-    User.findOne({ _id: new ObjectID(req.auth.userId) })
+    User.findOne({ _id: new ObjectID(req.auth.userId) }).populate('subject')
       .then((user) => {
         if (!user) {
           res.json({ message: "Utilisateur introuvable" });
         } else {
-          Assignment.findOne({ _id: new ObjectID(req.body._id) })
+          Assignment.findOne({ _id: new ObjectID(req.body._id) }).populate('subject')
             .then((check) => {
               if (check) {
                 if (check.user[0] == user._id.toString("hex")) {
@@ -153,7 +153,7 @@ const getAssigmentsByUser = async (req, res) => {
       if (user.role == "STUDENT") {
         res.json({ data: [], message: "Utilisateur etudiant" });
       }else{
-        const assignments = await Assignment.find({ subject: user.subject.type });
+        const assignments = await Assignment.find({ subject: user.subject });
         res.json({ data: assignments });
       }
     } else {
