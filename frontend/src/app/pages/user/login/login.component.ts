@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
       if (resUser.useractif) {
         if (resUser.useractif.role == "STUDENT") {
           this.router.navigate(['/home/student']);
-        }else{
+        } else {
           this.router.navigate(['/home/teacher']);
         }
       }
@@ -71,12 +71,10 @@ export class LoginComponent implements OnInit {
           this.authService.logIn()
           localStorage.setItem('token', res.token);
           localStorage.setItem('user', res.userId);
-          if (res.role == "STUDENT") {
-            this.router.navigate(['/home/student']);
-          }else{
-            this.router.navigate(['/home/teacher']);
-          }
-          window.location.reload();          
+          this.router.navigate(['/']).then(() => {
+            window.location.reload();
+          });
+
         }
         this.ResRequest = res.message;
         this.statusLoading = false;
