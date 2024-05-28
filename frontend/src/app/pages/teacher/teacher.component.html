@@ -8,43 +8,44 @@
   @if (userData) {
   <mat-card class="example-card">
     <mat-card-header>
-      <mat-card-title>{{ userData.firstName }} {{ userData.lastName }}</mat-card-title>
-      <mat-card-subtitle>Enseignant : {{ userData.subject.type }}</mat-card-subtitle>
+      <mat-card-subtitle>{{ userData.firstName }} {{ userData.lastName }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <p *ngIf="dataVide" class="mt-5">Aucun assignment trouvé pour le moment</p>
+      <div class="header-custom">
+        <h2>Espace enseignant</h2>
+      </div>
     </mat-card-content>
   </mat-card>
   }
   @if(dataNotDone.length > 0){
-    <mat-card class="mt-4 example-card">
-      <mat-card-content>
-        <div class="two-col h-100" cdkDropListGroup>
-          <div class="container-data w-80 h-100">
-            <h5 class="mb-4">Pas encore rendu</h5>
-            <div class="container-item">
-              <div cdkDropList [cdkDropListData]="dataNotDone" class="list-item" cdkDropListSortingDisabled>
-                @for (item of dataNotDone; track item) {
-                <app-assignment-card cdkDrag [assignment]="item" (click)="viewAssignment(item._id, '50', '50')"
-                  [ngStyle]="{ width: '100%' }"></app-assignment-card>
-                }
-              </div>
-            </div>
-          </div>
-          <div class="container-data w-80 h-100">
-            <h5 class="mb-4">Rendu</h5>
-            <div class="container-item">
-              <div cdkDropList [cdkDropListData]="dataDone" class="list-item" (cdkDropListDropped)="drop($event)">
-                @for (item of dataDone; track item) {
-                <app-assignment-card cdkDrag [assignment]="item" [ngStyle]="{ width: '100%' }"
-                  (click)="viewAssignment(item._id, '50', '50')"></app-assignment-card>
-                }
-              </div>
+  <mat-card class="mt-4 example-card">
+    <mat-card-content>
+      <div class="two-col h-100" cdkDropListGroup>
+        <div class="container-data w-80 h-100">
+          <h5 class="mb-4">Pas encore rendu</h5>
+          <div class="container-item">
+            <div cdkDropList [cdkDropListData]="dataNotDone" class="list-item" cdkDropListSortingDisabled>
+              @for (item of dataNotDone; track item) {
+              <app-assignment-card cdkDrag [assignment]="item" (click)="viewAssignment(item._id, '50', '50')"
+                [ngStyle]="{ width: '100%' }"></app-assignment-card>
+              }
             </div>
           </div>
         </div>
-      </mat-card-content>
-    </mat-card>
+        <div class="container-data w-80 h-100">
+          <h5 class="mb-4">Rendu</h5>
+          <div class="container-item">
+            <div cdkDropList [cdkDropListData]="dataDone" class="list-item" (cdkDropListDropped)="drop($event)">
+              @for (item of dataDone; track item) {
+              <app-assignment-card cdkDrag [assignment]="item" [ngStyle]="{ width: '100%' }"
+                (click)="viewAssignment(item._id, '50', '50')"></app-assignment-card>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
   }
 
 </div>
