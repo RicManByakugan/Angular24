@@ -17,6 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { UserService } from '../../shared/service/user.service';
 import { LoaderComponent } from '../../component/loader/loader.component';
+import { User } from '../../interfaces/user.interface';
 
 @Component({
   selector: 'app-student',
@@ -38,7 +39,7 @@ import { LoaderComponent } from '../../component/loader/loader.component';
 })
 export class StudentComponent {
   assignments!: Assignment[];
-  userData: any;
+  userData!: User;
   page = 1;
   pageSize = 12;
   totalPages!: number;

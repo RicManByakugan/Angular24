@@ -39,6 +39,8 @@
     <div class="item">
       <app-assignment-card
         [assignment]="assignment"
+        [user]="userData"
+        (reload)="reloadAssignments()"
         (click)="viewAssignment(assignment._id, '50', '50')"
       ></app-assignment-card>
     </div>

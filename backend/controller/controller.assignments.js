@@ -2,6 +2,7 @@ let Assignment = require("../model/assignment");
 const { ObjectID } = require("bson");
 const User = require("../model/user");
 const { buildSearch } = require("../utils/search");
+const assignment = require("../model/assignment");
 
 // Récupérer tous les assignments (GET)
 /*
@@ -173,33 +174,10 @@ const getAssigmentsByUser = async (req, res) => {
 
 // suppression d'un assignment (DELETE)
 // l'id est bien le _id de mongoDB
-const deleteAssignment = (req, res) => {
+const deleteAssignment = async (req, res) => {
   if (req.auth.userId) {
-    User.findOne({ _id: new ObjectID(req.auth.userId) })
-      .then((user) => {
-        if (!user) {
-          res.json({ message: "Utilisateur introuvable" });
-        } else {
-          Assignment.findOne({ _id: req.params.id })
-            .then((check) => {
-              if (!check) {
-                res.json({ message: "Assignment introuvable" });
-              } else {
-                if (check.user[0] == user._id.toString("hex")) {
-                  Assignment.findByIdAndRemove({ _id: new ObjectID(req.params.id) })
-                    .then((resFinal) => {
-                      res.json({ message: "Deleted" });
-                    })
-                    .catch((error) => res.json({ message: "Erreur de traitement" }));
-                } else {
-                  res.json({ message: "Utilisateur ne peut pas supprimer" });
-                }
-              }
-            })
-            .catch((error) => res.json({ message: "Erreur de traitement" }));
-        }
-      })
-      .catch((error) => res.json({ message: "Erreur de traitement" }));
+    await Assignment.findByIdAndRemove(req.params.id);
+    res.json({ message: "Supprimé" });
   } else {
     res.json({ message: "Utilisateur non connecté" });
   }

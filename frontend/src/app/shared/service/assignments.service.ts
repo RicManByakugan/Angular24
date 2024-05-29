@@ -97,12 +97,7 @@ export class AssignmentsService {
     });
   }
 
-  deleteAssignment(assignment: AssignmentOld): Observable<any> {
-    // on va supprimer l'assignment dans le tableau
-    //let pos = this.assignments.indexOf(assignment);
-    //this.assignments.splice(pos, 1);
-    this.logService.log(assignment.nom, 'supprimé');
-    //return of("Assignment supprimé avec succès");
+  deleteAssignment(assignment: Assignment): Observable<any> {
     return this.http.delete(this.uri + '/' + assignment._id, {
       headers: this.headers,
     });

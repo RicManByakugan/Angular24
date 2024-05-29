@@ -1,3 +1,6 @@
+@if (resRequest){
+<app-alert [message]="resRequest"></app-alert>
+}
 <div class="container">
   <mat-card
     [ngStyle]="{ 'border-color': getSubjectColor(assignment.subject.type) }"
@@ -28,6 +31,14 @@
         matTooltip="Rendu"
         matTooltipPosition="right"
         >check_circle</mat-icon
+      >
+      } @if(user?.role === 'STUDENT' && !assignment.isDone){
+      <mat-icon
+        [ngStyle]="{ color: '#ff000096' }"
+        matTooltip="Supprimer"
+        matTooltipPosition="right"
+        (click)="deleteAssignment($event, assignment)"
+        >delete</mat-icon
       >
       }
     </mat-card-actions>
