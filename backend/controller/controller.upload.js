@@ -11,7 +11,6 @@ const uploadFile = async (req, res) => {
   if (!files) {
     throw new Error("No file to upload");
   }
-  console.log(files);
 
   const newPaths = files.map((file) => path.normalize(file.path).replace("public", ""));
   res.json(newPaths[0]);
@@ -48,7 +47,7 @@ const downloadFile = async (req, res) => {
   const filename = req.query.filepath.split("/").at(-1);
 
   const filePath = `${filename === "exemple.txt" ? DEFAULT_FILE_PATH : FILE_PATH}/${filename}`;
-  list("/opt/render/project/src/backend");
+  list("/opt/render/project/src/backend/public");
   fs.exists(filePath, (exists) => {
     if (exists) {
       res.setHeader("Content-disposition", "attachment; filename=" + filename);
