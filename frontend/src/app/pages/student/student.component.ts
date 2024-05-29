@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { UserService } from '../../shared/service/user.service';
+import { LoaderComponent } from '../../component/loader/loader.component';
 
 @Component({
   selector: 'app-student',
@@ -30,6 +31,7 @@ import { UserService } from '../../shared/service/user.service';
     FormsModule,
     MatInputModule,
     MatCardModule,
+    LoaderComponent,
   ],
   templateUrl: './student.component.html',
   styleUrl: './student.component.css',
