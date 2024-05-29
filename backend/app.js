@@ -44,7 +44,7 @@ async function start(port) {
   // Pour les formulaires
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
-  app.use(cors);
+  app.use(cors({ origin: "*" }));
 
   // Pour les images
   app.use(express.static("public"));

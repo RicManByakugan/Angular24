@@ -40,7 +40,7 @@ const getAssignments = async (req, res) => {
     foreignField: "_id",
     as: "teacher",
   });
-  aggregateQuery.unwind("$teacher");
+  aggregateQuery.unwind({ path: "$teacher", preserveNullAndEmptyArrays: true });
 
   const assignments = await Assignment.aggregatePaginate(aggregateQuery, {
     page: parseInt(page) || 1,
