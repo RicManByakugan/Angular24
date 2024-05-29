@@ -16,6 +16,12 @@ mat-card {
   border-bottom: 5px solid;
 }
 
+.avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
 .inline-ellipsis {
   display: inline-block;
   overflow: hidden;

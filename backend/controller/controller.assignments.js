@@ -34,6 +34,13 @@ const getAssignments = async (req, res) => {
     as: "subject",
   });
   aggregateQuery.unwind("$subject");
+  aggregateQuery.lookup({
+    from: "users",
+    localField: "teacher",
+    foreignField: "_id",
+    as: "teacher",
+  });
+  aggregateQuery.unwind("$teacher");
 
   const assignments = await Assignment.aggregatePaginate(aggregateQuery, {
     page: parseInt(page) || 1,
