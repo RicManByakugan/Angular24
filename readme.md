@@ -1,5 +1,10 @@
 # Gestion d'Assignments
 
+## Contributeurs
+
+- Ramananjoelina Tokiniaina Angelo
+- Ratovonirina Eric
+
 ## Introduction
 
 Ce projet est une application de gestion d'assignments développée avec Angular pour le frontend, Node.js pour le backend et MongoDB pour la base de données. L'application offre des fonctionnalités de gestion des devoirs pour deux rôles distincts : étudiants et enseignants.
@@ -69,6 +74,6 @@ Ce projet est une application de gestion d'assignments développée avec Angular
 - **Base de données** : MongoDB
 - **Authentification** : JWT (JSON Web Tokens)
 
-## URLs déployé sur Render
+## URL déployé sur Render
 
 https://angular24-front.onrender.com/
