@@ -15,8 +15,10 @@
     </mat-card-content>
     <mat-card-actions class="inline">
       @if(avatarUrl){<img
-        mat-card-image
-        [src]="avatarUrl"
+        class="avatar"
+        [matTooltip]="teacher.firstName + ' ' + teacher.lastName"
+        [src]="avatarUrl | filePath"
+        matTooltipPosition="right"
         alt="Teacher photo"
       />} @if(!assignment.isDone){
       <mat-icon

@@ -11,6 +11,7 @@ import { RouterLink } from '@angular/router';
 import { SUBJECT_COLORS } from '../../../shared/constants/assignment.constants';
 import { AssignmentsService } from '../../../shared/service/assignments.service';
 import { AlertComponent } from '../../../component/alert/alert.component';
+import { FilePathPipe } from '../../../shared/pipes/file-path.pipe';
 
 @Component({
   selector: 'app-assignment-card',
@@ -22,6 +23,7 @@ import { AlertComponent } from '../../../component/alert/alert.component';
     MatTooltipModule,
     RouterLink,
     AlertComponent,
+    FilePathPipe,
   ],
   templateUrl: './assignment-card.component.html',
   styleUrl: './assignment-card.component.css',
@@ -38,6 +40,10 @@ export class AssignmentCardComponent {
 
   get avatarUrl() {
     return (this.assignment.teacher as User)?.photo;
+  }
+
+  get teacher() {
+    return this.assignment?.teacher as User;
   }
 
   getSubjectColor(subjectType: SubjectType): string {
