@@ -1,6 +1,7 @@
 let express = require("express");
 let app = express();
 let bodyParser = require("body-parser");
+const cors = require("cors");
 const routesAssignment = require("./routes/assignments");
 const routesUser = require("./routes/user");
 const routesUpload = require("./routes/upload");
@@ -43,6 +44,7 @@ async function start(port) {
   // Pour les formulaires
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
+  app.use(cors);
 
   // Pour les images
   app.use(express.static("public"));
