@@ -1,26 +1,24 @@
 const path = require("path");
 const fs = require("fs");
-const FILE_PATH = "../public/files";
-const DEFAULT_FILE_PATH = "../public/default";
+const FILE_PATH = "./public/files";
+const DEFAULT_FILE_PATH = "./public/default";
 
 const uploadFile = async (req, res) => {
   const files = req.files;
+  console.log(req);
   if (!files) {
     throw new Error("No file to upload");
   }
+  console.log(files);
 
-  const newPaths = files.map((file) => {
-    const adjustedTargetPath = path.join(__dirname, "..", file.path.replace("public", ""));
-    return adjustedTargetPath;
-  });
-
+  const newPaths = files.map((file) => path.normalize(file.path).replace("public", ""));
   res.json(newPaths[0]);
   return newPaths[0];
 };
 
 const deleteFile = async (req, res) => {
   const name = req.params.filename;
-  fs.unlink(`${__dirname}/${IMAGE_PATH}/${name}`, (err) => {
+  fs.unlink(`${IMAGE_PATH}/${name}`, (err) => {
     if (err) {
       throw new Error("Error when deleting file");
     }
@@ -29,9 +27,9 @@ const deleteFile = async (req, res) => {
 };
 
 const downloadFile = async (req, res) => {
+  console.log(req.params);
   const filename = req.params.filename;
-  const targetPath = filename === "exemple.txt" ? DEFAULT_FILE_PATH : FILE_PATH;
-  const filePath = path.join(__dirname, targetPath, filename);
+  const filePath = `${filename === "exemple.txt" ? DEFAULT_FILE_PATH : FILE_PATH}/${filename}`;
   fs.exists(filePath, (exists) => {
     if (exists) {
       res.setHeader("Content-disposition", "attachment; filename=" + filename);

@@ -99,6 +99,7 @@ const postAssignment = async (req, res) => {
         res.json({ message: "Utilisateur introuvable" });
       }
       const { _id, ...assignment } = req.body;
+      console.log(req.body);
       const created = await Assignment.create(assignment);
       res.json(created);
     } catch (error) {
@@ -123,6 +124,7 @@ const updateAssignment = (req, res) => {
             .then((check) => {
               if (check) {
                 if (check.user[0] == user._id.toString("hex")) {
+                  console.log("UPDATE recu assignment : ");
                   console.log(req.body);
                   Assignment.findByIdAndUpdate(req.body._id, req.body, { new: true })
                     .then((resUpdate) => {

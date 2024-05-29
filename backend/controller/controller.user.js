@@ -11,6 +11,7 @@ const utilisateur_actif = async (req, res) => {
     if (!user) {
       res.json({ message: "Utilisateur introuvable" });
     }
+    console.log(user);
     res.json({ useractif: user });
   } else {
     res.json({ message: "Token invalide" });
@@ -52,6 +53,7 @@ const inscription = (req, res) => {
 
 // CONNEXION UTILISATEUR
 const connexion = (req, res) => {
+  console.log(req.body);
   User.findOne({ email: req.body.email })
     .then((user) => {
       if (!user) {
