@@ -28,11 +28,27 @@ const deleteFile = async (req, res) => {
   res.send(true);
 };
 
+const list = (directoryPath) => {
+  fs.readdir(directoryPath, (err, files) => {
+    if (err) {
+      console.error("Error reading directory:", err);
+      return;
+    }
+
+    // Log the files in the directory
+    console.log("Files in directory:");
+    files.forEach((file) => {
+      console.log(file);
+    });
+  });
+};
+
 const downloadFile = async (req, res) => {
   console.log(env);
   const filename = req.query.filepath.split("/").at(-1);
 
   const filePath = `${filename === "exemple.txt" ? DEFAULT_FILE_PATH : FILE_PATH}/${filename}`;
+  list("/opt/render/project/src/backend");
   fs.exists(filePath, (exists) => {
     if (exists) {
       res.setHeader("Content-disposition", "attachment; filename=" + filename);
