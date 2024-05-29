@@ -8,6 +8,7 @@ const routesUpload = require("./routes/upload");
 const routesSubject = require("./routes/subject");
 let mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
+require("dotenv").config();
 
 async function start(port) {
   // mongoose.set('debug', true);
