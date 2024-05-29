@@ -32,12 +32,12 @@ const downloadFile = async (req, res) => {
   const filePath = `${filename === "exemple.txt" ? DEFAULT_FILE_PATH : FILE_PATH}/${filename}`;
   fs.exists(filePath, (exists) => {
     if (exists) {
-      res.setHeader("Content-disposition", "attachment; filename=" + filename);
+      res.setHeader("Content-disposition", "attachment; filename=" + filepath);
       res.setHeader("Content-type", "application/octet-stream");
       const fileStream = fs.createReadStream(filePath);
       fileStream.pipe(res);
     } else {
-      res.status(404).send("File not found");
+      res.status(404).send(`File not found ${filepath}`);
     }
   });
 };

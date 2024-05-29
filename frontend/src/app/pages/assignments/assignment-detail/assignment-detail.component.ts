@@ -67,8 +67,7 @@ export class AssignmentDetailComponent implements OnInit {
   }
 
   onDownloadFile(filePath: string) {
-    const fileName = filePath.split('\\').at(-1);
-    this.fileUploadService.downloadFile(fileName as string);
+    this.fileUploadService.downloadFile(filePath as string);
   }
 
   get student() {
