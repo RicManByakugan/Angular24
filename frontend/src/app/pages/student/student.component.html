@@ -1,19 +1,25 @@
 <div class="main">
   @if(userData){
-    <mat-card class="example-card">
-      <mat-card-header>
-        <mat-card-subtitle>{{ userData.firstName }} {{ userData.lastName }}</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="header-custom">
-          <h2>Espace etudiant</h2>
-          <button mat-fab color="accent" aria-label="Ajouter un devoir" matTooltip="Ajouter un devoir"
-            matTooltipPosition="right" (click)="openDialog('50', '50')">
-            <mat-icon>add</mat-icon>
-          </button>
-        </div>
-      </mat-card-content>
-    </mat-card>
+  <mat-card class="example-card mt-3">
+    <mat-card-header>
+      <mat-card-subtitle>Espace etudiant</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="header-custom">
+        <h2>{{ userData.firstName }} {{ userData.lastName }}</h2>
+        <button
+          mat-fab
+          color="accent"
+          aria-label="Ajouter un devoir"
+          matTooltip="Ajouter un devoir"
+          matTooltipPosition="right"
+          (click)="openDialog('50', '50')"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
   }
 
   <div class="search-bar">
@@ -28,14 +34,21 @@
   <div class="list">
     @for(assignment of assignments;track assignment._id){
     <div class="item">
-      <app-assignment-card [assignment]="assignment"
-        (click)="viewAssignment(assignment._id, '50', '50')"></app-assignment-card>
+      <app-assignment-card
+        [assignment]="assignment"
+        (click)="viewAssignment(assignment._id, '50', '50')"
+      ></app-assignment-card>
     </div>
     }
     <div class="actions">
       <div class="paginator">
-        <mat-paginator [length]="totalPages" [pageSizeOptions]="[12, 24, 48]" [pageIndex]="page"
-          aria-label="Select page" (page)="handlePageEvent($event)">
+        <mat-paginator
+          [length]="totalPages"
+          [pageSizeOptions]="[12, 24, 48]"
+          [pageIndex]="page"
+          aria-label="Select page"
+          (page)="handlePageEvent($event)"
+        >
         </mat-paginator>
       </div>
     </div>

@@ -67,6 +67,13 @@ export class StudentComponent {
         }
       });
     });
+    this.reloadAssignments();
+  }
+
+  reloadAssignments() {
+    this.dialog.afterAllClosed.subscribe((event) => {
+      this.getAssignments();
+    });
   }
 
   getAssignments() {
