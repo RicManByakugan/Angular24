@@ -6,6 +6,6 @@ const { upload } = require("../middleware/multer");
 
 router.post("/upload", auth, upload("files"), uploadController.uploadFile);
 router.delete("/upload/:filename", auth, uploadController.deleteFile);
-router.get("/upload/download/:filename", auth, uploadController.downloadFile);
+router.get("/upload/download", auth, uploadController.downloadFile);
 
 module.exports = router;

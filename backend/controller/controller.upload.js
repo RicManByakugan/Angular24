@@ -29,17 +29,16 @@ const deleteFile = async (req, res) => {
 };
 
 const downloadFile = async (req, res) => {
-  const filename = req.params.filename;
-  const targetPath = filename === "exemple.txt" ? DEFAULT_FILE_PATH : FILE_PATH;
-  const filePath = path.join(__dirname, targetPath, filename);
-  fs.exists(filePath, (exists) => {
+  const filepath = req.query.filepath.replace(/\\/gi, "/");
+  console.log(filepath);
+  fs.exists(filepath, (exists) => {
     if (exists) {
-      res.setHeader("Content-disposition", "attachment; filename=" + filename);
+      res.setHeader("Content-disposition", "attachment; filename=" + filepath);
       res.setHeader("Content-type", "application/octet-stream");
       const fileStream = fs.createReadStream(filePath);
       fileStream.pipe(res);
     } else {
-      res.status(404).send("File not found");
+      res.status(404).send(`File not found ${filepath}`);
     }
   });
 };
