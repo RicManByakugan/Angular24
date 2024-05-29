@@ -1,6 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 const FILE_PATH = "./public/files";
+const DEFAULT_FILE_PATH = "./public/default";
 
 const uploadFile = async (req, res) => {
   const files = req.files;
@@ -28,7 +29,7 @@ const deleteFile = async (req, res) => {
 const downloadFile = async (req, res) => {
   console.log(req.params);
   const filename = req.params.filename;
-  const filePath = `${FILE_PATH}/${filename}`;
+  const filePath = `${filename === "exemple.txt" ? DEFAULT_FILE_PATH : FILE_PATH}/${filename}`;
   fs.exists(filePath, (exists) => {
     if (exists) {
       res.setHeader("Content-disposition", "attachment; filename=" + filename);
