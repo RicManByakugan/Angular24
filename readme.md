@@ -1,10 +1,5 @@
 # Gestion d'Assignments
 
-## Contributeurs
-
-- Ramananjoelina Tokiniaina Angelo
-- Ratovonirina Eric
-
 ## Introduction
 
 Ce projet est une application de gestion d'assignments développée avec Angular pour le frontend, Node.js pour le backend et MongoDB pour la base de données. L'application offre des fonctionnalités de gestion des devoirs pour deux rôles distincts : étudiants et enseignants.
@@ -67,18 +62,54 @@ Ce projet est une application de gestion d'assignments développée avec Angular
   - email : sbarhem1@ebay.com, mot de passe: test
   - email : msizzeyg@rediff.com, mot de passe: test
 
-## Technologies Utilisées
+## Contributions
 
-- **Frontend** : Angular
-- **Backend** : Node.js avec Express
-- **Base de données** : MongoDB
-- **Authentification** : JWT (JSON Web Tokens)
+### Ramananjoelina Tokiniaina Angelo
+
+- **Espace étudiants**:
+- Mise en place espace étudiants
+- Récupération des assignments filtré sur l'étudiant connecté
+- Ajout de recherche et pagination sur la liste des assignments
+- Dialog de détail d'un assignment
+- Création d'un assignment:
+  - Implémentation d'un système d'upload / download de fichier
+  - Création d'un assignment
+- Implémentation suppression d'un assignment
+- **Layout**:
+- Mise en place layout général de l'application
+- **Deploiement**:
+- Configuration deploiement backend sur Render
+- **Base de données**:
+- Ajout nouvelle collection MongoDB pour les matières
+- Génération des données (Assignments, User, Matieres)
+
+### Ratovonirina Eric
+
+- **Espace enseignants**:
+- Mise en place espace enseignant
+- Système de drag and drop pour le rendu d'un assignment
+- Formulaire de rendu d'un assignment
+- Notification par snackbar après une opération effectué sur l'application
+- **Connextion & Inscription**:
+- Gestion authentification par JWT token
+- Formulaire d'inscription avec model stepper
+- **Deploiement**:
+- Configuration deploiement front-end sur Render
+- **Base de données**:
+- Ajout nouvelle collection MongoDB pour les utilisateurs
 
 ## URL déployé sur Render
 
 https://angular24-front.onrender.com/
 
 ## Démarrage du projet en local
+
+### Technologies Utilisées
+
+- **Frontend** : Angular
+- **Backend** : Node.js avec Express
+- **Base de données** : MongoDB
+- **Authentification** : JWT (JSON Web Tokens)
 
 ### Cloner le repository
 
@@ -89,7 +120,7 @@ cd Angular24/
 
 ### Front-end angular
 
-Entrer dans le repertoire de front-end
+Entrer dans le repertoire du front-end
 
 ```shell
 cd frontend
@@ -107,7 +138,7 @@ npm install
 npm start
 ```
 
-Le front-end démarre sur l'url l'url http://localhost:4200
+Le front-end démarre sur l'url http://localhost:4200
 
 ### Backend-nodejs
 
@@ -127,9 +158,11 @@ npm install
 
 Dans le repertoire /backend, créer un fichier .env et y ajouter les varibales:
 
+```shell
 ENV=DEV
 FILE_PATH = ../public/files
 DEFAULT_FILE_PATH = ../public/default
+```
 
 ### Démarrer l'application
 
