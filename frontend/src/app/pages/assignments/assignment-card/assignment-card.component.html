@@ -34,7 +34,7 @@
         matTooltipPosition="right"
         >check_circle</mat-icon
       >
-      } @if(user.role === 'STUDENT' && !assignment.isDone){
+      } @if(user?.role === 'STUDENT' && !assignment.isDone){
       <mat-icon
         [ngStyle]="{ color: '#ff000096' }"
         matTooltip="Supprimer"
