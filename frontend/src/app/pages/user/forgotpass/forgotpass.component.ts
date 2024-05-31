@@ -47,7 +47,7 @@ export class ForgotpassComponent {
           this.router.navigate(['/home/board']);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => this.ResRequest = "Erreur interne du serveur.");
   }
 
   onSubmit(event: any) {

@@ -39,8 +39,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private userService: UserService,
     private authService: AuthService,
-    private router: Router,
-    private cdr: ChangeDetectorRef
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -84,6 +83,13 @@ export class LoginComponent implements OnInit {
           }, 500);
         }
         this.ResRequest = res.message;
+        this.statusLoading = false;
+      }, (error) => {
+        if (error.status === 500) {
+          this.ResRequest = "Erreur interne du serveur. Veuillez réessayer plus tard.";
+        } else {
+          this.ResRequest = "Une erreur s'est produite. Veuillez réessayer.";
+        }
         this.statusLoading = false;
       });
   }

@@ -126,7 +126,7 @@ const resend = (req, res) => {
           })
           .catch((error) => {
             console.error("Erreur d'envoi de l'email : ", error);
-            res.status(500).json({ message: "Erreur lors de l'envoi de l'email" });
+            res.status(200).json({ message: "Erreur lors de l'envoi de l'email" });
           });
       }
     })
@@ -151,7 +151,7 @@ const verificationCode = (req, res) => {
           })
           .catch((error) => {
             console.error("Erreur lors de la mise à jour de l'utilisateur : ", error);
-            res.status(500).json({ message: "Erreur lors de la mise à jour de l'utilisateur" });
+            res.status(200).json({ message: "Erreur lors de la mise à jour de l'utilisateur" });
           });
       } else {
         res.status(200).json({ message: "Code de validation incorrect" });

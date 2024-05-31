@@ -38,6 +38,9 @@ export class CodeValidatorComponent {
 
   constructor(private userService: UserService, private authService: AuthService, private router: Router) {
     this.emailUser = localStorage.getItem("emailCode")
+    if (this.emailUser) {
+      this.ResRequest = "Un code de validation a été envoyer"
+    }
   }
 
   ngOnInit(): void {
@@ -48,29 +51,38 @@ export class CodeValidatorComponent {
           this.router.navigate(['/home/board']);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => this.ResRequest = "Erreur interne du serveur.");
 
     if (this.emailUser == undefined) {
       this.router.navigate(['/login']);
     }
   }
 
-  resend(){
+  resend() {
     this.statusLoading = true;
     this.ResRequest = '';
     if (this.emailUser === '') {
       this.ResRequest = '';
       this.ResRequest = "Une erreur s'est produite";
-      this.statusLoading = false;
       return;
     }
-
     this.userService
       .resendUser(this.emailUser)
       .subscribe((res) => {
-        this.ResRequest = res.message;
+        if (res) {
+          this.ResRequest = res.message;
+        } else {
+          this.ResRequest = "Une erreur s'est produite";
+        }
         this.statusLoading = false;
-      });
+      }, (error) => {
+        if (error.status === 500) {
+          this.ResRequest = "Erreur interne du serveur. Veuillez réessayer plus tard.";
+        } else {
+          this.ResRequest = "Une erreur s'est produite. Veuillez réessayer.";
+        }
+        this.statusLoading = false;
+      })
   }
 
   onSubmit(event: any) {
@@ -90,6 +102,13 @@ export class CodeValidatorComponent {
           this.router.navigate(['/reset']);
         }
         this.ResRequest = res.message;
+        this.statusLoading = false;
+      }, (error) => {
+        if (error.status === 500) {
+          this.ResRequest = "Erreur interne du serveur. Veuillez réessayer plus tard.";
+        } else {
+          this.ResRequest = "Une erreur s'est produite. Veuillez réessayer.";
+        }
         this.statusLoading = false;
       });
   }

@@ -47,7 +47,7 @@ export class ResetpassComponent {
           this.router.navigate(['/home/board']);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => this.ResRequest = "Erreur interne du serveur.");
   }
 
   onSubmit(event: any) {
@@ -76,6 +76,13 @@ export class ResetpassComponent {
           this.router.navigate(['/login']);
         }
         this.ResRequest = res.message;
+        this.statusLoading = false;
+      }, (error) => {
+        if (error.status === 500) {
+          this.ResRequest = "Erreur interne du serveur. Veuillez réessayer plus tard.";
+        } else {
+          this.ResRequest = "Une erreur s'est produite. Veuillez réessayer.";
+        }
         this.statusLoading = false;
       });
   }

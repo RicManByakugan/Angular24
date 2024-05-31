@@ -2,22 +2,24 @@
   <div class="entete d-flex justify-content-center align-items-center">
     <img src="favicon.ico" width="40" height="40" />
   </div>
-  @if(userData && userData.role === "TEACHER"){
-  <mat-divider></mat-divider>
-  <a routerLink="teacher">
-    <mat-list-item class="pl-4 pr-0 item-custom-light">
-      Enseignant
-    </mat-list-item>
-  </a>
-  <mat-divider></mat-divider>
-  }@else{
-  <mat-divider></mat-divider>
-  <a routerLink="student">
-    <mat-list-item class="pl-4 pr-0 item-custom-light">
-      Etudiant
-    </mat-list-item>
-  </a>
-  <mat-divider></mat-divider>
+  @if(userData){
+    @if(userData.role === "TEACHER"){
+    <mat-divider></mat-divider>
+    <a routerLink="teacher">
+      <mat-list-item class="pl-4 pr-0 item-custom-light">
+        Enseignant
+      </mat-list-item>
+    </a>
+    <mat-divider></mat-divider>
+    }@else{
+    <mat-divider></mat-divider>
+    <a routerLink="student">
+      <mat-list-item class="pl-4 pr-0 item-custom-light">
+        Etudiant
+      </mat-list-item>
+    </a>
+    <mat-divider></mat-divider>
+    }
   }
   <a routerLink="board"><mat-list-item class="pl-4 pr-0 item-custom-light">
       Mon compte

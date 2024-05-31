@@ -12,19 +12,22 @@
             <div class="w-100 row-center">
                 <div class="w-100 h-100">
                     <h3 class="text-center"><strong>Assignment</strong></h3>
-                    <p class="text-center">Code de validation</p>
+                    @if (emailUser) {
+                        <p class="text-center">Code de validation dans {{emailUser}}</p>
+                    }
                     <form class="login-content" #loginForm="ngForm" (ngSubmit)="onSubmit($event)">
                         <div class="form-group first">
                             <mat-form-field appearance="outline">
                                 <mat-label>Code</mat-label>
                                 <input matInput placeholder="Code" [(ngModel)]="codeUser" name="codeUser" required />
-                                <mat-error> Veuillez rensigner le code </mat-error>
+                                <mat-error> Veuillez renseigner le code </mat-error>
                             </mat-form-field>
                         </div>
                         <button class="w-100" class="submit" mat-raised-button color="primary">
                             Entrer
                         </button>
-                        <button (click)="resend()" type="button" class="w-100" class="submit" mat-raised-button color="primary">
+                        <button (click)="resend()" type="button" class="w-100" class="submit" mat-raised-button
+                            color="primary">
                             Réenvoye le code
                         </button>
                         <div class="d-flex mb-5 align-items-center">
