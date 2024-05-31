@@ -93,7 +93,9 @@ Ce projet est une application de gestion d'assignments développée avec Angular
 - **Connextion & Inscription**:
   - Gestion authentification par JWT token
   - Formulaire d'inscription avec model stepper
-  - Réinitialisation mot de passe
+  - Réinitialisation mot de passe via un code envoyer dans un email
+- **Page profile**
+  - Affiche l'utilisateur connecté ainsi que ses informations
 - **Deploiement**:
   - Configuration deploiement front-end sur Render
 - **Base de données**:
