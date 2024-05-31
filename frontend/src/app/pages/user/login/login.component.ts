@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
   passwordUser: string = '';
   statusLoading: boolean = false;
   ResRequest: string = '';
+  timeoutControl: any;
 
   constructor(
     private userService: UserService,
@@ -72,7 +73,8 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('token', res.token);
           localStorage.setItem('user', res.userId);
           window.location.reload();
-          setTimeout(() => {
+          this.clearLoginTimeout()
+          this.timeoutControl = setTimeout(() => {
             this.authService.logIn();
             if (res.role == 'STUDENT') {
               this.router.navigate(['/home/student']);
@@ -84,5 +86,12 @@ export class LoginComponent implements OnInit {
         this.ResRequest = res.message;
         this.statusLoading = false;
       });
+  }
+
+  clearLoginTimeout() {
+    if (this.timeoutControl) {
+      clearTimeout(this.timeoutControl);
+      this.timeoutControl = null;
+    }
   }
 }
