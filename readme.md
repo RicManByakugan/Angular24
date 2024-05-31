@@ -77,3 +77,64 @@ Ce projet est une application de gestion d'assignments développée avec Angular
 ## URL déployé sur Render
 
 https://angular24-front.onrender.com/
+
+## Démarrage du projet en local
+
+### Cloner le repository
+
+```shell
+git clone https://github.com/RicManByakugan/Angular24
+cd Angular24/
+```
+
+### Front-end angular
+
+Entrer dans le repertoire de front-end
+
+```shell
+cd frontend
+```
+
+### Installer les packages npm
+
+```shell
+npm install
+```
+
+### Démarrer l'application
+
+```shell
+npm start
+```
+
+Le front-end démarre sur l'url l'url http://localhost:4200
+
+### Backend-nodejs
+
+Entrer dans le repertoire du backend
+
+```shell
+cd backend
+```
+
+### Installer les packages npm
+
+```shell
+npm install
+```
+
+### Ajout variables d'environnements
+
+Dans le repertoire /backend, créer un fichier .env et y ajouter les varibales:
+
+ENV=DEV
+FILE_PATH = ../public/files
+DEFAULT_FILE_PATH = ../public/default
+
+### Démarrer l'application
+
+```shell
+npm start
+```
+
+Le backend démarre sur l'url http://localhost:8000
