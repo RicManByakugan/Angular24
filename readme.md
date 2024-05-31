@@ -67,36 +67,37 @@ Ce projet est une application de gestion d'assignments développée avec Angular
 ### Ramananjoelina Tokiniaina Angelo
 
 - **Espace étudiants**:
-- Mise en place espace étudiants
-- Récupération des assignments filtré sur l'étudiant connecté
-- Ajout de recherche et pagination sur la liste des assignments
-- Dialog de détail d'un assignment
-- Création d'un assignment:
-  - Implémentation d'un système d'upload / download de fichier
-  - Création d'un assignment
-- Implémentation suppression d'un assignment
+  - Mise en place espace étudiants
+  - Récupération des assignments filtré sur l'étudiant connecté
+  - Ajout de recherche et pagination sur la liste des assignments
+  - Dialog de détail d'un assignment
+  - Création d'un assignment:
+    - Implémentation d'un système d'upload / download de fichier
+    - Création d'un assignment
+  - Implémentation suppression d'un assignment
 - **Layout**:
-- Mise en place layout général de l'application
+  - Mise en place layout global de l'application
 - **Deploiement**:
-- Configuration deploiement backend sur Render
+  - Configuration deploiement backend sur Render
 - **Base de données**:
-- Ajout nouvelle collection MongoDB pour les matières
-- Génération des données (Assignments, User, Matieres)
+  - Ajout nouvelle collection MongoDB pour les matières
+  - Génération des données (Assignments, User, Matieres)
 
 ### Ratovonirina Eric
 
 - **Espace enseignants**:
-- Mise en place espace enseignant
-- Système de drag and drop pour le rendu d'un assignment
-- Formulaire de rendu d'un assignment
-- Notification par snackbar après une opération effectué sur l'application
+  - Mise en place espace enseignant
+  - Système de drag and drop pour le rendu d'un assignment
+  - Formulaire de rendu d'un assignment
+  - Notification par snackbar après une opération effectué sur l'application
 - **Connextion & Inscription**:
-- Gestion authentification par JWT token
-- Formulaire d'inscription avec model stepper
+  - Gestion authentification par JWT token
+  - Formulaire d'inscription avec model stepper
+  - Réinitialisation mot de passe
 - **Deploiement**:
-- Configuration deploiement front-end sur Render
+  - Configuration deploiement front-end sur Render
 - **Base de données**:
-- Ajout nouvelle collection MongoDB pour les utilisateurs
+  - Ajout nouvelle collection MongoDB pour les utilisateurs
 
 ## URL déployé sur Render
 
